@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './Layout/Layout';
+import SignUp from './components/SignUp';
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
         <div>
             Hello Mouse
         </div>
+        <SignUp/>
       </Layout>
     );
   }

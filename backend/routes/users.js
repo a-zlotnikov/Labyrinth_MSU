@@ -16,7 +16,8 @@ router.post('/signup', async function(req, res, next) { // Регистраци�
     await user.save();
     console.log('>>> Save ok');
     req.session.user = user;
-    await res.json({logged_in: true});
+    // await res.json({logged_in: true});
+    await res.json(req.session);
   } catch (e) {
     console.error(e);
     await res.json({logged_in: false});
@@ -29,7 +30,8 @@ router.post('/signin', async function(req, res, next) {
     const user = await User.findOne({username});
     if (user.password === password) {
       req.session.user = user;
-      await res.json({logged_in: true});
+      // await res.json({logged_in: true});
+      await res.json(req.session);
     } else {
       await res.json({logged_in: false});
     }
