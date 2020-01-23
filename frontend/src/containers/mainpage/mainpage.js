@@ -13,7 +13,8 @@ class Mainpage extends Component {
           <div>
             <Link to={'/constructor'}>Конструктор</Link>
             <Link to={'/fields'}>Архив сред</Link>
-            <Link to={'/results'}>Результаты эксперемента</Link>
+            <Link to={'/results'}>Архив эксперемента</Link>
+            <Link to={'/registration'}>Регистрация</Link>
           </div>
         </div>
       </div>
