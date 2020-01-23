@@ -25,7 +25,7 @@ export const CHANGEVALUE = (value, changedValue) => {
 
 export const fetchField = () => {
     return async (dispatch) => {
-        console.log(123);
+        // console.log(123);
         const response = await fetch('/getField');
         const result = await response.json();
         console.log(result);

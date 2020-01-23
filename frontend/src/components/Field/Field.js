@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ADDVALUE, CHANGEVALUE, fetchField} from '../../store/creators/creators';
-import '../../style.css';
+import './Field.css';
 
 class Field extends Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class Field extends Component {
 
   componentDidMount() {
     this.props.onClick();
+    console.log(this.props.constructor);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -63,7 +64,7 @@ class Field extends Component {
         this.props.action(e.target.innerText, 'start');
         break;
       default:
-        debugger
+        // debugger
 // this.props.newValue(e.target.innerText, );
         // !!!
         // this.setState({newValueStatus: !this.state.newValueStatus});
@@ -72,6 +73,7 @@ class Field extends Component {
   };
 
   render() {
+    console.log(this.props.constructor);
     return (
         <div className='board'>
           {this.state.wall && <div>WALL</div>}
@@ -79,6 +81,7 @@ class Field extends Component {
           {this.state.start && <div>START</div>}
 
           {this.props.constructor && this.props.constructor.map((element) => {
+            console.log(123123123123);
             console.log(element);
             return (
                 <div key={element._id}>{element.line.map(component => {
@@ -112,10 +115,7 @@ class Field extends Component {
             <button onClick={this.wall}>Build wall</button>
             <button onClick={this.food}>Food</button>
             <button onClick={this.start}>Start position</button>
-
           </div>
-
-
         </div>
     );
   }
@@ -123,7 +123,7 @@ class Field extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    constructor: state.field,
+    constructor: state.field.field,
   };
 };
 
