@@ -7,7 +7,7 @@ class Mainpage extends Component {
     return (
       <div>
         <div className={classes.ImgLogo}>
-          <img src="/logo.png" alt=""/>
+          <img src="/img/logo.png" alt=""/>
         </div>
         <div className={classes.Mainpage}>
           <div>
