@@ -7,7 +7,7 @@ const userSchema = new db.Schema({
   surname: {type: String, required: true},
   name: {type: String, required: true},
   gender: {type: String, required: true},
-  dob: Date, // Дата рождения
+  dob: {type: Date, required: true}, // Дата рождения
   hand: {type: String, required: true}, // 'Левша'/'Правша'
   group: String, // Группа (для студента)
   year: Number,

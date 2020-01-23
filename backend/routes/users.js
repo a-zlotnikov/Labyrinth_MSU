@@ -17,10 +17,10 @@ router.post('/signup', async function(req, res, next) { // Регистраци�
     console.log('>>> Save ok');
     req.session.user = user;
     // await res.json({logged_in: true});
-    await res.json(req.session);
+    await res.json({succeeded: true});
   } catch (e) {
     console.error(e);
-    await res.json({logged_in: false});
+    await res.json({succeeded: false});
   }
 });
 
