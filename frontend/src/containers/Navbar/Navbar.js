@@ -12,8 +12,8 @@ class Navbar extends Component {
   render() {
     return (
       <div className={classes.Navbar}>
-        <div onClick={this.isBack}>Назад</div>
-        <div>Иванов Иван</div>
+        <div onClick={this.isBack}>Главное меню</div>
+        <div>{this.props.username}</div>
       </div>
     );
   }
