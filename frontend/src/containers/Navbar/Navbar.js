@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
 import classes from './Navbar.module.css';
 
 class Navbar extends Component {
-
+  
+  isBack = () => {
+    return (
+      window.history.back()
+    );
+  };
+  
   render() {
-    console.log(this);
     return (
       <div className={classes.Navbar}>
-        <NavLink to='/'>Назад</NavLink>
+        <div onClick={this.isBack}>Назад</div>
+        <div>Иванов Иван</div>
       </div>
     );
   }
