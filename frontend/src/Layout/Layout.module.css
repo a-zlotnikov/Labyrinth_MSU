@@ -1,0 +1,16 @@
+.Layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #DADADA;
+}
+
+.Layout main {
+    width: 1024px;
+    height: 768px;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+}

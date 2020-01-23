@@ -1,0 +1,32 @@
+.Mainpage {
+    display: flex;
+    justify-content: center;
+    padding-top: 200px;
+    flex-grow: 1;
+}
+
+.Mainpage div {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+}
+
+.Mainpage a {
+    display: flex;
+    justify-content: center;
+    border: 1px solid gray;
+    width: 30vw;
+    height: 5vh;
+    border-radius: 6px;
+    text-decoration: none;
+    color: black;
+    padding: 3px;
+    margin: 10px;
+    background-color: lightgrey;
+
+}
+
+.Mainpage a:hover {
+    background-color: darkgray;
+    font-weight: bold;
+}
