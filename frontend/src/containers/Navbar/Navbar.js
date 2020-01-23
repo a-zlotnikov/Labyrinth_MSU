@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
+import {NavLink} from 'react-router-dom';
 import classes from './Navbar.module.css';
 
 class Navbar extends Component {
+
   render() {
+    console.log(this);
     return (
       <div className={classes.Navbar}>
-        <div>Туда</div>
-        <div>Home</div>
-        <div>Сюда</div>
+        <NavLink to='/'>Назад</NavLink>
       </div>
     );
   }
