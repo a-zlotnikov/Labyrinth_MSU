@@ -1,7 +1,7 @@
 .Mainpage {
     display: flex;
     justify-content: center;
-    padding-top: 25%;
+    padding-top: 200px;
     flex-grow: 1;
 }
 
@@ -22,9 +22,11 @@
     color: black;
     padding: 3px;
     margin: 10px;
+    background-color: lightgrey;
+
 }
 
 .Mainpage a:hover {
-    background-color: #eee;
+    background-color: darkgray;
     font-weight: bold;
 }
