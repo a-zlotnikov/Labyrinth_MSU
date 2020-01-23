@@ -1,7 +1,7 @@
 .Mainpage {
     display: flex;
     justify-content: center;
-    padding-top: 200px;
+    padding-top: 50px;
     flex-grow: 1;
 }
 
@@ -27,6 +27,14 @@
 }
 
 .Mainpage a:hover {
-    background-color: darkgray;
+    cursor: pointer;
     font-weight: bold;
 }
+
+.ImgLogo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 50px;
+}
+
