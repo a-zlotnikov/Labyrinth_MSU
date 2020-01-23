@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ADDVALUE, CHANGEVALUE, fetchField} from '../store/actions/creators';
-import '../style.css';
+import {ADDVALUE, CHANGEVALUE, fetchField} from '../../store/creators/creators';
+import '../../style.css';
 
 class Field extends Component {
   constructor(props) {

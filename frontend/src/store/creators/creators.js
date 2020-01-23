@@ -1,4 +1,4 @@
-import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE} from "./actions";
+import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE} from "../actions/actions";
 
 export const FULLFIELD = (field) => {
     return {
