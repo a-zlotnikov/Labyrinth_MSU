@@ -2,4 +2,4 @@
 .eslintrc.js
 package-lock.json
 yarn.lock
-.idea
+/.idea
