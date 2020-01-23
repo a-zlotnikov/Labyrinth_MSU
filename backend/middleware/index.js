@@ -1,11 +1,18 @@
-module.exports = function (app) {
+module.exports = function(app) {
   const express = require('express');
   const morgan = require('morgan');
   const path = require('path');
   const cookieParser = require('cookie-parser');
-  const { cookiesCleaner } = require('./auth');
+  const {cookiesCleaner} = require('./auth');
   const session = require('express-session');
   const FileStore = require('session-file-store')(session);
+  const mongoose = require('mongoose');
+
+  mongoose.connect('mongodb+srv://admin:LnCC67f8@labirynth-420rj.mongodb.net', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  });
 
   const fileStoreOptions = {
     path: path.join(__dirname, '..', 'sessions'),
@@ -13,7 +20,7 @@ module.exports = function (app) {
 
   app.use(morgan('dev'));
 
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({extended: true}));
   app.use(express.json());
 
   app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -21,16 +28,16 @@ module.exports = function (app) {
   app.use(cookiesCleaner);
   app.use(cookieParser());
   app.use(
-    session({
-      store: new FileStore(fileStoreOptions),
-      key: 'user_sid',
-      secret: 'keyboard party',
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        expires: 600000,
-      },
-    }),
+      session({
+        store: new FileStore(fileStoreOptions),
+        key: 'user_sid',
+        secret: 'keyboard party',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+          expires: 600000,
+        },
+      }),
   );
 
   app.use((req, res, next) => {
