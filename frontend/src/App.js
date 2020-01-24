@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import Layout from './Layout/Layout';
 import SignIn from './components/SignIn/SignIn';
 import Mainpage from './containers/mainpage/mainpage';
@@ -11,35 +11,50 @@ class App extends Component {
     super(props);
     
     this.state = {
-      user: '',
-      loading: true
+      user: {
+        user: {
+          username: 'Reiko',
+          category: 'Студент',
+        },
+      },
+      loading: false,
     };
   }
   
   componentDidMount = async () => {
-    this.setState({loading: true});
-    const response = await fetch('/users');
-    const result = await response.json();
-    this.setState({user: result, loading: false});
-    console.log(this.state.user)
+    // this.setState({loading: true});
+    // const response = await fetch('/users');
+    // const result = await response.json();
+    // this.setState({user: result.user, loading: false});
   };
   
   render() {
-    return (this.state.loading === true) ? (<div>Loading...</div>) :
-      (this.state.user.user === undefined) ? (<div><Route path={'/'} component={SignIn}/></div>) :
+    return (this.state.loading === true) ? (<Layout>
+        <div>Loading...</div>
+      </Layout>) :
+      (this.state.user === undefined) ? (<Layout>
+          <div><Route path={'/'} component={SignIn}/></div>
+        </Layout>) :
         (<Layout>
-        <div>
-          <Route render={(props) =>{
-            return (
-              <div>
-                <Navbar {...props} username={this.state.user.user.username} />
-              </div>
-            );
-          }} />
-          <Route path={'/'} component={Mainpage}/>
-        </div>
-      </Layout>
-    )
+            <Switch>
+            <div>
+              <Route render={(props) => {
+                return (
+                  <div>
+                    <Navbar {...props} options={this.state.user.user}/>
+                    <Mainpage {...props} options={this.state.user.user}/>
+                  </div>
+                  
+                );
+              }}/>
+              <Route path={''} component={''}/>
+              <Route path={''} component={''}/>
+              <Route path={''} component={''}/>
+              <Route path={''} component={''}/>
+            </div>
+            </Switch>
+          </Layout>
+        );
   }
 }
 
