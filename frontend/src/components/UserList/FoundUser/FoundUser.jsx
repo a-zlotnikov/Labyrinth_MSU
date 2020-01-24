@@ -8,7 +8,7 @@ class FoundUser extends Component {
     }
   }
 
-  delete = async (e) => {
+  delete = async (e) => { // Удаляется, но карточка висит в результатах
       const id = e.target.parentElement.parentElement.parentElement.id;
       let resp = await fetch('/users/delete', {
         method: 'DELETE',
