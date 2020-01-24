@@ -8,6 +8,18 @@ router.get('/', function(req, res) {
   res.json(req.session);
 });
 
+router.post('/search', async function(req, res) {
+  console.log(req.body);
+  try {
+    const result = await User.find({[req.body.type]: req.body.query});
+    console.log(result);
+    await res.json({response: result});
+  } catch (e) {
+    console.error(e);
+    await res.json({response: false});
+  }
+});
+
 router.post('/signup', async function(req, res, next) { // Регистрация нового пользователя
   try {
     const user = new User({...req.body});

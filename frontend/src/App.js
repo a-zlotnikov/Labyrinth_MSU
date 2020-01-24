@@ -6,6 +6,8 @@ import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
 import SignUp from './components/SignUp/SignUp';
 import Field from './components/Field/Field';
+import SignUp from './components/SignUp/SignUp';
+import UserList from './components/UserList/UserList';
 
 class App extends Component {
   constructor(props) {
@@ -58,9 +60,14 @@ class App extends Component {
                   }}/>
                 </Switch>
               </div>
-            </Router>
-          </Layout>
-        );
+            );
+          }} />
+          <Route path={'/'} component={Mainpage}/>
+          <Route path={'/registration'} component={SignUp}/>
+          <Route path={'/users'} component={UserList}/>
+        </div>
+      </Layout>
+    )
   }
 }
 
