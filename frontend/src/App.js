@@ -4,6 +4,7 @@ import Layout from './Layout/Layout';
 import SignIn from './components/SignIn/SignIn';
 import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
+import Field from './components/Field/Field';
 
 class App extends Component {
   constructor(props) {

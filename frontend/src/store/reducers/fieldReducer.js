@@ -4,10 +4,9 @@ const initialState = {
   field: [],
 };
 
-export const fieldReducer = (state = initialState, action) => {
+export default function fieldReducer(state = initialState, action) {
   switch (action.type) {
     case FULL_FIELD:
-
       return {
         field: action.field,
       };
