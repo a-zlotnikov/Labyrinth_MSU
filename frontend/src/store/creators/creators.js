@@ -30,5 +30,3 @@ export const fetchField = () => {
     dispatch(FULLFIELD(result));
   };
 };
-
-}
