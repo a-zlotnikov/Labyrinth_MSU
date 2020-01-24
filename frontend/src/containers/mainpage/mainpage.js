@@ -20,7 +20,6 @@ class Mainpage extends Component {
       <div>
         <Logo/>
         <OtherPage/>
-        <hr/>
         <AdminPage/>
       </div>
     ) : (<div>
