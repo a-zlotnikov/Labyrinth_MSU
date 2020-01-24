@@ -3,7 +3,8 @@ const {Field} = require('./field');
 
 mongoose.connect('mongodb+srv://admin:LnCC67f8@labirynth-420rj.mongodb.net',
     {useNewUrlParser: true}).then(() => {
-  Field.insertMany({line: [
+  Field.insertMany(
+    {line: [
           {
             line: [
               {index: 'a1', wall: false, food: false, start: false, value: null},
