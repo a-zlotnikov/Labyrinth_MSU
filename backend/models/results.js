@@ -7,14 +7,17 @@ const resultsSchema = new db.Schema({
   nameExperiment: String,
   numberExperiment: Number,
   nameIndividual: String,
-  surname:String,
+  // user: {type: mongoose.Types.ObjectId, ref: 'User'},
+  //---------------------------
+  surname: String,
   name: String,
   gender: String,
   hand: String,
   year: Number,
   group: String,
+  //---------------------------
   numberOfReinforcements: Number,
-  result: Object
+  result: Array,
   
 });
 
