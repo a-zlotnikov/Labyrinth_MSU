@@ -1,0 +1,34 @@
+.board {
+    text-align: center;
+}
+
+.board span {
+    display: inline-block;
+}
+
+.inputText {
+    width: 40px;
+    height: 40px;
+}
+
+span {
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.wall {
+    background-color: black;
+    color: white;
+}
+
+.food {
+    background-color: blue;
+    color: white;
+}
+
+.start {
+    background-color: green;
+    color: white;
+}

@@ -4,46 +4,49 @@ const initialState = {
   field: [],
 };
 
-export const fieldReducer = (state = initialState, action) => {
+export default function fieldReducer(state = initialState, action) {
   switch (action.type) {
     case FULL_FIELD:
-
       return {
         field: action.field,
       };
     case ADD_VALUE:
       const newField = state.field.map((comp) => {
         return {line: comp.line.map(elem => {
-          if (elem.value === action.value) {
+          if (elem.index === action.index) {
 
             switch (action.change) {
               case 'wall':
                 return elem = {
-                  value: elem.value,
+                  index: elem.index,
                   wall: !elem.wall,
                   food: elem.food,
                   start: elem.start,
+                  value: elem.value,
                 };
               case 'food':
                 return elem = {
-                  value: elem.value,
+                  index: elem.index,
                   wall: elem.wall,
                   food: !elem.food,
                   start: elem.start,
+                  value: elem.value
                 };
               case 'start':
                 return elem = {
-                  value: elem.value,
+                  index: elem.index,
                   wall: elem.wall,
                   food: elem.food,
                   start: !elem.start,
+                  value: elem.value,
                 };
               default:
                 return elem = {
-                  value: elem.value,
+                  index: elem.index,
                   wall: elem.wall,
                   food: elem.food,
                   start: elem.start,
+                  value: elem.value,
                 };
             }
 
@@ -59,7 +62,7 @@ export const fieldReducer = (state = initialState, action) => {
     case CHANGE_VALUE:
       const newValue = state.field.map((comp) => {
         return {line: comp.line.map(elem => {
-            if (elem.value === action.value) {
+            if (elem.index === action.index) {
                   return elem = {
                     value: action.changedValue,
                     wall: elem.wall,
