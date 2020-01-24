@@ -1,6 +1,7 @@
 const db = require('mongoose');
 
 const userSchema = new db.Schema({
+  active: Boolean,
   username: {type: String, required: true, unique: true}, // Идентификатор пользователя, по которому будет происходит авторизация
   password: {type: String, required: true},
   category: {type: String, required: true}, // Категория пользователя ('Преподаватель', 'Дипломник', 'Студент')
