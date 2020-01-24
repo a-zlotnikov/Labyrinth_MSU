@@ -7,28 +7,26 @@ export const FULLFIELD = (field) => {
     }
 };
 
-export const ADDVALUE = (value, change) => {
+export const ADDVALUE = (index, change) => {
     return {
         type: ADD_VALUE,
-        value,
+        index,
         change
     }
 };
 
-export const CHANGEVALUE = (value, changedValue) => {
+export const CHANGEVALUE = (index, changedValue) => {
     return {
         type: CHANGE_VALUE,
-        value,
+        index,
         changedValue
     }
 };
 
 export const fetchField = () => {
     return async (dispatch) => {
-        // console.log(123);
         const response = await fetch('/getField');
         const result = await response.json();
-        console.log(result);
         dispatch(FULLFIELD(result))
     }
 };

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ADDVALUE, CHANGEVALUE, fetchField} from '../../store/creators/creators';
+import {ADDVALUE, fetchField, CHANGEVALUE} from '../../store/creators/creators';
 import './Field.css';
 
 class Field extends Component {
@@ -8,27 +8,25 @@ class Field extends Component {
     super(props);
 
     this.state = {
-      board: null,
       wall: false,
       food: false,
       start: false,
+      newValueStatus: false
     };
   }
 
   componentDidMount() {
     this.props.onClick();
-    console.log(this.props.constructor);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.constructor === this.props.constructor) {
-      this.props.onClick();
-    }
-  }
-
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (prevProps.constructor === this.props.constructor) {
+  //     this.props.onClick();
+  //   }
+  // }
   wall = () => {
     this.setState({
-      wall: true,
+      wall: !this.state.wall,
       food: false,
       start: false,
     });
@@ -37,7 +35,7 @@ class Field extends Component {
   food = () => {
     this.setState({
       wall: false,
-      food: true,
+      food: !this.state.food,
       start: false,
     });
   };
@@ -46,9 +44,20 @@ class Field extends Component {
     this.setState({
       wall: false,
       food: false,
-      start: true,
+      start: !this.state.start,
     });
   };
+
+  changeValue = (prevValue) => {
+    const getValue = (e) => {
+      const x = e.keyCode;
+      const letter = String.fromCharCode(x);
+      this.props.newValue(prevValue, letter);
+      console.log(letter);
+    };
+    document.onkeydown=getValue
+  };
+
 
   action = (e) => {
     // debugger
@@ -64,27 +73,22 @@ class Field extends Component {
         this.props.action(e.target.innerText, 'start');
         break;
       default:
-        // debugger
-// this.props.newValue(e.target.innerText, );
-        // !!!
-        // this.setState({newValueStatus: !this.state.newValueStatus});
+        this.changeValue(e.target.innerText);
         break;
     }
   };
 
   render() {
-    console.log(this.props.constructor);
+
     return (
         <div className='board'>
           {this.state.wall && <div>WALL</div>}
           {this.state.food && <div>FOOD</div>}
           {this.state.start && <div>START</div>}
 
-          {this.props.constructor && this.props.constructor.map((element) => {
-            console.log(123123123123);
-            console.log(element);
+          {this.props.constructor && this.props.constructor.map((element, i) => {
             return (
-                <div key={element._id}>{element.line.map(component => {
+                <div key={`${element} ${i}`}>{element.line.map(component => {
                   let action;
                   switch (true) {
                     case component.wall:
@@ -102,9 +106,11 @@ class Field extends Component {
                   }
 
                   return (
-                      <span key={component.value} className={action}
-                            onClick={this.action}>
-                        {component.value}
+                      <span key={component.index}
+                            className={action}
+                            onClick={this.action}
+                      >
+                        {component.value ? component.value : component.index}
                       </span>
                   );
                 })}
@@ -132,12 +138,12 @@ const mapDispatchToProps = (dispatch) => {
     onClick: () => {
       dispatch(fetchField());
     },
-    action: (value, change) => {
-      dispatch(ADDVALUE(value, change));
+    action: (index, change) => {
+      dispatch(ADDVALUE(index, change));
     },
-    // newValue: (value, changedValue) => {
-    //   dispatch(CHANGEVALUE(value, changedValue))
-    // }
+    newValue: (value, changedValue) => {
+      dispatch(CHANGEVALUE(value, changedValue))
+    }
   };
 };
 
