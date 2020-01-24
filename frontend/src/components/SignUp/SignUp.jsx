@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import './SignUp.css';
 const moment = require('moment');
+
 
 class SignUp extends Component {
   constructor(props) {
@@ -89,7 +91,7 @@ class SignUp extends Component {
 
   render() {
     return (
-        <div>
+        <div className={'container'}>
         {this.state.authorized ?
               <div>
                 <div><h1>Создание пользователя</h1></div>
@@ -103,12 +105,12 @@ class SignUp extends Component {
                     <div>
                       <div>
                         <div>Идентификатор</div>
-                        <div><input name="username" value={this.state.username} onChange={this.changeValue}/><div onClick={this.generateUsername}>сгенерировать</div></div>
+                        <div><input name="username" value={this.state.username} onChange={this.changeValue}/><div className={'button'} onClick={this.generateUsername}>сгенерировать</div></div>
                       </div>
 
                       <div>
                         <div>Пароль</div>
-                        <div><input name="password" value={this.state.password} onChange={this.changeValue}/><div onClick={this.generatePassword}>новый пароль</div></div>
+                        <div><input name="password" value={this.state.password} onChange={this.changeValue}/><div className={'button'} onClick={this.generatePassword}>новый пароль</div></div>
                       </div>
 
                       <div>
@@ -173,7 +175,7 @@ class SignUp extends Component {
                           </div> : <div/>
                       }
 
-                      <div onClick={this.signUp}>Добавить нового пользователя</div>
+                      <div className={'longButton'} onClick={this.signUp}>Добавить нового пользователя</div>
 
                       {this.state.sending ? <div>Подождите...</div> : <div/>}
 
