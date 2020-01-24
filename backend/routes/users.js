@@ -4,8 +4,8 @@ const User = require('../models/user');
 // const bcryptjs = require('bcryptjs');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', function(req, res) {
+  res.json(req.session);
 });
 
 router.post('/signup', async function(req, res, next) { // Регистрация нового пользователя

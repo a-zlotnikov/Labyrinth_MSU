@@ -1,4 +1,4 @@
-import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE} from "./actions";
+import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE} from "../actions/actions";
 
 export const FULLFIELD = (field) => {
     return {
@@ -25,7 +25,7 @@ export const CHANGEVALUE = (value, changedValue) => {
 
 export const fetchField = () => {
     return async (dispatch) => {
-        console.log(123);
+        // console.log(123);
         const response = await fetch('/getField');
         const result = await response.json();
         console.log(result);

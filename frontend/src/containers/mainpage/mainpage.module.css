@@ -1,7 +1,7 @@
 .Mainpage {
     display: flex;
     justify-content: center;
-    padding-top: 200px;
+    padding-top: 50px;
     flex-grow: 1;
 }
 
@@ -14,6 +14,7 @@
 .Mainpage a {
     display: flex;
     justify-content: center;
+    align-items: center;
     border: 1px solid gray;
     width: 30vw;
     height: 5vh;
@@ -23,10 +24,17 @@
     padding: 3px;
     margin: 10px;
     background-color: lightgrey;
-
 }
 
 .Mainpage a:hover {
-    background-color: darkgray;
+    cursor: pointer;
     font-weight: bold;
 }
+
+.ImgLogo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 50px;
+}
+
