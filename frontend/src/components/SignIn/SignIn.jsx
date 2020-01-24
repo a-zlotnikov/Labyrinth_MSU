@@ -35,6 +35,7 @@ class SignIn extends Component {
       // Cookies.set('username', res.username);
       // Cookies.set('user_id', res.user_id);
       console.log('>>> Authorized');
+      return
     } else {
       alert('Try again')
     }

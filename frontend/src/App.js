@@ -5,6 +5,8 @@ import SignIn from './components/SignIn/SignIn';
 import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
 import Field from './components/Field/Field';
+import SignUp from './components/SignUp/SignUp';
+import UserList from './components/UserList/UserList';
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +38,8 @@ class App extends Component {
             );
           }} />
           <Route path={'/'} component={Mainpage}/>
+          <Route path={'/registration'} component={SignUp}/>
+          <Route path={'/users'} component={UserList}/>
         </div>
       </Layout>
     )
