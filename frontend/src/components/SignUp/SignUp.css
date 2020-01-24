@@ -1,0 +1,43 @@
+.container {
+    padding: 0 50px;
+}
+
+.button {
+    font-size: 15px;
+    display: flex;
+    border: black solid 1px;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: lightgray;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:active {
+    background-color: grey;
+}
+
+.longButton {
+    font-size: 15px;
+    display: flex;
+    border: black solid 1px;
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: lightgray;
+    justify-content: center;
+    align-items: center;
+}
+
+.longButton:hover {
+    cursor: pointer;
+}
+
+.longButton:active {
+    background-color: grey;
+}

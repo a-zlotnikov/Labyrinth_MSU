@@ -1,4 +1,4 @@
-import {ADD_VALUE, FULL_FIELD, CHANGE_VALUE} from '../actions/actions';
+import {ADD_VALUE, CHANGE_VALUE, FULL_FIELD} from '../actions/actions';
 
 const initialState = {
   field: [],
@@ -12,49 +12,26 @@ export default function fieldReducer(state = initialState, action) {
       };
     case ADD_VALUE:
       const newField = state.field.map((comp) => {
-        return {line: comp.line.map(elem => {
-            console.log(elem);
-          if (elem.index === action.index) {
+        return {
+          line: comp.line.map(elem => {
 
-            switch (action.change) {
-              case 'wall':
-                return elem = {
-                  index: elem.index,
-                  wall: !elem.wall,
-                  food: elem.food,
-                  start: elem.start,
-                  value: elem.value,
-                };
-              case 'food':
-                return elem = {
-                  index: elem.index,
-                  wall: elem.wall,
-                  food: !elem.food,
-                  start: elem.start,
-                  value: elem.value
-                };
-              case 'start':
-                return elem = {
-                  index: elem.index,
-                  wall: elem.wall,
-                  food: elem.food,
-                  start: !elem.start,
-                  value: elem.value,
-                };
-              default:
-                return elem = {
-                  index: elem.index,
-                  wall: elem.wall,
-                  food: elem.food,
-                  start: elem.start,
-                  value: elem.value,
-                };
+            if (elem.index === action.index) {
+
+              for (let key in elem) {
+                if (key === action.change) {
+                  elem[key] = !elem[key];
+                } else if (key === 'index' || key === 'value') {
+                  elem[key] = elem[key];
+                } else {
+                  elem[key] = false;
+                }
+              }
+              return elem;
+            } else {
+              return elem;
             }
-
-          } else {
-            return elem;
-          }
-        })};
+          }),
+        };
       });
       return {
         field: newField,
@@ -62,18 +39,23 @@ export default function fieldReducer(state = initialState, action) {
 
     case CHANGE_VALUE:
       const newValue = state.field.map((comp) => {
-        return {line: comp.line.map(elem => {
+        return {
+          line: comp.line.map(elem => {
             if (elem.index === action.index) {
-                  return elem = {
-                    value: action.changedValue,
-                    wall: elem.wall,
-                    food: elem.food,
-                    start: elem.start,
-                  };
+
+              for (let key in elem) {
+                if (key === 'value') {
+                  elem[key] = action.changedValue;
+                } else {
+                  elem[key] = elem[key];
+                }
+              }
+              return elem;
             } else {
               return elem;
             }
-          })};
+          }),
+        };
       });
       return {
         field: newValue,
