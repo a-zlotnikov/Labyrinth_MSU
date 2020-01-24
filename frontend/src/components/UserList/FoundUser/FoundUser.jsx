@@ -3,27 +3,42 @@ import React, {Component} from 'react';
 class FoundUser extends Component {
   constructor(props) {
     super(props);
-    this.state = { // Це хардкод
-      surname: 'Лёзов',
-      name: 'Валя',
-      category: 'Преподаватель',
-      username: '12345',
-      password: 'mypass',
-      gender: 'Мужской',
-      dob: '2015-01-01',
-      hand: 'Правша',
-      group: '101',
-      year: '2020',
-    };
+    this.state = {
+      loading: false,
+    }
   }
+
+  delete = async (e) => { // Удаляется, но карточка висит в результатах
+      const id = e.target.parentElement.parentElement.parentElement.id;
+      let resp = await fetch('/users/delete', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+      });
+      const res = await resp.json();
+      this.setState({loading: true});
+      if (res.succeed) {
+        this.setState({loading: false});
+        alert('Пользователь удален')
+      } else {
+        this.setState({loading: false});
+        alert('Произошла ошибка')
+      }
+  };
+
   render() {
     return (
-      <div>
+      <div id={this.props.id}>
         <hr/>
         <div>
           <div>{this.props.surname} {this.props.name}</div>
           <div>{this.props.category}</div>
-          <div>Группа {this.props.group} / {this.props.year} год</div>
+          <div>
+            {this.props.category === 'Студент' ?
+            <div>
+            Группа {this.props.group} / {this.props.year} год
+            </div> : <div/>}
+          </div>
           <br/>
           <div>Идентификатор: {this.props.username}</div>
           <div>Пароль: {this.props.password}</div>
@@ -34,7 +49,7 @@ class FoundUser extends Component {
           <div>
             <div>Редактировать</div>
             <div>Отключить</div>
-            <div>Удалить</div>
+            <div onClick={this.delete}>Удалить</div>
           </div>
         </div>
       </div>

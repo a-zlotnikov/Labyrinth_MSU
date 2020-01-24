@@ -6,6 +6,7 @@ import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
 import SignUp from './components/SignUp/SignUp';
 import Field from './components/Field/Field';
+import UserList from './components/UserList/UserList';
 import Documentation from './components/Documentation/Documentation';
 
 class App extends Component {
@@ -50,6 +51,7 @@ class App extends Component {
                       <Switch>
                         <Route path={'/registration'} component={SignUp}/>
                         <Route path={'/constructor'} component={Field}/>
+                        <Route path={'/users'} component={UserList}/>
                         <Route path={'/readme'} component={Documentation}/>
                         <Route exact path={'/'} render={(props) => {
                           return (

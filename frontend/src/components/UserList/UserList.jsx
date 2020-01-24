@@ -14,6 +14,24 @@ class UserList extends Component {
     };
   }
 
+  componentDidMount = async () => {
+    await this.searchAll();
+  };
+
+  searchAll = async () => {
+    let resp = await fetch('/users/search/all', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    });
+    const res = await resp.json();
+    this.setState({loading: true});
+    if (res.response) {
+      this.setState({loading: false, error: false, response: res.response});
+    } else {
+      this.setState({loading: false, error: true});
+    }
+  };
+
   changeType = async (e) => {
     if (e.target.value === 'Группа') {
       this.setState({type: 'group'})
@@ -44,7 +62,7 @@ class UserList extends Component {
     }
   };
 
-  reset = () => {
+  reset = async () => {
     this.setState({
       type: 'group',
       query: '',
@@ -52,7 +70,8 @@ class UserList extends Component {
       loading: false,
       error: false,
       authorized: true,
-    })
+    });
+    await this.searchAll();
   };
 
   render() {
@@ -79,6 +98,7 @@ class UserList extends Component {
                             {this.state.response.length !== 0 ?
                                 <div>
                                   {this.state.response.map((result) => <FoundUser
+                                      id = {result._id}
                                       surname = {result.surname}
                                       name = {result.name}
                                       category = {result.category}
