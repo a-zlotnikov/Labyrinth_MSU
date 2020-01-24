@@ -19,19 +19,18 @@ class App extends Component {
     this.setState({loading: true});
     const response = await fetch('/users');
     const result = await response.json();
-    this.setState({user: result, loading: false});
-    console.log(this.state.user)
+    this.setState({user: result.user, loading: false});
   };
   
   render() {
     return (this.state.loading === true) ? (<div>Loading...</div>) :
-      (this.state.user.user === undefined) ? (<div><Route path={'/'} component={SignIn}/></div>) :
+      (this.state.user === undefined) ? (<div><Route path={'/'} component={SignIn}/></div>) :
         (<Layout>
         <div>
           <Route render={(props) =>{
             return (
               <div>
-                <Navbar {...props} username={this.state.user.user.username} />
+                <Navbar {...props} username={this.state.user.user} />
               </div>
             );
           }} />
