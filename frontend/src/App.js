@@ -10,7 +10,7 @@ import Field from './components/Field/Field';
 class App extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       user: {
         user: {
@@ -21,14 +21,14 @@ class App extends Component {
       loading: false,
     };
   }
-  
+
   componentDidMount = async () => {
     // this.setState({loading: true});
     // const response = await fetch('/users');
     // const result = await response.json();
     // this.setState({user: result.user, loading: false});
   };
-  
+
   render() {
     return (this.state.loading === true) ? (<Layout>
         <div>Loading...</div>
@@ -48,7 +48,7 @@ class App extends Component {
                 }}/>
                 <Switch>
                   <Route path={'/registration'} component={SignUp}/>
-                  <Route path={'/fields'} component={Field}/>
+                  <Route path={'/constructor'} component={Field}/>
                   <Route exact path={'/'} render={(props) => {
                     return (
                       <div>

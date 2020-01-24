@@ -13,6 +13,7 @@ export default function fieldReducer(state = initialState, action) {
     case ADD_VALUE:
       const newField = state.field.map((comp) => {
         return {line: comp.line.map(elem => {
+            console.log(elem);
           if (elem.index === action.index) {
 
             switch (action.change) {
