@@ -29,5 +29,4 @@ export const fetchField = () => {
     const result = await response.json();
     dispatch(FULLFIELD(result));
   };
-
-}
+};
