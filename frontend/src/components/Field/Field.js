@@ -26,9 +26,15 @@ class Field extends Component {
 
   changeValue = (prevValue) => {
     const getValue = (e) => {
-      const x = e.keyCode;
-      const letter = String.fromCharCode(x);
-      this.props.newValue(prevValue, letter);
+
+      const x = e.key;
+      const regex = /[\u0400-\u04FF]+/g;
+      const match = regex.exec(x);
+      if(x==='Backspace'){
+        this.props.newValue(prevValue, null);
+      } else if(match){
+        this.props.newValue(prevValue, x);
+      }
     };
     document.onkeydown=getValue
   };
@@ -67,9 +73,39 @@ class Field extends Component {
   };
 
   cellStatus = (e) => {
+    let translate;
+    switch (e.target.innerText){
+      case 'стена':
+        translate = 'wall';
+        break;
+      case 'кормушка':
+        translate = 'food';
+        break;
+      case 'ложная кормушка':
+        translate = 'fakeFood';
+        break;
+      case 'вход':
+        translate = 'entry';
+        break;
+      case 'выход':
+        translate = 'exit';
+        break;
+      case 'педаль':
+        translate = 'pedal';
+        break;
+      case 'лампочка':
+        translate = 'lamp';
+        break;
+      case 'звук':
+        translate = 'sound';
+        break;
+    }
+
+    // console.log(translate);
+
     const currentState = this.state;
     for (let key in currentState) {
-      if (key === e.target.innerText) {
+      if (key === translate) {
         currentState[key] = !currentState[key];
       }  else {
         currentState[key] = false;
@@ -82,15 +118,14 @@ class Field extends Component {
 
     return (
         <div className='board'>
-          {this.state.wall && <div>WALL</div>}
-          {this.state.food && <div>FOOD</div>}
-          {this.state.fakeFood && <div>FAKEFOOD</div>}
-          {this.state.entry && <div>ENTRY</div>}
-          {this.state.exit && <div>EXIT</div>}
-          {this.state.pedal && <div>PEDAL</div>}
-          {this.state.lamp && <div>LAMP</div>}
-          {this.state.sound && <div>SOUND</div>}
-
+          {this.state.wall && <div>Стена</div>}
+          {this.state.food && <div>Кормушка</div>}
+          {this.state.fakeFood && <div>Ложная кормушка</div>}
+          {this.state.entry && <div>Вход</div>}
+          {this.state.exit && <div>Выход</div>}
+          {this.state.pedal && <div>Педаль</div>}
+          {this.state.lamp && <div>Лампочка</div>}
+          {this.state.sound && <div>Звук</div>}
 
           {this.props.constructor && this.props.constructor.map((element, i) => {
             return (
@@ -132,7 +167,7 @@ class Field extends Component {
                             className={action}
                             onClick={this.action}
                       >
-                        {component.value ? component.value : component.index}
+                        {component.value ? <b>{component.value}</b> : component.index}
                       </span>
                   );
                 })}
