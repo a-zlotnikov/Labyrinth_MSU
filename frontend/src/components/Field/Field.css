@@ -11,7 +11,7 @@
     height: 40px;
 }
 
-span {
+.comp {
     text-align: center;
     width: 40px;
     height: 40px;
@@ -19,16 +19,40 @@ span {
 }
 
 .wall {
-    background-color: black;
-    color: white;
-}
-
-.food {
     background-color: blue;
     color: white;
 }
 
-.start {
+.food {
+    background-color: orange;
+    color: black;
+}
+
+.fakeFood {
+    background-color: violet;
+    color: black;
+}
+
+.entry {
     background-color: green;
+    color: black;
+}
+
+.exit {
+    background-color: lightblue;
+    color: black;
+}
+
+.pedal {
+    background-color: lemonchiffon;
+    color: black;
+}
+.lamp {
+    background-color: purple;
     color: white;
+}
+
+.sound {
+    background-color: red;
+    color: black;
 }

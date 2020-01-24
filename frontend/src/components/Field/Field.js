@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ADDVALUE, fetchField, CHANGEVALUE} from '../../store/creators/creators';
 import './Field.css';
+import StatusButtons from '../StatusButtons/StatusButtons';
 
 class Field extends Component {
   constructor(props) {
@@ -10,8 +11,12 @@ class Field extends Component {
     this.state = {
       wall: false,
       food: false,
-      start: false,
-      newValueStatus: false
+      fakeFood: false,
+      entry: false,
+      exit: false,
+      pedal: false,
+      lamp: false,
+      sound: false,
     };
   }
 
@@ -19,63 +24,58 @@ class Field extends Component {
     this.props.onClick();
   }
 
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   if (prevProps.constructor === this.props.constructor) {
-  //     this.props.onClick();
-  //   }
-  // }
-  wall = () => {
-    this.setState({
-      wall: !this.state.wall,
-      food: false,
-      start: false,
-    });
-  };
-
-  food = () => {
-    this.setState({
-      wall: false,
-      food: !this.state.food,
-      start: false,
-    });
-  };
-
-  start = () => {
-    this.setState({
-      wall: false,
-      food: false,
-      start: !this.state.start,
-    });
-  };
-
   changeValue = (prevValue) => {
     const getValue = (e) => {
       const x = e.keyCode;
       const letter = String.fromCharCode(x);
       this.props.newValue(prevValue, letter);
-      console.log(letter);
     };
     document.onkeydown=getValue
   };
 
 
   action = (e) => {
-    // debugger
-    console.log(e.target.innerText);
     switch (true) {
       case this.state.wall:
-        this.props.action(e.target.innerText, 'wall');
+        this.props.action(e.target.id, 'wall');
         break;
       case this.state.food:
-        this.props.action(e.target.innerText, 'food');
+        this.props.action(e.target.id, 'food');
         break;
-      case this.state.start:
-        this.props.action(e.target.innerText, 'start');
+      case this.state.fakeFood:
+        this.props.action(e.target.id, 'fakeFood');
+        break;
+      case this.state.entry:
+        this.props.action(e.target.id, 'entry');
+        break;
+      case this.state.exit:
+        this.props.action(e.target.id, 'exit');
+        break;
+      case this.state.pedal:
+        this.props.action(e.target.id, 'pedal');
+        break;
+      case this.state.lamp:
+        this.props.action(e.target.id, 'lamp');
+        break;
+      case this.state.sound:
+        this.props.action(e.target.id, 'sound');
         break;
       default:
-        this.changeValue(e.target.innerText);
+        this.changeValue(e.target.id);
         break;
     }
+  };
+
+  cellStatus = (e) => {
+    const currentState = this.state;
+    for (let key in currentState) {
+      if (key === e.target.innerText) {
+        currentState[key] = !currentState[key];
+      }  else {
+        currentState[key] = false;
+      }
+    }
+    this.setState(currentState)
   };
 
   render() {
@@ -84,7 +84,13 @@ class Field extends Component {
         <div className='board'>
           {this.state.wall && <div>WALL</div>}
           {this.state.food && <div>FOOD</div>}
-          {this.state.start && <div>START</div>}
+          {this.state.fakeFood && <div>FAKEFOOD</div>}
+          {this.state.entry && <div>ENTRY</div>}
+          {this.state.exit && <div>EXIT</div>}
+          {this.state.pedal && <div>PEDAL</div>}
+          {this.state.lamp && <div>LAMP</div>}
+          {this.state.sound && <div>SOUND</div>}
+
 
           {this.props.constructor && this.props.constructor.map((element, i) => {
             return (
@@ -97,8 +103,23 @@ class Field extends Component {
                     case component.food:
                       action = 'food comp';
                       break;
-                    case component.start:
-                      action = 'start comp';
+                    case component.fakeFood:
+                      action = 'fakeFood comp';
+                      break;
+                    case component.entry:
+                      action = 'entry comp';
+                      break;
+                    case component.exit:
+                      action = 'exit comp';
+                      break;
+                    case component.pedal:
+                      action = 'pedal comp';
+                      break;
+                    case component.lamp:
+                      action = 'lamp comp';
+                      break;
+                    case component.sound:
+                      action = 'sound comp';
                       break;
                     default:
                       action = 'comp';
@@ -107,6 +128,7 @@ class Field extends Component {
 
                   return (
                       <span key={component.index}
+                            id={component.index}
                             className={action}
                             onClick={this.action}
                       >
@@ -118,9 +140,7 @@ class Field extends Component {
             );
           })}
           <div>
-            <button onClick={this.wall}>Build wall</button>
-            <button onClick={this.food}>Food</button>
-            <button onClick={this.start}>Start position</button>
+            <StatusButtons cellStatus={this.cellStatus} />
           </div>
         </div>
     );
