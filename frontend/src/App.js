@@ -17,7 +17,7 @@ class App extends Component {
       user: {
         user: {
           username: 'Reiko',
-          category: 'Преподаватель',
+          category: 'Студент',
         },
       },
       loading: false,
