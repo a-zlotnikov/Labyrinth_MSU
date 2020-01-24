@@ -8,6 +8,7 @@ class AdminPage extends Component {
       <div className={classes.AdminPage}>
         <Link to={'/registration'}>Регистрация</Link>
         <Link to={'/users'}>Список пользователей</Link>
+        <Link to={'/readme'}>Документация</Link>
       </div>
     );
   }
