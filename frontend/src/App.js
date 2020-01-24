@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 import Layout from './Layout/Layout';
 import SignIn from './components/SignIn/SignIn';
 import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
+import SignUp from './components/SignUp/SignUp';
 import Field from './components/Field/Field';
 
 class App extends Component {
@@ -14,7 +15,7 @@ class App extends Component {
       user: {
         user: {
           username: 'Reiko',
-          category: 'Студент',
+          category: 'Преподаватель',
         },
       },
       loading: false,
@@ -36,23 +37,28 @@ class App extends Component {
           <div><Route path={'/'} component={SignIn}/></div>
         </Layout>) :
         (<Layout>
-            <Switch>
-            <div>
-              <Route render={(props) => {
-                return (
-                  <div>
-                    <Navbar {...props} options={this.state.user.user}/>
-                    <Mainpage {...props} options={this.state.user.user}/>
-                  </div>
-                  
-                );
-              }}/>
-              <Route path={''} component={''}/>
-              <Route path={''} component={''}/>
-              <Route path={''} component={''}/>
-              <Route path={''} component={''}/>
-            </div>
-            </Switch>
+            <Router>
+              <div>
+                <Route render={(props) => {
+                  return (
+                    <div>
+                      <Navbar {...props} options={this.state.user.user}/>
+                    </div>
+                  );
+                }}/>
+                <Switch>
+                  <Route path={'/registration'} component={SignUp}/>
+                  <Route path={'/fields'} component={Field}/>
+                  <Route exact path={'/'} render={(props) => {
+                    return (
+                      <div>
+                        <Mainpage {...props} options={this.state.user.user}/>
+                      </div>
+                    );
+                  }}/>
+                </Switch>
+              </div>
+            </Router>
           </Layout>
         );
   }
