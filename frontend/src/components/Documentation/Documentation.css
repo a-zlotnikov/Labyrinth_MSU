@@ -1,0 +1,13 @@
+.container {
+    padding: 0 50px;
+    padding-bottom: 30px;
+}
+
+.logo {
+    text-align: center;
+    margin-top: 20px;
+}
+
+p {
+    text-indent: 20px;
+}
