@@ -26,3 +26,8 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+.OtherPage a:active {
+    font-weight: bold;
+    background-color: lightslategrey;
+}
