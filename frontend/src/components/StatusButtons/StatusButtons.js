@@ -4,14 +4,14 @@ class StatusButtons extends Component {
   render() {
     return (
         <div>
-          <button onClick={this.props.cellStatus}>wall</button>
-          <button onClick={this.props.cellStatus}>food</button>
-          <button onClick={this.props.cellStatus}>fakeFood</button>
-          <button onClick={this.props.cellStatus}>entry</button>
-          <button onClick={this.props.cellStatus}>exit</button>
-          <button onClick={this.props.cellStatus}>pedal</button>
-          <button onClick={this.props.cellStatus}>lamp</button>
-          <button onClick={this.props.cellStatus}>sound</button>
+          <button onClick={this.props.cellStatus}>стена</button>
+          <button onClick={this.props.cellStatus}>кормушка</button>
+          <button onClick={this.props.cellStatus}>ложная кормушка</button>
+          <button onClick={this.props.cellStatus}>вход</button>
+          <button onClick={this.props.cellStatus}>выход</button>
+          <button onClick={this.props.cellStatus}>педаль</button>
+          <button onClick={this.props.cellStatus}>лампочка</button>
+          <button onClick={this.props.cellStatus}>звук</button>
         </div>
     );
   }

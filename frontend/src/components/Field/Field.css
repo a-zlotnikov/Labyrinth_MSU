@@ -56,3 +56,9 @@
     background-color: red;
     color: black;
 }
+
+b {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
