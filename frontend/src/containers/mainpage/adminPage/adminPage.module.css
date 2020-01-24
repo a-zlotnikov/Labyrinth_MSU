@@ -1,0 +1,28 @@
+.AdminPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.AdminPage a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    width: 30vw;
+    height: 5vh;
+    border-radius: 6px;
+    text-decoration: none;
+    color: black;
+    padding: 3px;
+    margin: 10px;
+    background-color: lightgrey;
+}
+
+.AdminPage a:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
