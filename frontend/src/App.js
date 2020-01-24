@@ -6,8 +6,6 @@ import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
 import SignUp from './components/SignUp/SignUp';
 import Field from './components/Field/Field';
-import SignUp from './components/SignUp/SignUp';
-import UserList from './components/UserList/UserList';
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +15,7 @@ class App extends Component {
       user: {
         user: {
           username: 'Reiko',
-          category: 'Студент',
+          category: 'Преподаватель',
         },
       },
       loading: false,
@@ -33,41 +31,36 @@ class App extends Component {
 
   render() {
     return (this.state.loading === true) ? (<Layout>
-        <div>Loading...</div>
-      </Layout>) :
-      (this.state.user === undefined) ? (<Layout>
-          <div><Route path={'/'} component={SignIn}/></div>
+          <div>Loading...</div>
         </Layout>) :
-        (<Layout>
-            <Router>
-              <div>
-                <Route render={(props) => {
-                  return (
+        (this.state.user === undefined) ? (<Layout>
+              <div><Route path={'/'} component={SignIn}/></div>
+            </Layout>) :
+            (<Layout>
+                  <Router>
                     <div>
-                      <Navbar {...props} options={this.state.user.user}/>
+                      <Route render={(props) => {
+                        return (
+                            <div>
+                              <Navbar {...props} options={this.state.user.user}/>
+                            </div>
+                        );
+                      }}/>
+                      <Switch>
+                        <Route path={'/registration'} component={SignUp}/>
+                        <Route path={'/constructor'} component={Field}/>
+                        <Route exact path={'/'} render={(props) => {
+                          return (
+                              <div>
+                                <Mainpage {...props} options={this.state.user.user}/>
+                              </div>
+                          );
+                        }}/>
+                      </Switch>
                     </div>
-                  );
-                }}/>
-                <Switch>
-                  <Route path={'/registration'} component={SignUp}/>
-                  <Route path={'/constructor'} component={Field}/>
-                  <Route exact path={'/'} render={(props) => {
-                    return (
-                      <div>
-                        <Mainpage {...props} options={this.state.user.user}/>
-                      </div>
-                    );
-                  }}/>
-                </Switch>
-              </div>
+                  </Router>
+                </Layout>
             );
-          }} />
-          <Route path={'/'} component={Mainpage}/>
-          <Route path={'/registration'} component={SignUp}/>
-          <Route path={'/users'} component={UserList}/>
-        </div>
-      </Layout>
-    )
   }
 }
 
