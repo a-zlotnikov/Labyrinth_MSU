@@ -8,6 +8,8 @@ import SignUp from './components/SignUp/SignUp';
 import Field from './components/Field/Field';
 import UserList from './components/UserList/UserList';
 import Documentation from './components/Documentation/Documentation';
+import Results from './components/Results/Results';
+import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +32,7 @@ class App extends Component {
     // const result = await response.json();
     // this.setState({user: result.user, loading: false});
   };
-
+  
   render() {
     return (this.state.loading === true) ? (<Layout>
           <div>Loading...</div>
@@ -51,8 +53,11 @@ class App extends Component {
                       <Switch>
                         <Route path={'/registration'} component={SignUp}/>
                         <Route path={'/constructor'} component={Field}/>
+                        <Route exact path={'/results'} component={Results}/>
+                        <Route path={'/results/:id'} component={ResultDetail}/>
                         <Route path={'/users'} component={UserList}/>
                         <Route path={'/readme'} component={Documentation}/>
+         
                         <Route exact path={'/'} render={(props) => {
                           return (
                               <div>

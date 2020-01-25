@@ -11,6 +11,7 @@ const resultsSchema = new db.Schema({
   //---------------------------
   surname: String,
   name: String,
+  age: Number,
   gender: String,
   hand: String,
   year: Number,
