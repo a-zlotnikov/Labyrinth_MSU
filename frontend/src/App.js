@@ -57,6 +57,7 @@ class App extends Component {
                           return (
                               <div>
                                 <Mainpage {...props} options={this.state.user.user}/>
+                                <SignIn/>
                               </div>
                           );
                         }}/>

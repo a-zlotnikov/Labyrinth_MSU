@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
+import  { Redirect } from 'react-router-dom';
+/*import {connect} from 'react-redux'
+import {AddTodoAC, ChangeStatusAC, EditTaskAC, DeleteTaskAC, UpdateTasksAC} from '../redux/creators'*/
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      logged_in: null,
     }
   };
 
@@ -35,7 +39,7 @@ class SignIn extends Component {
       // Cookies.set('username', res.username);
       // Cookies.set('user_id', res.user_id);
       console.log('>>> Authorized');
-      return
+      return <Redirect to='/readme'/>;
     } else {
       alert('Try again')
     }
@@ -54,6 +58,7 @@ class SignIn extends Component {
         <div>
           <input onChange={this.refreshPasswordField} placeholder="Пароль" type="password"/>
         </div>
+        {this.state.logged_in === false ? <div>Проверьте логин и пароль</div> : <div/>}
         <br/>
         <div onClick={this.signIn}>Войти</div>
       </div>

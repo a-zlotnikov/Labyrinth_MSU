@@ -61,8 +61,9 @@ router.post('/signin', async function(req, res, next) {
 router.post('/switch_status', async function(req, res) {
   try {
     const id = req.body.id;
-    const user = await User.findById({id});
-    await User.findOneAndUpdate({user}, {active: !user.active});
+    const user = await User.findById(id);
+    await User.findOneAndUpdate({_id: id}, {active: !user.active});
+    console.log(user.active);
     await res.json({succeed: true});
   } catch (e) {
     await res.json({succeed: false});

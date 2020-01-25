@@ -73,8 +73,8 @@ class SignUp extends Component {
 
   resetForm = () => {
     this.setState({
-      username: this.generateUsername(),
-      password: this.generatePassword(),
+      username: '',
+      password: '',
       category: 'Студент',
       surname: null,
       name: null,
@@ -87,6 +87,8 @@ class SignUp extends Component {
       failed: false,
       sending: false,
     });
+    this.generateUsername();
+    this.generatePassword();
   };
 
   render() {

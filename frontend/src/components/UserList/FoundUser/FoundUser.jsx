@@ -26,13 +26,33 @@ class FoundUser extends Component {
       }
   };
 
+  switchStatus = async (e) => {
+    const id = e.target.parentElement.parentElement.parentElement.id;
+    let resp = await fetch('/users/switch_status', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id})
+    });
+    const res = await resp.json();
+    this.setState({loading: true});
+    if (res.succeed) {
+      this.setState({loading: false});
+      alert('Статус изменен')
+    } else {
+      this.setState({loading: false});
+      alert('Произошла ошибка')
+    }
+  };
+
   render() {
     return (
       <div id={this.props.id}>
         <hr/>
         <div>
           <div>{this.props.surname} {this.props.name}</div>
-          <div>{this.props.category}</div>
+          <div>{this.props.category}
+            {this.props.active === false ? <div>отключен</div> : <div/>}
+          </div>
           <div>
             {this.props.category === 'Студент' ?
             <div>
@@ -48,7 +68,7 @@ class FoundUser extends Component {
           <br/>
           <div>
             <div>Редактировать</div>
-            <div>Отключить</div>
+            <div onClick={this.switchStatus}>Отключить</div>
             <div onClick={this.delete}>Удалить</div>
           </div>
         </div>
