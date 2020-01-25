@@ -1,4 +1,6 @@
 // Подключаем mongoose.
+const faker = require('faker');
+faker.locale = "ru";
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:LnCC67f8@labirynth-420rj.mongodb.net',
   {useNewUrlParser: true, useUnifiedTopology: true});
@@ -14,8 +16,9 @@ async function seedRes() {
       nameExperiment: '2x2',
       numberExperiment: 1,
       nameIndividual: 'МикиМаус',
-      surname: 'Нагинский',
-      name: 'Вова',
+      surname: faker.name.firstName(),
+      name: faker.name.lastName(),
+      age: 12,
       gender: 'Мужской',
       hand: 'Левша',
       year: 2020,
