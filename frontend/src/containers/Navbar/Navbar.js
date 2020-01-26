@@ -7,7 +7,10 @@ class Navbar extends Component {
     return (
       <div className={classes.Navbar}>
         <Link to={'/'}>Главное меню</Link>
-        <div>{this.props.options.username}</div>
+        <div>{this.props.options.username} /
+          {this.props.options.category} /
+          {this.props.options.group ?
+          this.props.options.group : null}</div>
       </div>
     );
   }

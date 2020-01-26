@@ -1,5 +1,4 @@
 .Results {
-
 }
 
 .Results th {
@@ -13,6 +12,32 @@
     margin: 0;
 }
 
-.Results tr:hover {
+/*.Results tr:hover {*/
+/*    background-color: lightgrey;*/
+/*}*/
+
+.Header {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.LayoutRes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Option {
+
+}
+
+.Option.enable:hover {
     background-color: lightgrey;
+}
+
+.Option.disable {
+    background-color: darkgray;
 }
