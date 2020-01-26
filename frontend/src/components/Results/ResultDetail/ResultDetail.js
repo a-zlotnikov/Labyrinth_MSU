@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import classes from './ResultDetail.module.css';
+import Loader from '../../../containers/Loader/Loader';
 
 class ResultDetail extends Component {
   
@@ -62,7 +63,7 @@ class ResultDetail extends Component {
           })}
         </table>
       </div>
-    ) : (<div>Loading...</div>);
+    ) :  (<Loader />);
   }
 }
 

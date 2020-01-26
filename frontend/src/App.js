@@ -10,6 +10,7 @@ import UserList from './components/UserList/UserList';
 import Documentation from './components/Documentation/Documentation';
 import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
+import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
 
 class App extends Component {
@@ -36,7 +37,7 @@ class App extends Component {
 
   render() {
     return (this.state.loading === true) ? (<Layout>
-          <div>Loading...</div>
+        <Loader />
         </Layout>) :
         (this.state.user === undefined) ? (<Layout>
               <div><Route path={'/'} component={SignIn}/></div>
@@ -76,7 +77,7 @@ class App extends Component {
                         <Route exact path={'/results'} render={(props) => {
                           return (
                             <div>
-                              <Results {...props} options={this.state.user.user.category}/>
+                              <Results {...props} options={this.state.user.user}/>
                             </div>
                           );
                         }}/>
