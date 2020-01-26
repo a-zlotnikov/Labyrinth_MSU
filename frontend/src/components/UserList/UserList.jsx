@@ -99,6 +99,7 @@ class UserList extends Component {
                                 <div>
                                   {this.state.response.map((result) => <FoundUser
                                       id = {result._id}
+                                      active = {result.active}
                                       surname = {result.surname}
                                       name = {result.name}
                                       category = {result.category}
