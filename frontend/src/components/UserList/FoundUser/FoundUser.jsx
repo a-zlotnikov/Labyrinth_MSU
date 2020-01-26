@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
+const moment = require('moment');
 
 class FoundUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       edit: false,
       id: this.props.id,
       username: this.props.username,
@@ -61,30 +61,41 @@ class FoundUser extends Component {
     this.setState({edit: !this.state.edit})
   };
 
+  componentDidMount() {
+    console.log(moment(this.state.dob).format('YYYY-MM-DD'));
+  }
+
   changeValue = (e) => {
     this.setState({[e.target.name]: e.target.value});
+    console.log(this.state.dob)
   };
 
   save = async () => {
-    const {id, username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
-    let body;
-    if (this.state.category === 'Студент') {
-      body = {id, username, password, category, surname, name, gender, dob, hand, group, year}
-    } else {
-      body = {id, username, password, category, surname, name, gender, dob, hand}
-    }
-    let resp = await fetch('/users/edit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(body)
-    });
-    const res = await resp.json();
-    // this.setState({edit: !this.state.edit});
-    if (res.succeeded) {
-      this.setState({saved: true});
-      this.setState({edit: false});
-    } else {
-      this.setState({saved: true});
+    try {
+      const {id, username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
+      let body;
+      if (this.state.category === 'Студент') {
+        body = {id, username, password, category, surname, name, gender, dob, hand, group, year}
+      } else {
+        body = {id, username, password, category, surname, name, gender, dob, hand}
+      }
+      let resp = await fetch('/users/edit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+      });
+      const res = await resp.json();
+      // this.setState({edit: !this.state.edit});
+      if (res.succeeded) {
+        this.setState({saved: true});
+        this.setState({edit: false});
+      } else {
+        this.setState({saved: false});
+        this.setState(this.props)
+      }
+    } catch (e) {
+      this.setState({saved: false});
+      this.setState(this.props)
     }
   };
 
@@ -97,7 +108,7 @@ class FoundUser extends Component {
             {this.state.edit ?
                 <div><input name="surname" value={this.state.surname} onChange={this.changeValue}/><input name="name" value={this.state.name} onChange={this.changeValue}/></div>
                 :
-                <div>{this.props.surname} {this.props.name}</div>
+                <div>{this.state.surname} {this.state.name}</div>
             }
           </div>
           <div>
@@ -133,7 +144,7 @@ class FoundUser extends Component {
           </div>
               :
               <div>{this.props.gender}</div>}</div>
-          <div>Дата рождения: {this.state.edit ? <div><input value={this.state.dob} name="dob" onChange={this.changeValue} type="date"/></div>: <div>{this.props.dob}</div>}</div>
+          <div>Дата рождения: {this.state.edit ? <div><input value={moment(this.state.dob).format('YYYY-MM-DD')} name="dob" onChange={this.changeValue} type="date"/></div>: <div>{moment(this.state.dob).format('DD.MM.YYYY')}</div>}</div>
           <div>Рука: {this.state.edit ? <div><select value={this.state.hand} name="hand" onChange={this.changeValue}>
             <option>Правша</option>
             <option>Левша</option>
