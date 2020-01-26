@@ -58,12 +58,24 @@ router.post('/signin', async function(req, res, next) {
   }
 });
 
+router.post('/edit', async function(req, res, next) {
+  console.log(req.body);
+  try {
+    await User.findOneAndUpdate({_id: req.body.id}, req.body);
+    const user = await User.findById(req.body.id);
+    console.log(user);
+    await res.json({succeeded: true});
+  } catch (e) {
+    await res.json({succeeded: false});
+  }
+});
+
 router.post('/switch_status', async function(req, res) {
   try {
     const id = req.body.id;
     const user = await User.findById(id);
     await User.findOneAndUpdate({_id: id}, {active: !user.active});
-    console.log(user.active);
+    // console.log(user.active);
     await res.json({succeed: true});
   } catch (e) {
     await res.json({succeed: false});
@@ -78,6 +90,6 @@ router.delete('/delete', async function(req, res) {
   } catch (e) {
     await res.json({succeed: false});
   }
-})
+});
 
 module.exports = router;
