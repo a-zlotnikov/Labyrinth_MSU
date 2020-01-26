@@ -36,6 +36,7 @@
 
 .Option.enable:hover {
     background-color: lightgrey;
+    cursor: pointer;
 }
 
 .Option.disable {

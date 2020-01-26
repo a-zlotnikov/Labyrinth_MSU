@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import lodash from 'lodash';
+import {Resizable, ResizableBox} from 'react-resizable';
 import classes from './Results.module.css';
+import Loader from '../../containers/Loader/Loader';
 
 class Results extends Component {
   constructor(props) {
@@ -22,9 +24,7 @@ class Results extends Component {
     this.setState({
       results,
     });
-    console.log(this.props.options)
   };
-  
   
   onFinder = (e) => {
     this.setState({
@@ -44,18 +44,19 @@ class Results extends Component {
   };
   
   onDelete = async id => {
-    if (this.props.options === 'Преподаватель') {
+    if (this.props.options.category === 'Преподаватель') {
+      
+      const response = await fetch('/results', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id}),
+      });
+      const results = await response.json();
+      this.setState({
+        results,
+      });
+    }
     
-    const response = await fetch('/results', {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({id})
-    });
-    const results = await response.json();
-    this.setState({
-      results
-    });    }
-  
   };
   
   render() {
@@ -63,10 +64,10 @@ class Results extends Component {
     const cls = [classes.Option];
     const any = [classes.Option, classes.enable];
     
-    if (this.props.options === 'Преподаватель') {
-      cls.push(classes.enable)
+    if (this.props.options.category === 'Преподаватель') {
+      cls.push(classes.enable);
     } else {
-      cls.push(classes.disable)
+      cls.push(classes.disable);
     }
     
     return this.state.results ? (
@@ -102,24 +103,37 @@ class Results extends Component {
               <tbody>
               {this.state.results.map((result, index) =>
                 <tr key={index} name={result._id}
-                    >
+                >
                   <td>{index + 1}</td>
                   <td>{result.data}</td>
                   <td>{result.nameEnvironment}</td>
                   <td>{result.numberExperiment}</td>
                   <td>{result.nameIndividual}</td>
-                  <td className={any.join(' ')} onClick={() => this.props.history.push(
-                    '/results/' + result._id)}>Смотреть</td>
+                  <td className={any.join(' ')}
+                      onClick={() => this.props.history.push(
+                        '/results/' + result._id)}
+                  >Смотреть
+                  </td>
                   <td className={any.join(' ')}>Скачать</td>
-                  <td className={cls.join(' ')} onClick={this.onDelete.bind(this, result._id)}>Удалить</td>
-                </tr>  ,
+                  <td className={cls.join(' ')}
+                      onClick={this.onDelete.bind(this, result._id)}
+                  >Удалить
+                  </td>
+                </tr>,
               )}
               </tbody>
             </table>
           </div>
         </div>
+        {/*<ResizableBox*/}
+        {/*  width={200}*/}
+        {/*  height={200}*/}
+        {/*  draggableOpts={{...}}*/}
+        {/*  minConstraints={[100, 100]} maxConstraints={[300, 300]}>*/}
+        {/*  <span>Contents</span>*/}
+        {/*</ResizableBox>*/}
       </div>
-    ) : <div>Loading...</div>;
+    ) : (<Loader />);
   }
 }
 
