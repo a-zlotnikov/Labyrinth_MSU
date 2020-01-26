@@ -1,4 +1,8 @@
-import {ADD_VALUE, CHANGE_VALUE, FULL_FIELD} from '../actions/actions';
+import {
+  ADD_VALUE,
+  CHANGE_VALUE,
+  FULL_FIELD,
+} from '../actions/actions';
 
 const initialState = {
   field: [],
