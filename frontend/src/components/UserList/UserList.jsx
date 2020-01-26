@@ -23,7 +23,7 @@ class UserList extends Component {
   exportToExcel = () => {
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
-    const ws = XLSX.utils.json_to_sheet(this.state.response);
+    const ws = XLSX.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
     const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], {type: fileType});
