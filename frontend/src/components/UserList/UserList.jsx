@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import FoundUser from './FoundUser/FoundUser';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
 class UserList extends Component {
   constructor(props) {
@@ -16,6 +18,16 @@ class UserList extends Component {
 
   componentDidMount = async () => {
     await this.searchAll();
+  };
+
+  exportToExcel = () => {
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const fileExtension = '.xlsx';
+    const ws = XLSX.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], {type: fileType});
+    FileSaver.saveAs(data, 'search_results' + fileExtension);
   };
 
   searchAll = async () => {
@@ -87,7 +99,7 @@ class UserList extends Component {
                 </select>
                 <input value={this.state.query} onChange={this.changeQuery}/>
                 <div onClick={this.reset}>Сбросить</div>
-                {this.state.response.length !== 0 ? <div>Скачать результаты в XLSX</div> : <div/>}
+                {this.state.response.length !== 0 ? <div onClick={this.exportToExcel}>Скачать результаты в XLSX</div> : <div/>}
               </div>
               <div>
                 {this.state.error ?
