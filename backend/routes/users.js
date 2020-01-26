@@ -11,8 +11,9 @@ router.get('/', function(req, res) {
 router.post('/search', async function(req, res) {
   // console.log(req.body);
   try {
-    const result = await User.find({[req.body.type]: req.body.query});
-    // console.log(result);
+    const result = await User.find({[req.body.type]: {$regex: new RegExp(req.body.query, 'i')}});
+    console.log(`/^${req.body.query}/i`);
+    console.log(result);
     await res.json({response: result});
   } catch (e) {
     // console.error(e);

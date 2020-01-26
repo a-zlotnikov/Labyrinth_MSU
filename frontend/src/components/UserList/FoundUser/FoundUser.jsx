@@ -61,10 +61,6 @@ class FoundUser extends Component {
     this.setState({edit: !this.state.edit})
   };
 
-  componentDidMount() {
-    console.log(moment(this.state.dob).format('YYYY-MM-DD'));
-  }
-
   changeValue = (e) => {
     this.setState({[e.target.name]: e.target.value});
     console.log(this.state.dob)
@@ -106,7 +102,7 @@ class FoundUser extends Component {
         <div>
           <div>
             {this.state.edit ?
-                <div><input name="surname" value={this.state.surname} onChange={this.changeValue}/><input name="name" value={this.state.name} onChange={this.changeValue}/></div>
+                <div><input name="surname" placeholder="Фамилия" value={this.state.surname} onChange={this.changeValue}/><input name="name" placeholder="Имя" value={this.state.name} onChange={this.changeValue}/></div>
                 :
                 <div>{this.state.surname} {this.state.name}</div>
             }
