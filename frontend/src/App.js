@@ -53,7 +53,15 @@ class App extends Component {
                       <Switch>
                         <Route path={'/registration'} component={SignUp}/>
                         <Route path={'/constructor'} component={Field}/>
-                        <Route exact path={'/results'} component={Results}/>
+                        {/*<Route exact path={'/results'} component={Results}/>*/}
+                        <Route exact path={'/results'} render={(props) => {
+                          return (
+                            <div>
+                              <Results {...props} options={this.state.user.user.category}/>
+                            </div>
+                          );
+                        }}/>
+  
                         <Route path={'/results/:id'} component={ResultDetail}/>
                         <Route path={'/users'} component={UserList}/>
                         <Route path={'/readme'} component={Documentation}/>
