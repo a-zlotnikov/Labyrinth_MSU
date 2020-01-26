@@ -11,6 +11,7 @@ import Documentation from './components/Documentation/Documentation';
 import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
+import Experiment from './components/Experiment/Experiment';
 
 class App extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class App extends Component {
     // const result = await response.json();
     // this.setState({user: result.user, loading: false});
   };
-  
+
   render() {
     return (this.state.loading === true) ? (<Layout>
         <Loader />
@@ -53,8 +54,26 @@ class App extends Component {
                       }}/>
                       <Switch>
                         <Route path={'/registration'} component={SignUp}/>
-                        <Route path={'/constructor'} component={Field}/>
-                        {/*<Route exact path={'/results'} component={Results}/>*/}
+
+                        {/*<Route path={'/constructor'} component={Field}/>*/}
+                        <Route path={'/constructor'} render={
+                          (props)=>{
+                            return (
+                                <div>
+                                  <Field {...props} />
+                                </div>
+                            )
+                          }
+                        } />
+                        <Route path={'/experiment/:id'} render={
+                          (props)=>{
+                            return (
+                                <div>
+                                  <Experiment {...props} />
+                                </div>
+                            )
+                          }
+                        } />
                         <Route exact path={'/results'} render={(props) => {
                           return (
                             <div>
@@ -62,11 +81,11 @@ class App extends Component {
                             </div>
                           );
                         }}/>
-  
+
                         <Route path={'/results/:id'} component={ResultDetail}/>
                         <Route path={'/users'} component={UserList}/>
                         <Route path={'/readme'} component={Documentation}/>
-         
+
                         <Route exact path={'/'} render={(props) => {
                           return (
                               <div>
