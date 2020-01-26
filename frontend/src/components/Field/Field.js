@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ADDVALUE, fetchField, CHANGEVALUE} from '../../store/creators/creators';
+import {ADDVALUE, CHANGEVALUE, fetchField} from '../../store/creators/creators';
 import './Field.css';
 import StatusButtons from '../StatusButtons/StatusButtons';
 
@@ -17,6 +17,9 @@ class Field extends Component {
       pedal: false,
       lamp: false,
       sound: false,
+      fieldName: '',
+      saveStatus: false,
+      nameStatus: false
     };
   }
 
@@ -28,17 +31,16 @@ class Field extends Component {
     const getValue = (e) => {
 
       const x = e.key;
-      const regex = /[\u0400-\u04FF]+/g;
+      const regex = /[\u0400-\u04FF0-9]+/g;
       const match = regex.exec(x);
-      if(x==='Backspace'){
+      if (x === 'Backspace') {
         this.props.newValue(prevValue, null);
-      } else if(match){
+      } else if (match) {
         this.props.newValue(prevValue, x);
       }
     };
-    document.onkeydown=getValue
+    document.onkeydown = getValue;
   };
-
 
   action = (e) => {
     switch (true) {
@@ -74,7 +76,7 @@ class Field extends Component {
 
   cellStatus = (e) => {
     let translate;
-    switch (e.target.innerText){
+    switch (e.target.innerText) {
       case 'стена':
         translate = 'wall';
         break;
@@ -101,23 +103,86 @@ class Field extends Component {
         break;
     }
 
-    // console.log(translate);
-
     const currentState = this.state;
     for (let key in currentState) {
-      if (key === translate) {
+      if (key === 'fieldName') {
+        currentState[key] = currentState[key];
+      } else if (key === translate) {
         currentState[key] = !currentState[key];
-      }  else {
+      } else {
         currentState[key] = false;
       }
     }
-    this.setState(currentState)
+    this.setState(currentState);
   };
+
+  fieldName = (e) => {
+    this.setState({fieldName: e.target.value});
+  };
+
+  saveField = async () => {
+    this.setState({
+      nameStatus: false,
+      saveStatus: false
+    });
+    if (this.state.fieldName.length > 0) {
+      const response = await fetch(
+          '/saveField',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: this.state.fieldName,
+              field: this.props.constructor,
+            }),
+          },
+      );
+      const result = await response.json();
+      if (result) {
+        this.setState({saveStatus: true});
+      }
+    } else {
+      this.setState({nameStatus: true})
+    }
+  };
+
+  startExperiment = async () => {
+
+    const response = await fetch (
+        '/startExp',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: this.state.fieldName,
+            field: this.props.constructor,
+          }),
+        },
+    );
+    const result = await response.json();
+    console.log(result);
+  if(result.id){
+    this.props.history.push(`/experiment/${result.id}`)
+  } else {
+    this.setState({nameStatus: true})
+  }
+
+   // if(this.state.saveStatus){
+    //
+    // }
+    // this.props.history.push('/experiment/123')
+  };
+
 
   render() {
 
     return (
         <div className='board'>
+          <input onChange={this.fieldName} value={this.state.fieldName}/>
           {this.state.wall && <div>Стена</div>}
           {this.state.food && <div>Кормушка</div>}
           {this.state.fakeFood && <div>Ложная кормушка</div>}
@@ -126,8 +191,12 @@ class Field extends Component {
           {this.state.pedal && <div>Педаль</div>}
           {this.state.lamp && <div>Лампочка</div>}
           {this.state.sound && <div>Звук</div>}
+          {this.state.fieldName && this.state.fieldName}
+          {this.state.saveStatus && <div>Среда сохранена</div>}
+          {this.state.nameStatus && <div>Введите имя</div>}
 
-          {this.props.constructor && this.props.constructor.map((element, i) => {
+          {this.props.constructor &&
+          this.props.constructor.map((element, i) => {
             return (
                 <div key={`${element} ${i}`}>{element.line.map(component => {
                   let action;
@@ -167,7 +236,9 @@ class Field extends Component {
                             className={action}
                             onClick={this.action}
                       >
-                        {component.value ? <b>{component.value}</b> : component.index}
+                        {component.value ?
+                            <b>{component.value}</b> :
+                            component.index}
                       </span>
                   );
                 })}
@@ -175,7 +246,13 @@ class Field extends Component {
             );
           })}
           <div>
-            <StatusButtons cellStatus={this.cellStatus} />
+            <StatusButtons cellStatus={this.cellStatus}/>
+          </div>
+          <div>
+            <button onClick={this.saveField}>Сохранить среду</button>
+          </div>
+          <div>
+            <button onClick={this.startExperiment}>Начать эксперимент</button>
           </div>
         </div>
     );
@@ -197,8 +274,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(ADDVALUE(index, change));
     },
     newValue: (value, changedValue) => {
-      dispatch(CHANGEVALUE(value, changedValue))
-    }
+      dispatch(CHANGEVALUE(value, changedValue));
+    },
   };
 };
 
