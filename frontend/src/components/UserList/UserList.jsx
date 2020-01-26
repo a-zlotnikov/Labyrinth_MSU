@@ -99,7 +99,7 @@ class UserList extends Component {
                 </select>
                 <input value={this.state.query} onChange={this.changeQuery}/>
                 <div onClick={this.reset}>Сбросить</div>
-                {this.state.response.length !== 0 ? <div onClick={this.exportToExcel}>Скачать результаты в XLSX</div> : <div/>}
+                {this.state.response.length !== 0 ? <div onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
               </div>
               <div>
                 {this.state.error ?
