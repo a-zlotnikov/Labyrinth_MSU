@@ -9,6 +9,7 @@ class FoundUser extends Component {
       id: this.props.id,
       username: this.props.username,
       password: this.props.password,
+      active: this.props.active,
       category: this.props.category,
       surname: this.props.surname,
       name: this.props.name,
@@ -18,11 +19,12 @@ class FoundUser extends Component {
       group: this.props.group,
       year: this.props.year,
       saved: null,
+      confirmation: false,
     }
   }
 
   delete = async (e) => { // Удаляется, но карточка висит в результатах
-      const id = e.target.parentElement.parentElement.parentElement.id;
+      const id = this.state.id;
       let resp = await fetch('/users/delete', {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
@@ -40,6 +42,7 @@ class FoundUser extends Component {
   };
 
   switchStatus = async (e) => {
+    this.setState({saved: null});
     const id = e.target.parentElement.parentElement.parentElement.id;
     let resp = await fetch('/users/switch_status', {
       method: 'POST',
@@ -49,21 +52,18 @@ class FoundUser extends Component {
     const res = await resp.json();
     this.setState({loading: true});
     if (res.succeed) {
-      this.setState({loading: false});
-      alert('Статус изменен')
+      this.setState({loading: false, active: !this.state.active, saved: true});
     } else {
-      this.setState({loading: false});
-      alert('Произошла ошибка')
+      this.setState({loading: false, active: this.props.active, saved: false});
     }
   };
 
   editMode = () => {
-    this.setState({edit: !this.state.edit})
+    this.setState({edit: !this.state.edit, saved: null})
   };
 
   changeValue = (e) => {
     this.setState({[e.target.name]: e.target.value});
-    console.log(this.state.dob)
   };
 
   save = async () => {
@@ -156,7 +156,7 @@ class FoundUser extends Component {
               <div>
                 {this.state.saved === true ? <div>Изменения сохранены</div> : <div/>}
                 <div onClick={this.editMode}>Редактировать</div>
-                <div onClick={this.switchStatus}>Отключить</div>
+                {this.state.active ? <div onClick={this.switchStatus}>Отключить</div> : <div onClick={this.switchStatus}>Включить</div>}
                 <div onClick={this.delete}>Удалить</div>
               </div>
           }
