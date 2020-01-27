@@ -48,8 +48,8 @@ class SignIn extends Component {
       Cookies.set('gender', gender);
       Cookies.set('dob', dob);
       Cookies.set('hand', hand);
-      // Cookies.set('group', group);
-      // Cookies.set('year', year);
+      Cookies.set('group', group);
+      Cookies.set('year', year);
       console.log('>>> Authorized');
       return <Redirect to='/readme'/>;
     } else {
