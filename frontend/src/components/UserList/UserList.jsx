@@ -102,8 +102,10 @@ class UserList extends Component {
                 </select>
                 {this.state.type === "group" ? <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
                     <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>}
-                <div className={'button'} onClick={this.reset}>Сбросить</div>
-                {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
+                <div className={'btnRow'}>
+                  <div className={'button'} onClick={this.reset}>Сбросить</div>
+                  {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
+                </div>
               </div>
               <div>
                 {this.state.error ?

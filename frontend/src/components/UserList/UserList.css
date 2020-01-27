@@ -3,6 +3,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.btnRow {
+    display: flex;
+    flex-direction: row;
+}
+
 .title {
     display: flex;
     justify-content: center;
@@ -18,7 +23,8 @@
     height: 25px;
     background-color: lightgray;
     border-radius: 5px;
-    margin: 5px 0;
+    margin-top: 10px;
+    margin-right: 10px;
     box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
 }
 

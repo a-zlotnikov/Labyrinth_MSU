@@ -214,7 +214,7 @@ class FoundUser extends Component {
                 <div className={'text'}>{this.props.hand}</div>}</div>
             <br/>
             {this.state.edit ?
-                <div className={'btnContainer'}>
+                <div className={'btnRow'}>
                   {this.state.saved === false ?
                       <div>При сохранении произошла ошибка</div> :
                       <div/>}
@@ -222,7 +222,7 @@ class FoundUser extends Component {
                   <div className={'button'} onClick={this.editMode}>Отмена</div>
                 </div>
                 :
-                <div className={'btnContainer'}>
+                <div className={'btnRow'}>
                   {this.state.saved === true ?
                       <div>Изменения сохранены</div> :
                       <div/>}
