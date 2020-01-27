@@ -61,6 +61,7 @@ class FoundUser extends Component {
 
   editMode = () => {
     this.setState({edit: !this.state.edit, saved: null});
+    this.setState(this.props)
   };
 
   changeValue = (e) => {

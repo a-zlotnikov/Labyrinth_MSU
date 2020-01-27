@@ -20,7 +20,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: '',
+      user: Cookies.get('user_id'),
         // user: {
       //     username: 'Reiko',
       //     category: 'Преподаватель',
@@ -32,6 +32,12 @@ class App extends Component {
 
   componentDidMount = async () => {
     this.setState({loading: true});
+    const response = await fetch('/users');
+    const result = await response.json();
+    this.setState({user: result.user, loading: false});
+  };
+
+  componentDidUpdate = async () => {
     const response = await fetch('/users');
     const result = await response.json();
     this.setState({user: result.user, loading: false});
@@ -92,7 +98,6 @@ class App extends Component {
                           return (
                               <div>
                                 <Mainpage {...props} options={this.state.user.user}/>
-                                <SignIn/>
                               </div>
                           );
                         }}/>

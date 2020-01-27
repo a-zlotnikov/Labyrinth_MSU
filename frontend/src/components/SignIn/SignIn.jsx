@@ -55,7 +55,7 @@ class SignIn extends Component {
       // this.props.authSuccess(res);
 
       console.log('>>> Authorized');
-      return <Redirect to='/readme'/>;
+      // return <Redirect to='/readme'/>;
     } else {
       alert('Try again')
     }
