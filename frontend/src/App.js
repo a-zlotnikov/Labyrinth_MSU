@@ -20,12 +20,7 @@ class App extends Component {
     super(props);
     
     this.state = {
-      // user: '',
-      user: {
-        user: 'Reiko',
-        category: 'Преподаватель',
-      },
-      
+      user: '',
       loading: false,
     };
   }
