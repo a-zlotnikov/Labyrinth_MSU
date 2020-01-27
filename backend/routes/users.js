@@ -9,11 +9,11 @@ router.get('/', function(req, res) {
 });
 
 router.post('/search', async function(req, res) {
-  console.log(req.body)
   try {
-    // if (req.body.type === 'year') {
-    //   const
-    // }
+    if (req.body.type === 'year') {
+      const result = await User.find({[req.body.type]: Number(req.body.query)});
+      await res.json({response: result});
+    }
     const result = await User.find({[req.body.type]: {$regex: new RegExp(req.body.query, 'i')}});
     await res.json({response: result});
   } catch (e) {

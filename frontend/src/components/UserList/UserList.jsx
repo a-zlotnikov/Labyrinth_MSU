@@ -75,11 +75,6 @@ class UserList extends Component {
   };
 
   search = async () => {
-    // if (this.state.type === 'year') {
-    //   this.setState({query: Number(this.state.query)});
-    //   // console.log(Number(this.state.query));
-    //   console.log(this.state.query)
-    // }
     const {type, query} = this.state;
     let resp = await fetch('/users/search', {
       method: 'POST',
