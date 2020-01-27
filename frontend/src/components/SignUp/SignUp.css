@@ -1,41 +1,101 @@
-.container {
-    padding: 0 50px;
+.regContainer {
+    padding: 50px 100px;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.button {
-    font-size: 15px;
+.regAttribute {
     display: flex;
-    width: 150px;
-    height: 30px;
-    border-radius: 5px;
+    flex-direction: row;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.regText {
+    font-size: 20px;
+    padding: 0 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+.regText:hover {
+    cursor: pointer;
+}
+
+.regInput {
+    font-family: 'Montserrat', sans-serif;
+    width: 300px;
+    padding-left: 5px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0;
+    outline: 0 !important;
+}
+
+.regTextEdit {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: whitesmoke;
+    border-bottom: black 1px solid;
+}
+
+.regSelector {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0px;
+}
+
+.regButton {
+    display: flex;
+    width: 290px;
+    height: 25px;
     background-color: lightgray;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.regButton:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.regButton:active {
+    background-color: grey;
+}
+
+.regAttributesBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.addUserButton {
+    display: flex;
+    font-size: 20px;
+    width: 290px;
+    height: 55px;
+    background-color: lightgray;
+    border-radius: 5px;
+    margin-top: 50px;
+    margin-left: 470px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
 }
 
-.button:hover {
+.addUserButton:hover {
     cursor: pointer;
+    font-weight: bold;
 }
 
-.button:active {
+.addUserButton:active {
     background-color: grey;
 }
 
-.longButton {
-    font-size: 15px;
-    display: flex;
-    width: 250px;
-    height: 30px;
-    border-radius: 5px;
-    background-color: lightgray;
-    justify-content: center;
-    align-items: center;
-}
-
-.longButton:hover {
-    cursor: pointer;
-}
-
-.longButton:active {
-    background-color: grey;
-}

@@ -21,16 +21,27 @@ class App extends Component {
     
     this.state = {
       user: '',
+      logged_in: false,
       loading: false,
     };
   }
+
+  handler = () => {
+    // console.log(this.state);
+    this.setState({logged_in: true, loading: false});
+    console.log(this.state)
+  };
   
   componentDidMount = async () => {
     this.setState({loading: true});
     const response = await fetch('/users');
     const result = await response.json();
-    console.log(result);
-    this.setState({user: result.user, loading: false});
+    // console.log(result);
+    if (result.user) {
+      this.setState({user: result.user, loading: false, logged_in: true});
+    } else {
+      this.setState({loading: false, logged_in: false})
+    }
   };
 
   /*componentDidUpdate = async () => { // TODO: море фетчей
@@ -43,8 +54,14 @@ class App extends Component {
     return (this.state.loading === true) ? (<Layout>
         <Loader/>
       </Layout>) :
-      (this.state.user === undefined) ? (<Layout>
-          <div><Route path={'/'} component={SignIn}/></div>
+      (this.state.logged_in === false) ? (<Layout>
+          <div><Route path={'/'} render={(props) => {
+            return (
+                <div>
+                  <SignIn {...props} handler={this.handler}/>
+                </div>
+            );
+          }}/></div>
         </Layout>) :
         (<Layout>
             <Router>
