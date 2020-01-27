@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FoundUser from './FoundUser/FoundUser';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+const Cookies = require('js-cookie');
 
 class UserList extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class UserList extends Component {
       response: [],
       loading: false,
       error: false,
-      authorized: true,
+      category: Cookies.get('category'),
     };
   }
 
@@ -89,7 +90,7 @@ class UserList extends Component {
   render() {
     return (
         <div>
-        {this.state.authorized ?
+        {this.state.category === 'Преподаватель' ?
             <div>
               <div><h1>Поиск</h1></div>
               <div>

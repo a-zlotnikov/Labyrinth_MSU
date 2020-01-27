@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import './SignUp.css';
 const moment = require('moment');
-
+const Cookies = require('js-cookie');
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      active: true,
       username: '',
       password: '',
       category: 'Студент',
@@ -20,7 +21,6 @@ class SignUp extends Component {
       created: false,
       failed: false,
       sending: false,
-      authorized: true, // !! Захардкоженный вариант, вместо этого в if на рендер надо кидать this.props.category из редакса
     };
   }
 
@@ -48,12 +48,12 @@ class SignUp extends Component {
   };
 
   signUp = async() => {
-    const {username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
+    const {active, username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
     let body;
     if (this.state.category === 'Студент') {
-      body = {username, password, category, surname, name, gender, dob, hand, group, year}
+      body = {active, username, password, category, surname, name, gender, dob, hand, group, year}
     } else {
-      body = {username, password, category, surname, name, gender, dob, hand}
+      body = {active, username, password, category, surname, name, gender, dob, hand}
     }
     let resp = await fetch('/users/signup', {
       method: 'POST',
@@ -94,7 +94,7 @@ class SignUp extends Component {
   render() {
     return (
         <div className={'container'}>
-        {this.state.authorized ?
+        {Cookies.get('category') === 'Преподаватель' ?
               <div>
                 <div><h1>Создание пользователя</h1></div>
 
