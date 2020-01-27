@@ -20,7 +20,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: Cookies.get('user_id'),
+      user: '',
         // user: {
       //     username: 'Reiko',
       //     category: 'Преподаватель',
@@ -34,14 +34,15 @@ class App extends Component {
     this.setState({loading: true});
     const response = await fetch('/users');
     const result = await response.json();
+    console.log(result);
     this.setState({user: result.user, loading: false});
   };
 
-  componentDidUpdate = async () => {
+  /*componentDidUpdate = async () => { // TODO: море фетчей
     const response = await fetch('/users');
     const result = await response.json();
     this.setState({user: result.user, loading: false});
-  };
+  };*/
 
   render() {
     return (this.state.loading === true) ? (<Layout>
