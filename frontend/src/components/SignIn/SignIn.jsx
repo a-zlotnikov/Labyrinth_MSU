@@ -33,7 +33,7 @@ class SignIn extends Component {
     });
 
     const res = await resp.json();
-    console.log(res);
+    // console.log(res);
     if (res.user && res.cookie) {
       // this.props.cookie.set({session: true})
       // Cookies.set('logged_in', true);
@@ -55,11 +55,13 @@ class SignIn extends Component {
       // this.props.authSuccess(res);
 
       console.log('>>> Authorized');
+      this.props.handler();
+      console.log('>>> HANDLER')
       // return <Redirect to='/readme'/>;
     } else {
       alert('Try again')
     }
-    await console.log(res);
+    // await console.log(res);
   };
 
   render() {
