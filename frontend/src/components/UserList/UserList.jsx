@@ -32,6 +32,16 @@ class UserList extends Component {
     FileSaver.saveAs(data, 'search_results' + fileExtension);
   };
 
+  // exportToXLS = () => {
+  //   const fileType = 'application/vnd.ms-excel';
+  //   const fileExtension = '.xls';
+  //   const ws = XLS.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
+  //   const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+  //   const excelBuffer = XLS.write(wb, { bookType: 'xls', type: 'array' });
+  //   const data = new Blob([excelBuffer], {type: fileType});
+  //   FileSaver.saveAs(data, 'search_results' + fileExtension);
+  // };
+
   searchAll = async () => {
     let resp = await fetch('/users/search/all', {
       method: 'GET',
@@ -51,6 +61,10 @@ class UserList extends Component {
       this.setState({type: 'group'})
     } else if (e.target.value === 'Фамилия') {
       this.setState({type: 'surname'})
+    } else if (e.target.value === 'Категория') {
+      this.setState({type: 'category'})
+    } else if (e.target.value === 'Год') {
+      this.setState({type: 'year'})
     }
     await this.search();
   };
@@ -61,6 +75,11 @@ class UserList extends Component {
   };
 
   search = async () => {
+    // if (this.state.type === 'year') {
+    //   this.setState({query: Number(this.state.query)});
+    //   // console.log(Number(this.state.query));
+    //   console.log(this.state.query)
+    // }
     const {type, query} = this.state;
     let resp = await fetch('/users/search', {
       method: 'POST',
@@ -99,6 +118,8 @@ class UserList extends Component {
                 <select className={'selector'} name="type" onChange={this.changeType}>
                   <option>Группа</option>
                   <option>Фамилия</option>
+                  <option>Год</option> // TODO: не пашет
+                  <option>Категория</option> // TODO: сделать
                 </select>
                 {this.state.type === "group" ? <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
                     <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>}
