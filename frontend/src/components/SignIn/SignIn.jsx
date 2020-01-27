@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import  { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {AUTHSUCCESS} from '../../store/creators/creators';
+import './SignIn.css';
+import Logo from '../../containers/mainpage/Logo/Logo';
 const Cookies = require('js-cookie');
 
 class SignIn extends Component {
@@ -66,19 +68,20 @@ class SignIn extends Component {
 
   render() {
     return (
-      <div>
-        <div><h1>Вход в систему</h1></div>
+      <div className={'logContainer'}>
+        <Logo/>
+        <h1 className={'logTitle'}>Вход в систему</h1>
         <br/>
         <div>
-          <input onChange={this.refreshUsernameField} placeholder="Идентификатор пользователя"/>
+          <input className={'logInput'} onChange={this.refreshUsernameField} placeholder="Идентификатор пользователя"/>
         </div>
         <br/>
         <div>
-          <input onChange={this.refreshPasswordField} placeholder="Пароль" type="password"/>
+          <input className={'logInput'} onChange={this.refreshPasswordField} placeholder="Пароль" type="password"/>
         </div>
         {this.state.logged_in === false ? <div>Проверьте логин и пароль</div> : <div/>}
         <br/>
-        <div onClick={this.signIn}>Войти</div>
+        <div className={'logButton'} onClick={this.signIn}>Войти</div>
       </div>
     );
   }

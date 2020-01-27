@@ -1,0 +1,50 @@
+.logContainer {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logTitle {
+margin-top: 80px;
+}
+
+.logInput {
+    display: flex;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    width: 450px;
+    padding-left: 5px;
+    font-size: 24px;
+    background-color: whitesmoke;
+    border: 0;
+    outline: 0 !important;
+}
+
+.logInput:focus {
+    border-bottom: black 1px solid;
+    font-size: 28px;
+}
+
+.logButton {
+    display: flex;
+    font-size: 20px;
+    margin-top: 30px;
+    width: 290px;
+    height: 55px;
+    background-color: lightgray;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.logButton:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logButton:active {
+    background-color: grey;
+}
