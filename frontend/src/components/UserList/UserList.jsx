@@ -118,15 +118,19 @@ class UserList extends Component {
                 <select className={'selector'} name="type" onChange={this.changeType}>
                   <option>Группа</option>
                   <option>Фамилия</option>
-                  <option>Год</option> // TODO: не пашет
-                  <option>Категория</option> // TODO: сделать
+                  <option>Год</option>
+                  <option>Категория</option>
                 </select>
                 {this.state.type === "group" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
                     this.state.type === "surname" ?
                     <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>:
                         this.state.type === "category" ?
-                            <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип пользователя'}/>:
-
+                            <select className={'selector'} value={this.state.query} onChange={this.changeQuery}>
+                              <option>Преподаватель</option>
+                              <option>Студент</option>
+                              <option>Дипломник</option>
+                            </select>:
+                            // <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип пользователя'}/>:
                             this.state.type === "year" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите год'}/>:
                             null
                 }
