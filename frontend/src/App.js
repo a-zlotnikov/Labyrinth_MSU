@@ -22,11 +22,6 @@ class App extends Component {
     this.state = {
       user: '',
       logged_in: false,
-      // user: {
-      //   user: 'Reiko',
-      //   category: 'Преподаватель',
-      // },
-      
       loading: false,
     };
   }
