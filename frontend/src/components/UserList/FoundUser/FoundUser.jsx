@@ -61,7 +61,7 @@ class FoundUser extends Component {
 
   editMode = () => {
     this.setState({edit: !this.state.edit, saved: null});
-    this.setState(this.props)
+    this.setState(this.props);
   };
 
   changeValue = (e) => {
@@ -124,121 +124,141 @@ class FoundUser extends Component {
         <div id={this.props.id}>
           <hr/>
           <div>
-            <div className={'attribute'}> Имя:
+            <div className={'attributesBox'}>
+              <div className={'leftBlock'}>
+                <div className={'attribute'}> Имя:
+                  {this.state.edit ?
+                      <div><input className={'input textEdit'} name="surname"
+                                  placeholder="Фамилия"
+                                  value={this.state.surname}
+                                  onChange={this.changeValue}/><input
+                          className={'input textEdit'} name="name"
+                          placeholder="Имя" value={this.state.name}
+                          onChange={this.changeValue}/></div>
+                      :
+                      <div
+                          className={'text'}> {this.state.surname} {this.state.name}</div>
+                  }
+                </div>
+                <div className={'attribute'}> Категория:
+                  {this.state.edit ?
+                      <div>
+                        <select className={'selector textEdit'}
+                                value={this.state.category}
+                                name="category" onChange={this.changeValue}>
+                          <option>Студент</option>
+                          <option>Дипломник</option>
+                          <option>Преподаватель</option>
+                        </select>
+                      </div>
+                      :
+                      <div className={'text'}>{this.props.category}</div>
+                  }
+                  {this.props.active === false ?
+                      <div className={'text'}>отключен</div> :
+                      <div/>}
+                </div>
+                < div
+                    className={'attribute'}> Идентификатор: {this.state.edit ?
+                    <div><input className={'input textEdit'} name="username"
+                                value={this.state.username}
+                                onChange={this.changeValue}/></div> :
+                    <div className={'text'}>{this.props.username}</div>}</div>
+                <div className={'attribute'}>Пароль: {this.state.edit ?
+                    <div><input className={'input textEdit'} name="password"
+                                value={this.state.password}
+                                onChange={this.changeValue}/></div> :
+                    <div className={'text'}>{this.props.password}</div>}</div>
+              </div>
+              <div>
+                <div className={'attribute'}>
+                  {this.props.category === 'Студент' ?
+                      <div>
+                        <div className={'studentBox'}>
+                          <div className={'attribute'}>
+                            Группа: {this.state.edit ?
+                              <div><input className={'input textEdit'}
+                                          name="group"
+                                          value={this.state.group}
+                                          onChange={this.changeValue}/></div> :
+                              <div className={'text'}>{this.props.group}</div>}
+                          </div>
+                        </div>
+                        <div className={'studentBox'}>
+                          <div className={'attribute'}>
+                            Год: {this.state.edit ?
+                              <div><input className={'input textEdit'}
+                                          name="year"
+                                          value={this.state.year}
+                                          onChange={this.changeValue}/></div> :
+                              <div className={'text'}>{this.props.year}</div>}
+                          </div>
+                        </div>
+                      </div>
+                      : <div/>}
+                </div>
+                <div className={'attribute'}>Пол: {this.state.edit ?
+                    <div>
+                      <select className={'selector textEdit'}
+                              value={this.state.gender}
+                              name="gender" onChange={this.changeValue}>
+                        <option>Мужской</option>
+                        <option>Женский</option>
+                      </select>
+                    </div>
+                    :
+                    <div className={'text'}>{this.props.gender}</div>}</div>
+                <div className={'attribute'}>Дата рождения: {this.state.edit ?
+                    <div><input className={'input textEdit'}
+                                value={moment(this.state.dob).
+                                    format('YYYY-MM-DD')}
+                                name="dob" onChange={this.changeValue}
+                                type="date"/>
+                    </div> :
+                    <div className={'text'}>{moment(this.state.dob).
+                        format('DD.MM.YYYY')}</div>}</div>
+                <div className={'attribute'}>Рука: {this.state.edit ?
+                    <div><select className={'selector textEdit'}
+                                 value={this.state.hand}
+                                 name="hand" onChange={this.changeValue}>
+                      <option>Правша</option>
+                      <option>Левша</option>
+                    </select></div> :
+                    <div className={'text'}>{this.props.hand}</div>}</div>
+              </div>
+            </div>
+            <div>
               {this.state.edit ?
-                  <div><input className={'input textEdit'} name="surname"
-                              placeholder="Фамилия" value={this.state.surname}
-                              onChange={this.changeValue}/><input
-                      className={'input textEdit'} name="name"
-                      placeholder="Имя" value={this.state.name}
-                      onChange={this.changeValue}/></div>
+                  <div className={'btnRow'}>
+                    {this.state.saved === false ?
+                        <div>При сохранении произошла ошибка</div> :
+                        <div/>}
+                    <div className={'button'} onClick={this.save}>Сохранить
+                    </div>
+                    <div className={'button'} onClick={this.editMode}>Отмена
+                    </div>
+                  </div>
                   :
-                  <div
-                      className={'text'}> {this.state.surname} {this.state.name}</div>
+                  <div className={'btnRow'}>
+                    {this.state.saved === true ?
+                        <div>Изменения сохранены</div> :
+                        <div/>}
+                    <div className={'button'}
+                         onClick={this.editMode}>Редактировать
+                    </div>
+                    {this.state.active ?
+                        <div className={'button'}
+                             onClick={this.switchStatus}>Отключить</div> :
+                        <div className={'button'}
+                             onClick={this.switchStatus}>Включить</div>}
+                    <div className={'button'} onClick={this.delete}>Удалить
+                    </div>
+                  </div>
               }
             </div>
-            <div className={'attribute'}> Категория:
-              {this.state.edit ?
-                  <div>
-                    <select className={'selector textEdit'} value={this.state.category}
-                            name="category" onChange={this.changeValue}>
-                      <option>Студент</option>
-                      <option>Дипломник</option>
-                      <option>Преподаватель</option>
-                    </select>
-                  </div>
-                  :
-                  <div className={'text'}>{this.props.category}</div>
-              }
-              {this.props.active === false ?
-                  <div className={'text'}>отключен</div> :
-                  <div/>}
-            </div>
-            <div className={'attribute'}>
-              {this.props.category === 'Студент' ?
-                  <div>
-                    <div className={'studentBox'}>
-                      <div className={'attribute'}>
-                        Группа: {this.state.edit ?
-                          <div><input className={'input textEdit'} name="group"
-                                      value={this.state.group}
-                                      onChange={this.changeValue}/></div> :
-                          <div className={'text'}>{this.props.group}</div>}
-                      </div>
-                    </div>
-                    <div className={'studentBox'}>
-                      <div className={'attribute'}>
-                        Год: {this.state.edit ?
-                          <div><input className={'input textEdit'} name="year"
-                                      value={this.state.year}
-                                      onChange={this.changeValue}/></div> :
-                          <div className={'text'}>{this.props.year}</div>}
-                      </div>
-                    </div>
-                  </div>
-                  : <div/>}
-            </div>
-            < div
-                className={'attribute'}> Идентификатор: {this.state.edit ?
-                <div><input className={'input textEdit'} name="username"
-                            value={this.state.username}
-                            onChange={this.changeValue}/></div> :
-                <div className={'text'}>{this.props.username}</div>}</div>
-            <div className={'attribute'}>Пароль: {this.state.edit ?
-                <div><input className={'input textEdit'} name="password"
-                            value={this.state.password}
-                            onChange={this.changeValue}/></div> :
-                <div className={'text'}>{this.props.password}</div>}</div>
-            <div className={'attribute'}>Пол: {this.state.edit ?
-                <div>
-                  <select className={'selector textEdit'} value={this.state.gender}
-                          name="gender" onChange={this.changeValue}>
-                    <option>Мужской</option>
-                    <option>Женский</option>
-                  </select>
-                </div>
-                :
-                <div className={'text'}>{this.props.gender}</div>}</div>
-            <div className={'attribute'}>Дата рождения: {this.state.edit ?
-                <div><input className={'input textEdit'} value={moment(this.state.dob).format('YYYY-MM-DD')}
-                            name="dob" onChange={this.changeValue} type="date"/>
-                </div> :
-                <div className={'text'}>{moment(this.state.dob).
-                    format('DD.MM.YYYY')}</div>}</div>
-            <div className={'attribute'}>Рука: {this.state.edit ?
-                <div><select className={'selector textEdit'} value={this.state.hand}
-                             name="hand" onChange={this.changeValue}>
-                  <option>Правша</option>
-                  <option>Левша</option>
-                </select></div> :
-                <div className={'text'}>{this.props.hand}</div>}</div>
-            <br/>
-            {this.state.edit ?
-                <div className={'btnRow'}>
-                  {this.state.saved === false ?
-                      <div>При сохранении произошла ошибка</div> :
-                      <div/>}
-                  <div className={'button'} onClick={this.save}>Сохранить</div>
-                  <div className={'button'} onClick={this.editMode}>Отмена</div>
-                </div>
-                :
-                <div className={'btnRow'}>
-                  {this.state.saved === true ?
-                      <div>Изменения сохранены</div> :
-                      <div/>}
-                  <div className={'button'}
-                       onClick={this.editMode}>Редактировать
-                  </div>
-                  {this.state.active ?
-                      <div className={'button'}
-                           onClick={this.switchStatus}>Отключить</div> :
-                      <div className={'button'}
-                           onClick={this.switchStatus}>Включить</div>}
-                  <div className={'button'} onClick={this.delete}>Удалить</div>
-                </div>
-            }
           </div>
         </div>
+
     );
   }
 }

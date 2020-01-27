@@ -3,6 +3,15 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.attributesBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.leftBlock {
+    margin-right: 50px;
+}
+
 .btnRow {
     display: flex;
     flex-direction: row;
