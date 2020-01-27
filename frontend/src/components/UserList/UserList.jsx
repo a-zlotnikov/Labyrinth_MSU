@@ -121,8 +121,15 @@ class UserList extends Component {
                   <option>Год</option> // TODO: не пашет
                   <option>Категория</option> // TODO: сделать
                 </select>
-                {this.state.type === "group" ? <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
-                    <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>}
+                {this.state.type === "group" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
+                    this.state.type === "surname" ?
+                    <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>:
+                        this.state.type === "category" ?
+                            <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип пользователя'}/>:
+
+                            this.state.type === "year" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите год'}/>:
+                            null
+                }
                 <div className={'btnRow'}>
                   <div className={'button'} onClick={this.reset}>Сбросить</div>
                   {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
