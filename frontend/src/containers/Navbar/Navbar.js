@@ -8,7 +8,8 @@ class Navbar extends Component {
     return (
       <div className={classes.Navbar}>
         <Link to={'/'}>Главное меню</Link>
-        <div>{Cookies.get('surname')} {Cookies.get('name')} / {/*{this.props.options.category} /*/} {/*{this.props.options.group ?*/} {/*this.props.options.group : null}*/}
+        <div>{Cookies.get('surname')} {Cookies.get('name')} / {Cookies.get('username')}
+        <Link to={'/'}>Выйти</Link>
         </div>
       </div>
     );

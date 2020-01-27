@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './SignUp.css';
 const moment = require('moment');
-
+const Cookies = require('js-cookie');
 
 class SignUp extends Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class SignUp extends Component {
       created: false,
       failed: false,
       sending: false,
-      authorized: true, // !! Захардкоженный вариант, вместо этого в if на рендер надо кидать this.props.category из редакса
     };
   }
 
@@ -95,7 +94,7 @@ class SignUp extends Component {
   render() {
     return (
         <div className={'container'}>
-        {this.state.authorized ?
+        {Cookies.get('category') === 'Преподаватель' ?
               <div>
                 <div><h1>Создание пользователя</h1></div>
 
