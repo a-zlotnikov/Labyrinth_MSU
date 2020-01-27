@@ -7,6 +7,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      active: true,
       username: '',
       password: '',
       category: 'Студент',
@@ -48,12 +49,12 @@ class SignUp extends Component {
   };
 
   signUp = async() => {
-    const {username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
+    const {active, username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
     let body;
     if (this.state.category === 'Студент') {
-      body = {username, password, category, surname, name, gender, dob, hand, group, year}
+      body = {active, username, password, category, surname, name, gender, dob, hand, group, year}
     } else {
-      body = {username, password, category, surname, name, gender, dob, hand}
+      body = {active, username, password, category, surname, name, gender, dob, hand}
     }
     let resp = await fetch('/users/signup', {
       method: 'POST',

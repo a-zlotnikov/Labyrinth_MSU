@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import  { Redirect } from 'react-router-dom';
 /*import {connect} from 'react-redux'
 import {AddTodoAC, ChangeStatusAC, EditTaskAC, DeleteTaskAC, UpdateTasksAC} from '../redux/creators'*/
+const Cookies = require('js-cookie');
 
 class SignIn extends Component {
   constructor(props) {
@@ -37,7 +38,18 @@ class SignIn extends Component {
       // this.props.cookie.set({session: true})
       // Cookies.set('logged_in', true);
       // Cookies.set('username', res.username);
-      // Cookies.set('user_id', res.user_id);
+      const {_id, username, category, surname, name, gender, dob, hand, group, year} = res.user;
+      // Cookies.set('cookie', res.cookie);
+      Cookies.set('user_id', _id);
+      Cookies.set('username', username);
+      Cookies.set('category', category);
+      Cookies.set('surname', surname);
+      Cookies.set('name', name);
+      Cookies.set('gender', gender);
+      Cookies.set('dob', dob);
+      Cookies.set('hand', hand);
+      // Cookies.set('group', group);
+      // Cookies.set('year', year);
       console.log('>>> Authorized');
       return <Redirect to='/readme'/>;
     } else {

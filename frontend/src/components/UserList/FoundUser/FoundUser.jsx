@@ -156,7 +156,7 @@ class FoundUser extends Component {
               <div>
                 {this.state.saved === true ? <div>Изменения сохранены</div> : <div/>}
                 <div onClick={this.editMode}>Редактировать</div>
-                {this.state.active ? <div onClick={this.switchStatus}>Отключить</div> : <div onClick={this.switchStatus}>Включить</div>}
+                {this.state.active ? <div onClick={this.switchStatus}>Отключить учетную запись</div> : <div onClick={this.switchStatus}>Включить учетную запись</div>}
                 <div onClick={this.delete}>Удалить</div>
               </div>
           }
