@@ -12,27 +12,29 @@ import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+import {connect} from 'react-redux'
+const Cookies = require('js-cookie');
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {
-        user: {
-          username: 'Reiko',
-          category: 'Преподаватель',
-        },
-      },
-      loading: false,
+      user: '',
+        // user: {
+      //     username: 'Reiko',
+      //     category: 'Преподаватель',
+      //   },
+      // },
+      loading: true,
     };
   }
 
   componentDidMount = async () => {
-    // this.setState({loading: true});
-    // const response = await fetch('/users');
-    // const result = await response.json();
-    // this.setState({user: result.user, loading: false});
+    this.setState({loading: true});
+    const response = await fetch('/users');
+    const result = await response.json();
+    this.setState({user: result.user, loading: false});
   };
 
   render() {
@@ -102,4 +104,11 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(store) {
+  return {
+    token: store.token
+  }
+}
+
+export default connect(mapStateToProps)(App)
+// module.exports = Cookies;
