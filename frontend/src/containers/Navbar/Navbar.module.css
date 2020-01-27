@@ -2,12 +2,25 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 .Navbar div {
-margin: 0 20px;
+    margin: 0 20px;
+    color: black;
+    font-size: 18px;
 }
 
 .Navbar a {
     margin: 0 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+}
+
+.Navbar a:hover {
+    cursor: pointer;
+    font-weight: bold;
 }

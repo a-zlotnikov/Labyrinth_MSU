@@ -26,9 +26,9 @@ class Navbar extends Component {
     console.log(this.props.token);
     return (
       <div className={classes.Navbar}>
-        <Link to={'/'}>Главное меню</Link>
-        <div>{Cookies.get('surname')} {Cookies.get('name')} / {Cookies.get('username')}
-        <Link onClick={this.logout} to={'/'}>Выйти</Link>
+        <Link className={'textNav'} to={'/'}>Главное меню</Link>
+        <div className={'textNav'}>{Cookies.get('surname')} {Cookies.get('name')} / {Cookies.get('username')}
+        <Link className={'textNav'} onClick={this.logout} to={'/'}>Выйти</Link>
         </div>
       </div>
     );
