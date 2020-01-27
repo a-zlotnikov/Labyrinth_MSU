@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FoundUser from './FoundUser/FoundUser';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import './UserList.css';
 const Cookies = require('js-cookie');
 
 class UserList extends Component {
@@ -31,6 +32,16 @@ class UserList extends Component {
     FileSaver.saveAs(data, 'search_results' + fileExtension);
   };
 
+  // exportToXLS = () => {
+  //   const fileType = 'application/vnd.ms-excel';
+  //   const fileExtension = '.xls';
+  //   const ws = XLS.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
+  //   const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+  //   const excelBuffer = XLS.write(wb, { bookType: 'xls', type: 'array' });
+  //   const data = new Blob([excelBuffer], {type: fileType});
+  //   FileSaver.saveAs(data, 'search_results' + fileExtension);
+  // };
+
   searchAll = async () => {
     let resp = await fetch('/users/search/all', {
       method: 'GET',
@@ -50,6 +61,10 @@ class UserList extends Component {
       this.setState({type: 'group'})
     } else if (e.target.value === 'Фамилия') {
       this.setState({type: 'surname'})
+    } else if (e.target.value === 'Категория') {
+      this.setState({type: 'category'})
+    } else if (e.target.value === 'Год') {
+      this.setState({type: 'year'})
     }
     await this.search();
   };
@@ -89,18 +104,31 @@ class UserList extends Component {
 
   render() {
     return (
-        <div>
+        <div className={'container'}>
         {this.state.category === 'Преподаватель' ?
+
             <div>
-              <div><h1>Поиск</h1></div>
+              <div className={'title'}><h1>Поиск</h1></div>
               <div>
-                <select name="type" onChange={this.changeType}>
+                <select className={'selector'} name="type" onChange={this.changeType}>
                   <option>Группа</option>
                   <option>Фамилия</option>
+                  <option>Год</option> // TODO: не пашет
+                  <option>Категория</option> // TODO: сделать
                 </select>
-                <input value={this.state.query} onChange={this.changeQuery}/>
-                <div onClick={this.reset}>Сбросить</div>
-                {this.state.response.length !== 0 ? <div onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
+                {this.state.type === "group" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
+                    this.state.type === "surname" ?
+                    <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>:
+                        this.state.type === "category" ?
+                            <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип пользователя'}/>:
+
+                            this.state.type === "year" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите год'}/>:
+                            null
+                }
+                <div className={'btnRow'}>
+                  <div className={'button'} onClick={this.reset}>Сбросить</div>
+                  {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
+                </div>
               </div>
               <div>
                 {this.state.error ?

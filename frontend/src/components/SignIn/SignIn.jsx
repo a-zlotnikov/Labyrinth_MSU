@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import  { Redirect } from 'react-router-dom';
-/*import {connect} from 'react-redux'
-import {AddTodoAC, ChangeStatusAC, EditTaskAC, DeleteTaskAC, UpdateTasksAC} from '../redux/creators'*/
+import {connect} from 'react-redux';
+import {AUTHSUCCESS} from '../../store/creators/creators';
 const Cookies = require('js-cookie');
 
 class SignIn extends Component {
@@ -40,6 +40,7 @@ class SignIn extends Component {
       // Cookies.set('username', res.username);
       const {_id, username, category, surname, name, gender, dob, hand, group, year} = res.user;
       // Cookies.set('cookie', res.cookie);
+
       Cookies.set('user_id', _id);
       Cookies.set('username', username);
       Cookies.set('category', category);
@@ -50,8 +51,11 @@ class SignIn extends Component {
       Cookies.set('hand', hand);
       Cookies.set('group', group);
       Cookies.set('year', year);
+
+      // this.props.authSuccess(res);
+
       console.log('>>> Authorized');
-      return <Redirect to='/readme'/>;
+      // return <Redirect to='/readme'/>;
     } else {
       alert('Try again')
     }
@@ -78,4 +82,18 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+function mapStateToProps(store) {
+  return {
+    token: store.token
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    authSuccess: (token) => {
+      dispatch(AUTHSUCCESS(token))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

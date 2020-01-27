@@ -1,0 +1,95 @@
+.container {
+    padding: 0 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.attributesBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.leftBlock {
+    margin-right: 50px;
+}
+
+.btnRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    width: 280px;
+    height: 25px;
+    background-color: lightgray;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+.button:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.topInput {
+    font-family: 'Montserrat', sans-serif;
+    width: 500px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0;
+    margin: 0 5px;
+    outline: 0 !important;
+}
+
+.input {
+    font-family: 'Montserrat', sans-serif;
+    width: 180px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0;
+    margin: 0 5px;
+    outline: 0 !important;
+}
+
+.selector {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0px;
+}
+
+.text {
+    font-size: 20px;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+.textEdit {
+    font-size: 20px;
+    padding: 0 10px;
+    font-weight: bold;
+    background-color: whitesmoke;
+    border-bottom: black 1px solid;
+}
+
+.attribute {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+
+.studentBox {
+    display: flex;
+    flex-direction: column;
+}

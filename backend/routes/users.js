@@ -10,6 +10,10 @@ router.get('/', function(req, res) {
 
 router.post('/search', async function(req, res) {
   try {
+    if (req.body.type === 'year') {
+      const result = await User.find({[req.body.type]: Number(req.body.query)});
+      await res.json({response: result});
+    }
     const result = await User.find({[req.body.type]: {$regex: new RegExp(req.body.query, 'i')}});
     await res.json({response: result});
   } catch (e) {
@@ -83,5 +87,19 @@ router.delete('/delete', async function(req, res) {
     await res.json({succeed: false});
   }
 });
+
+router.get ('/logout', async (req, res, next) => {
+  if (req.session.user) {
+    try {
+      await req.session.destroy ()
+      res.clearCookie ('user_sid')
+      res.redirect ('/')
+    } catch (error) {
+      next (error)
+    }
+  } else {
+    res.redirect ('/login')
+  }
+})
 
 module.exports = router;
