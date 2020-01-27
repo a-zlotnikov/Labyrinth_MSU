@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import FoundUser from './FoundUser/FoundUser';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import './UserList.css';
 const Cookies = require('js-cookie');
 
 class UserList extends Component {
@@ -89,18 +90,20 @@ class UserList extends Component {
 
   render() {
     return (
-        <div>
+        <div className={'container'}>
         {this.state.category === 'Преподаватель' ?
+
             <div>
-              <div><h1>Поиск</h1></div>
+              <div className={'title'}><h1>Поиск</h1></div>
               <div>
-                <select name="type" onChange={this.changeType}>
+                <select className={'selector'} name="type" onChange={this.changeType}>
                   <option>Группа</option>
                   <option>Фамилия</option>
                 </select>
-                <input value={this.state.query} onChange={this.changeQuery}/>
-                <div onClick={this.reset}>Сбросить</div>
-                {this.state.response.length !== 0 ? <div onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
+                {this.state.type === "group" ? <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
+                    <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>}
+                <div className={'button'} onClick={this.reset}>Сбросить</div>
+                {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
               </div>
               <div>
                 {this.state.error ?
