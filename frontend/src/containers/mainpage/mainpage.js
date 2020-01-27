@@ -17,8 +17,8 @@ class Mainpage extends Component {
   }
 
   render() {
-    console.log();
-    return ((this.state.isAdmin).includes(this.state.category)) ? (
+    // return ((this.state.isAdmin).includes(this.state.category)) ? (
+    return (Cookies.get('category') === 'Преподаватель') ? (
       <div>
         <Logo/>
         <OtherPage/>

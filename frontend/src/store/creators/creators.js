@@ -1,4 +1,4 @@
-import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD} from '../actions/actions';
+import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
 
 export const FULLFIELD = (field) => {
   return {
@@ -55,5 +55,12 @@ export const expField = (id) => {
     const result = await response.json();
 
     dispatch(EXPFIELD(result));
+  };
+};
+
+export const AUTHSUCCESS = (token) => {
+  return {
+    type: AUTH_SUCCESS,
+    token,
   };
 };

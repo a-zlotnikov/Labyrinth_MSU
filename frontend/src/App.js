@@ -12,6 +12,7 @@ import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+import {connect} from 'react-redux'
 const Cookies = require('js-cookie');
 
 class App extends Component {
@@ -103,5 +104,11 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(store) {
+  return {
+    token: store.token
+  }
+}
+
+export default connect(mapStateToProps)(App)
 // module.exports = Cookies;
