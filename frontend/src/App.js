@@ -10,33 +10,42 @@ import UserList from './components/UserList/UserList';
 import Documentation from './components/Documentation/Documentation';
 import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
+import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+import {connect} from 'react-redux'
+const Cookies = require('js-cookie');
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {
-        user: {
-          username: 'Reiko',
-          category: 'Преподаватель',
-        },
-      },
-      loading: false,
+      user: Cookies.get('user_id'),
+        // user: {
+      //     username: 'Reiko',
+      //     category: 'Преподаватель',
+      //   },
+      // },
+      loading: true,
     };
   }
 
   componentDidMount = async () => {
-    // this.setState({loading: true});
-    // const response = await fetch('/users');
-    // const result = await response.json();
-    // this.setState({user: result.user, loading: false});
+    this.setState({loading: true});
+    const response = await fetch('/users');
+    const result = await response.json();
+    this.setState({user: result.user, loading: false});
+  };
+
+  componentDidUpdate = async () => {
+    const response = await fetch('/users');
+    const result = await response.json();
+    this.setState({user: result.user, loading: false});
   };
 
   render() {
     return (this.state.loading === true) ? (<Layout>
-          <div>Loading...</div>
+        <Loader />
         </Layout>) :
         (this.state.user === undefined) ? (<Layout>
               <div><Route path={'/'} component={SignIn}/></div>
@@ -53,6 +62,7 @@ class App extends Component {
                       }}/>
                       <Switch>
                         <Route path={'/registration'} component={SignUp}/>
+
                         {/*<Route path={'/constructor'} component={Field}/>*/}
                         <Route path={'/constructor'} render={
                           (props)=>{
@@ -72,7 +82,14 @@ class App extends Component {
                             )
                           }
                         } />
-                        <Route exact path={'/results'} component={Results}/>
+                        <Route exact path={'/results'} render={(props) => {
+                          return (
+                            <div>
+                              <Results {...props} options={this.state.user.user}/>
+                            </div>
+                          );
+                        }}/>
+
                         <Route path={'/results/:id'} component={ResultDetail}/>
                         <Route path={'/users'} component={UserList}/>
                         <Route path={'/readme'} component={Documentation}/>
@@ -92,4 +109,11 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(store) {
+  return {
+    token: store.token
+  }
+}
+
+export default connect(mapStateToProps)(App)
+// module.exports = Cookies;

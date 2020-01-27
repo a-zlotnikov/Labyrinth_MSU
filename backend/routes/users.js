@@ -9,13 +9,10 @@ router.get('/', function(req, res) {
 });
 
 router.post('/search', async function(req, res) {
-  // console.log(req.body);
   try {
-    const result = await User.find({[req.body.type]: req.body.query});
-    // console.log(result);
+    const result = await User.find({[req.body.type]: {$regex: new RegExp(req.body.query, 'i')}});
     await res.json({response: result});
   } catch (e) {
-    // console.error(e);
     await res.json({response: false});
   }
 });
@@ -53,16 +50,25 @@ router.post('/signin', async function(req, res, next) {
       await res.json({logged_in: false});
     }
   } catch (e) {
-    console.error(e);
     await res.json({logged_in: false});
+  }
+});
+
+router.post('/edit', async function(req, res, next) {
+  try {
+    await User.findOneAndUpdate({_id: req.body.id}, req.body);
+    const user = await User.findById(req.body.id);
+    await res.json({succeeded: true});
+  } catch (e) {
+    await res.json({succeeded: false});
   }
 });
 
 router.post('/switch_status', async function(req, res) {
   try {
     const id = req.body.id;
-    const user = await User.findById({id});
-    await User.findOneAndUpdate({user}, {active: !user.active});
+    const user = await User.findById(id);
+    await User.findOneAndUpdate({_id: id}, {active: !user.active});
     await res.json({succeed: true});
   } catch (e) {
     await res.json({succeed: false});
@@ -71,11 +77,24 @@ router.post('/switch_status', async function(req, res) {
 
 router.delete('/delete', async function(req, res) {
   try {
-    console.log(req.body.id);
     await User.findOneAndDelete({_id: req.body.id});
     await res.json({succeed: true});
   } catch (e) {
     await res.json({succeed: false});
+  }
+});
+
+router.get ('/logout', async (req, res, next) => {
+  if (req.session.user) {
+    try {
+      await req.session.destroy ()
+      res.clearCookie ('user_sid')
+      res.redirect ('/')
+    } catch (error) {
+      next (error)
+    }
+  } else {
+    res.redirect ('/login')
   }
 })
 

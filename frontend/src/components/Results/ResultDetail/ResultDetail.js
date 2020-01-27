@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import classes from './ResultDetail.module.css';
+import Loader from '../../../containers/Loader/Loader';
 
 class ResultDetail extends Component {
   
@@ -8,7 +9,7 @@ class ResultDetail extends Component {
     
     this.state = {
       details: '',
-      loading: true
+      loading: true,
     };
   }
   
@@ -44,8 +45,25 @@ class ResultDetail extends Component {
         <p>Год: {this.state.details.year}</p>
         <p>Группа: {this.state.details.group}</p>
         <hr/>
+        <table width="100%" cellSpacing="0" border="1">
+          <thead>
+          <tr style={{textAlign:'center'}}>
+            <td>Время</td>
+            <td>Действие</td>
+          </tr>
+          </thead>
+          {this.state.details.result.map((timeAndDo, index) => {
+            return (
+              <tbody key={index}>
+              <tr style={{textAlign:'center'}}>
+                <td>{Object.keys(timeAndDo)}</td>
+                <td>{Object.values(timeAndDo)}</td>
+              </tr>
+              </tbody>);
+          })}
+        </table>
       </div>
-    ) : (<div>Loading...</div>)
+    ) :  (<Loader />);
   }
 }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   FULL_FIELD,
   ADD_VALUE,
@@ -7,6 +8,9 @@ import {
   NEW_VALUE,
   START_POS
 } from '../actions/actions';
+=======
+import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
+>>>>>>> d8cc8ea847f544145383d3c2bac0b8a90340087c
 
 export const FULLFIELD = (field) => {
   return {
@@ -86,5 +90,12 @@ export const expField = (id) => {
     const result = await response.json();
 
     dispatch(EXPFIELD(result));
+  };
+};
+
+export const AUTHSUCCESS = (token) => {
+  return {
+    type: AUTH_SUCCESS,
+    token,
   };
 };

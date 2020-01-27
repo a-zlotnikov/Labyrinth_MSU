@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import FoundUser from './FoundUser/FoundUser';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import './UserList.css';
+const Cookies = require('js-cookie');
 
 class UserList extends Component {
   constructor(props) {
@@ -10,12 +14,22 @@ class UserList extends Component {
       response: [],
       loading: false,
       error: false,
-      authorized: true,
+      category: Cookies.get('category'),
     };
   }
 
   componentDidMount = async () => {
     await this.searchAll();
+  };
+
+  exportToExcel = () => {
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const fileExtension = '.xlsx';
+    const ws = XLSX.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], {type: fileType});
+    FileSaver.saveAs(data, 'search_results' + fileExtension);
   };
 
   searchAll = async () => {
@@ -76,17 +90,22 @@ class UserList extends Component {
 
   render() {
     return (
-        <div>
-        {this.state.authorized ?
+        <div className={'container'}>
+        {this.state.category === 'Преподаватель' ?
+
             <div>
-              <div><h1>Поиск</h1></div>
+              <div className={'title'}><h1>Поиск</h1></div>
               <div>
-                <select name="type" onChange={this.changeType}>
+                <select className={'selector'} name="type" onChange={this.changeType}>
                   <option>Группа</option>
                   <option>Фамилия</option>
                 </select>
-                <input value={this.state.query} onChange={this.changeQuery}/>
-                <div onClick={this.reset}>Сбросить</div>
+                {this.state.type === "group" ? <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
+                    <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>}
+                <div className={'btnRow'}>
+                  <div className={'button'} onClick={this.reset}>Сбросить</div>
+                  {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}
+                </div>
               </div>
               <div>
                 {this.state.error ?
@@ -99,6 +118,7 @@ class UserList extends Component {
                                 <div>
                                   {this.state.response.map((result) => <FoundUser
                                       id = {result._id}
+                                      active = {result.active}
                                       surname = {result.surname}
                                       name = {result.name}
                                       category = {result.category}

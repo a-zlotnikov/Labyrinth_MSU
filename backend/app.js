@@ -5,7 +5,7 @@ const useErrorHandlers = require('./middleware/error-handlers');
 const app = express();
 useMiddleware(app);
 
-const resultsRouter = require('./routes/results')
+const resultsRouter = require('./routes/results');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 
