@@ -4,6 +4,7 @@ import lodash from 'lodash';
 import {Resizable, ResizableBox} from 'react-resizable';
 import classes from './Results.module.css';
 import Loader from '../../containers/Loader/Loader';
+const Cookies = require('js-cookie');
 
 class Results extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class Results extends Component {
     const cls = [classes.Option];
     const any = [classes.Option, classes.enable];
     
-    if (this.props.options.category === 'Преподаватель') {
+    if (Cookies.get('category') === 'Преподаватель') {
       cls.push(classes.enable);
     } else {
       cls.push(classes.disable);
