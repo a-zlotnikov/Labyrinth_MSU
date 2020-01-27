@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import lodash from 'lodash';
-import {Resizable, ResizableBox} from 'react-resizable';
+// import {Resizable, ResizableBox} from 'react-resizable';
 import classes from './Results.module.css';
 import Loader from '../../containers/Loader/Loader';
+import {saveAs} from 'file-saver';
+// const FileSaver = require('file-saver');
 const Cookies = require('js-cookie');
 
 class Results extends Component {
@@ -25,6 +27,7 @@ class Results extends Component {
     this.setState({
       results,
     });
+    console.log(this.state.results)
   };
   
   onFinder = (e) => {
@@ -43,6 +46,49 @@ class Results extends Component {
       sortField,
     });
   };
+  
+  onSaveTxt = async id => {
+    const response = await fetch('/results', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id}),
+    });
+    const results = await response.json();
+    const {
+      data, time, nameEnvironment, nameExperiment,
+      numberExperiment, typeExperiment, surname, name, age, gender, hand, year,
+      group, numberOfReinforcements,
+    } = results['0'];
+      let timeLine = [];
+    
+    results['0'].result.map(
+      (elem) => timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`));
+    
+    const elemFile = [
+      `${data}\n`,
+      `${time}\n`,
+      `${nameEnvironment}\n`,
+      `${nameExperiment}\n`,
+      `${numberExperiment}\n`,
+      `${typeExperiment}\n`,
+      `${surname}\n`,
+      `${name}\n`,
+      `${age}\n`,
+      `${gender}\n`,
+      `${hand}\n`,
+      `${year}\n`,
+      `${group}\n`,
+      `${numberOfReinforcements}\n`
+      ];
+    
+    const newFile = [...elemFile, ...timeLine];
+    const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
+    await saveAs(blob, `${results['0'].nameEnvironment}_${results['0'].nameEnvironment}`);
+  };
+  
+  onSaveXls = async id => {
+    // console.log(id)
+  }
   
   onDelete = async id => {
     if (this.props.options.category === 'Преподаватель') {
@@ -85,8 +131,10 @@ class Results extends Component {
             <table>
               <thead>
               <tr>
-                <th onClick={this.onSort.bind(this, 'pp')}>№ п/п</th>
                 <th onClick={this.onSort.bind(this, 'data')}>Дата</th>
+                <th onClick={this.onSort.bind(this, 'typeExperiment')}>Тип эксперемента</th>
+                <th onClick={this.onSort.bind(this, 'username')}>Идентификатор пользователя</th>
+  
                 <th onClick={this.onSort.bind(this, 'nameEnvironment')}>Название
                   эксперимента
                 </th>
@@ -96,7 +144,7 @@ class Results extends Component {
                 <th onClick={this.onSort.bind(this, 'nameIndividual')}>Имя
                   особи
                 </th>
-                <th colSpan="3">
+                <th colSpan="4">
                   Опции
                 </th>
               </tr>
@@ -105,19 +153,29 @@ class Results extends Component {
               {this.state.results.map((result, index) =>
                 <tr key={index} name={result._id}
                 >
-                  <td>{index + 1}</td>
                   <td>{result.data}</td>
+                  <td>{result.typeExperiment}</td>
+                  <td>{result.username}</td>
                   <td>{result.nameEnvironment}</td>
                   <td>{result.numberExperiment}</td>
                   <td>{result.nameIndividual}</td>
-                  <td className={any.join(' ')}
-                      onClick={() => this.props.history.push(
-                        '/results/' + result._id)}
+                  <td
+                    className={any.join(' ')}
+                    onClick={() => this.props.history.push(
+                      '/results/' + result._id)}
                   >Смотреть
                   </td>
-                  <td className={any.join(' ')}>Скачать</td>
-                  <td className={cls.join(' ')}
-                      onClick={this.onDelete.bind(this, result._id)}
+                  <td
+                    className={any.join(' ')}
+                    onClick={this.onSaveTxt.bind(this, result._id)}>Скачать txt
+                  </td>
+                  <td
+                    className={any.join(' ')}
+                    onClick={this.onSaveXls.bind(this, result._id)}>Скачать xls
+                  </td>
+                  <td
+                    className={cls.join(' ')}
+                    onClick={this.onDelete.bind(this, result._id)}
                   >Удалить
                   </td>
                 </tr>,
@@ -134,7 +192,7 @@ class Results extends Component {
         {/*  <span>Contents</span>*/}
         {/*</ResizableBox>*/}
       </div>
-    ) : (<Loader />);
+    ) : (<Loader/>);
   }
 }
 

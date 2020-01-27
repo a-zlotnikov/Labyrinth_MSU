@@ -12,24 +12,24 @@ import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+
 import {connect} from 'react-redux'
 const Cookies = require('js-cookie');
-
 class App extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
-      user: '',
-        // user: {
-      //     username: 'Reiko',
-      //     category: 'Преподаватель',
-      //   },
-      // },
-      loading: true,
+      // user: '',
+      user: {
+        user: 'Reiko',
+        category: 'Преподаватель',
+      },
+      
+      loading: false,
     };
   }
-
+  
   componentDidMount = async () => {
     this.setState({loading: true});
     const response = await fetch('/users');
@@ -46,13 +46,16 @@ class App extends Component {
 
   render() {
     return (this.state.loading === true) ? (<Layout>
-        <Loader />
+        <Loader/>
+      </Layout>) :
+      (this.state.user === undefined) ? (<Layout>
+          <div><Route path={'/'} component={SignIn}/></div>
         </Layout>) :
-        (this.state.user === undefined) ? (<Layout>
-              <div><Route path={'/'} component={SignIn}/></div>
-            </Layout>) :
-            (<Layout>
-                  <Router>
+        (<Layout>
+            <Router>
+              <div>
+                <Route render={(props) => {
+                  return (
                     <div>
                       <Route render={(props) => {
                         return (
@@ -104,9 +107,12 @@ class App extends Component {
                         }}/>
                       </Switch>
                     </div>
-                  </Router>
-                </Layout>
-            );
+                  );
+                }}/>
+              </div>
+            </Router>
+          </Layout>
+        );
   }
 }
 
