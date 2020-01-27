@@ -109,49 +109,6 @@ class App extends Component {
                     </div>
                   );
                 }}/>
-                <Switch>
-                  <Route path={'/registration'} component={SignUp}/>
-                  
-                  {/*<Route path={'/constructor'} component={Field}/>*/}
-                  <Route path={'/constructor'} render={
-                    (props) => {
-                      return (
-                        <div>
-                          <Field {...props} />
-                        </div>
-                      );
-                    }
-                  }/>
-                  <Route path={'/experiment/:id'} render={
-                    (props) => {
-                      return (
-                        <div>
-                          <Experiment {...props} />
-                        </div>
-                      );
-                    }
-                  }/>
-                  <Route exact path={'/results'} render={(props) => {
-                    return (
-                      <div>
-                        <Results {...props} options={this.state.user.user}/>
-                      </div>
-                    );
-                  }}/>
-                  
-                  <Route path={'/results/:id'} component={ResultDetail}/>
-                  <Route path={'/users'} component={UserList}/>
-                  <Route path={'/readme'} component={Documentation}/>
-                  
-                  <Route exact path={'/'} render={(props) => {
-                    return (
-                      <div>
-                        <Mainpage {...props} options={this.state.user.user}/>
-                        <SignIn/>
-                      </div>
-                    );
-                  }}/>
-                </Switch>
               </div>
             </Router>
           </Layout>
