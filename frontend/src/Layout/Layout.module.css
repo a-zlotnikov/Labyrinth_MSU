@@ -10,10 +10,11 @@ body {
 
 .Layout main {
     width: 1000px;
-    min-height: 650px;
+    min-height: 800px;
     margin: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     border-radius: 5px;
     background-color: #F5F5F5;
+    padding-bottom: 30px;
 }

@@ -4,6 +4,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import './UserList.css';
 const Cookies = require('js-cookie');
+const objectRenameKeys = require('object-rename-keys');
 
 class UserList extends Component {
   constructor(props) {
@@ -25,12 +26,37 @@ class UserList extends Component {
   exportToExcel = () => {
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
-    const ws = XLSX.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
+    const changesMap = {
+      active: 'Статус',
+      username: 'Идентификатор',
+      password: 'Пароль',
+      category: 'Категория',
+      surname: 'Фамилия',
+      name: 'Имя',
+      gender: 'Пол',
+      dob: 'Дата рождения',
+      hand: 'Рука',
+      group: 'Группа',
+      year: 'Год',
+    };
+    const translatedArray = this.state.response.map((i) => objectRenameKeys(i, changesMap));
+    const newArray = translatedArray.map(({_id, __v, ...keepAttrs}) => keepAttrs);
+    const ws = XLSX.utils.json_to_sheet(newArray); // Надо изменить формат данных (ключи по-русски и пр.)
     const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], {type: fileType});
     FileSaver.saveAs(data, 'search_results' + fileExtension);
   };
+
+  // exportToXLS = () => {
+  //   const fileType = 'application/vnd.ms-excel';
+  //   const fileExtension = '.xls';
+  //   const ws = XLS.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
+  //   const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+  //   const excelBuffer = XLS.write(wb, { bookType: 'xls', type: 'array' });
+  //   const data = new Blob([excelBuffer], {type: fileType});
+  //   FileSaver.saveAs(data, 'search_results' + fileExtension);
+  // };
 
   searchAll = async () => {
     let resp = await fetch('/users/search/all', {
@@ -51,6 +77,10 @@ class UserList extends Component {
       this.setState({type: 'group'})
     } else if (e.target.value === 'Фамилия') {
       this.setState({type: 'surname'})
+    } else if (e.target.value === 'Категория') {
+      this.setState({type: 'category'})
+    } else if (e.target.value === 'Год') {
+      this.setState({type: 'year'})
     }
     await this.search();
   };
@@ -99,9 +129,22 @@ class UserList extends Component {
                 <select className={'selector'} name="type" onChange={this.changeType}>
                   <option>Группа</option>
                   <option>Фамилия</option>
+                  <option>Год</option>
+                  <option>Категория</option>
                 </select>
-                {this.state.type === "group" ? <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
-                    <input className={'input'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>}
+                {this.state.type === "group" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите номер группы'}/> :
+                    this.state.type === "surname" ?
+                    <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>:
+                        this.state.type === "category" ?
+                            <select className={'selector'} value={this.state.query} onChange={this.changeQuery}>
+                              <option>Преподаватель</option>
+                              <option>Студент</option>
+                              <option>Дипломник</option>
+                            </select>:
+                            // <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип пользователя'}/>:
+                            this.state.type === "year" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите год'}/>:
+                            null
+                }
                 <div className={'btnRow'}>
                   <div className={'button'} onClick={this.reset}>Сбросить</div>
                   {this.state.response.length !== 0 ? <div className={'button'} onClick={this.exportToExcel}>Скачать результаты поиска в *.xlsx</div> : <div/>}

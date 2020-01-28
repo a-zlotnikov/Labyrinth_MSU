@@ -12,46 +12,62 @@ import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+
 import {connect} from 'react-redux'
 const Cookies = require('js-cookie');
-
 class App extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
-      user: Cookies.get('user_id'),
-        // user: {
-      //     username: 'Reiko',
-      //     category: 'Преподаватель',
-      //   },
-      // },
-      loading: true,
+      user: '',
+      logged_in: false,
+      loading: false,
     };
   }
 
+  handler = () => {
+    // console.log(this.state);
+    this.setState({logged_in: true, loading: false});
+    console.log(this.state)
+  };
+  
   componentDidMount = async () => {
     this.setState({loading: true});
     const response = await fetch('/users');
     const result = await response.json();
-    this.setState({user: result.user, loading: false});
+    // console.log(result);
+    if (result.user) {
+      this.setState({user: result.user, loading: false, logged_in: true});
+    } else {
+      this.setState({loading: false, logged_in: false})
+    }
   };
 
-  componentDidUpdate = async () => {
+  /*componentDidUpdate = async () => { // TODO: море фетчей
     const response = await fetch('/users');
     const result = await response.json();
     this.setState({user: result.user, loading: false});
-  };
+  };*/
 
   render() {
     return (this.state.loading === true) ? (<Layout>
-        <Loader />
+        <Loader/>
+      </Layout>) :
+      (this.state.logged_in === false) ? (<Layout>
+          <div><Route path={'/'} render={(props) => {
+            return (
+                <div>
+                  <SignIn {...props} handler={this.handler}/>
+                </div>
+            );
+          }}/></div>
         </Layout>) :
-        (this.state.user === undefined) ? (<Layout>
-              <div><Route path={'/'} component={SignIn}/></div>
-            </Layout>) :
-            (<Layout>
-                  <Router>
+        (<Layout>
+            <Router>
+              <div>
+                <Route render={(props) => {
+                  return (
                     <div>
                       <Route render={(props) => {
                         return (
@@ -103,9 +119,12 @@ class App extends Component {
                         }}/>
                       </Switch>
                     </div>
-                  </Router>
-                </Layout>
-            );
+                  );
+                }}/>
+              </div>
+            </Router>
+          </Layout>
+        );
   }
 }
 

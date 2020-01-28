@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import './SignUp.css';
+
 const moment = require('moment');
 const Cookies = require('js-cookie');
 
@@ -25,7 +27,6 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    this.generateUsername();
     this.generatePassword();
   }
 
@@ -33,32 +34,46 @@ class SignUp extends Component {
     this.setState({[e.target.name]: e.target.value});
   };
 
-  generateUsername = () => {
-    function getRandomLetter() {
-      let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-      return letters[(Math.floor(Math.random() * ((letters.length - 1) + 1)))];
-    }
-    const generatedUsername = moment().format('YYYYMM') + getRandomLetter() + getRandomLetter() + (Math.floor(Math.random() * (999 - 100 + 1)) + 100);
-    this.setState({username: generatedUsername});
-  };
-
   generatePassword = () => {
-    const generatedPassword = Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000;
+    const generatedPassword = Math.floor(
+        Math.random() * (99999999 - 10000000 + 1)) + 10000000;
     this.setState({password: generatedPassword});
   };
 
-  signUp = async() => {
+  signUp = async () => {
     const {active, username, password, category, surname, name, gender, dob, hand, group, year} = this.state;
     let body;
     if (this.state.category === 'Студент') {
-      body = {active, username, password, category, surname, name, gender, dob, hand, group, year}
+      body = {
+        active,
+        username,
+        password,
+        category,
+        surname,
+        name,
+        gender,
+        dob,
+        hand,
+        group,
+        year,
+      };
     } else {
-      body = {active, username, password, category, surname, name, gender, dob, hand}
+      body = {
+        active,
+        username,
+        password,
+        category,
+        surname,
+        name,
+        gender,
+        dob,
+        hand,
+      };
     }
     let resp = await fetch('/users/signup', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
     const res = await resp.json();
     this.setState({sending: true});
@@ -67,7 +82,7 @@ class SignUp extends Component {
       this.setState({created: true});
     } else {
       this.setState({sending: false});
-      this.setState({failed: true})
+      this.setState({failed: true});
     }
   };
 
@@ -87,112 +102,150 @@ class SignUp extends Component {
       failed: false,
       sending: false,
     });
-    this.generateUsername();
     this.generatePassword();
   };
 
   render() {
     return (
-        <div className={'container'}>
-        {Cookies.get('category') === 'Преподаватель' ?
+        <div className={'regContainer'}>
+          {Cookies.get('category') === 'Преподаватель' ?
               <div>
                 <div><h1>Создание пользователя</h1></div>
-
                 {this.state.created ?
                     <div>
                       <div><h2>Пользователь успешно создан</h2></div>
-                      <div onClick={this.resetForm}>Создать еще</div>
-                      <div>Вернуться в меню</div>
+                      <div className={'regText'} onClick={this.resetForm}>Создать еще</div>
+                      <Link className={'regText'} to={'/'}>Вернуться в меню</Link>
                     </div> :
                     <div>
-                      <div>
-                        <div>Идентификатор</div>
-                        <div><input name="username" value={this.state.username} onChange={this.changeValue}/><div className={'button'} onClick={this.generateUsername}>сгенерировать</div></div>
-                      </div>
-
-                      <div>
-                        <div>Пароль</div>
-                        <div><input name="password" value={this.state.password} onChange={this.changeValue}/><div className={'button'} onClick={this.generatePassword}>новый пароль</div></div>
-                      </div>
-
-                      <div>
-                        <div>Категория</div>
+                      <div className={'regAttributesBox'}>
                         <div>
-                          <select name="category" onChange={this.changeValue}>
-                            <option>Студент</option>
-                            <option>Дипломник</option>
-                            <option>Преподаватель</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div>Фамилия</div>
-                        <div><input name="surname" onChange={this.changeValue}/></div>
-                      </div>
-
-                      <div>
-                        <div>Имя</div>
-                        <div><input name="name" onChange={this.changeValue}/></div>
-                      </div>
-
-                      <div>
-                        <div>Пол</div>
-                        <div>
-                          <select name="gender" onChange={this.changeValue}>
-                            <option>Мужской</option>
-                            <option>Женский</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div>Дата рождения</div>
-                        <div><input name="dob" onChange={this.changeValue} type="date"/></div>
-                      </div>
-
-                      <div>
-                        <div>Левша/Правша</div>
-                        <div>
-                          <select name="hand" onChange={this.changeValue}>
-                            <option>Правша</option>
-                            <option>Левша</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      {this.state.category === 'Студент' ?
                           <div>
-
-                            <div>
-                              <div>Группа</div>
-                              <div><input name="group" onChange={this.changeValue}/></div>
+                            <div className={'regAttribute'}>Идентификатор:</div>
+                            <div><input className={'regInput regTextEdit'}
+                                        name="username"
+                                        value={this.state.username}
+                                        onChange={this.changeValue}/></div>
+                          </div>
+                          <div>
+                            <div className={'regAttribute'}>Пароль:</div>
+                            <div><input className={'regInput regTextEdit'}
+                                        name="password"
+                                        value={this.state.password}
+                                        onChange={this.changeValue}/>
+                              <div className={'regButton'}
+                                   onClick={this.generatePassword}>новый пароль
+                              </div>
                             </div>
+                          </div>
 
+                          <div>
+                            <div className={'regAttribute'}>Категория:</div>
                             <div>
-                              <div>Год</div>
-                              <div><input name="year" value={this.state.year} onChange={this.changeValue}/></div>
+                              <select className={'regTextEdit'} name="category"
+                                      onChange={this.changeValue}>
+                                <option>Студент</option>
+                                <option>Дипломник</option>
+                                <option>Преподаватель</option>
+                              </select>
                             </div>
+                          </div>
 
-                          </div> : <div/>
-                      }
+                          <div>
+                            <div className={'regAttribute'}>Фамилия:</div>
+                            <div><input className={'regInput regTextEdit'}
+                                        name="surname"
+                                        onChange={this.changeValue}/>
+                            </div>
+                          </div>
 
-                      <div className={'longButton'} onClick={this.signUp}>Добавить нового пользователя</div>
+                          <div>
+                            <div className={'regAttribute'}>Имя:</div>
+                            <div><input className={'regInput regTextEdit'}
+                                        name="name"
+                                        onChange={this.changeValue}/>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                            <div className={'regAttribute'}>Пол:</div>
+                            <div>
+                              <select className={'regTextEdit'} name="gender"
+                                      onChange={this.changeValue}>
+                                <option>Мужской</option>
+                                <option>Женский</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className={'regAttribute'}>Дата рождения:</div>
+                            <div><input className={'regInput regTextEdit'}
+                                        name="dob" onChange={this.changeValue}
+                                        type="date"/></div>
+                          </div>
+
+                          <div>
+                            <div className={'regAttribute'}>Левша/Правша:</div>
+                            <div>
+                              <select className={'regTextEdit'} name="hand"
+                                      onChange={this.changeValue}>
+                                <option>Правша</option>
+                                <option>Левша</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          {this.state.category === 'Студент' ?
+                              <div>
+
+                                <div>
+                                  <div className={'regAttribute'}>Группа:</div>
+                                  <div><input className={'regInput regTextEdit'}
+                                              name="group"
+                                              onChange={this.changeValue}/>
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <div className={'regAttribute'}>Год:</div>
+                                  <div><input className={'regInput regTextEdit'}
+                                              name="year"
+                                              value={this.state.year}
+                                              onChange={this.changeValue}/>
+                                  </div>
+                                </div>
+
+                              </div> : <div/>
+                          }
+                        </div>
+
+                      </div>
+
+
+                      < div className={'addUserButton'}
+                            onClick={this.signUp}>Добавить пользователя
+                      </div>
 
                       {this.state.sending ? <div>Подождите...</div> : <div/>}
 
                       {this.state.failed ?
                           <div>
-                            При создании пользователя произошла ошибка.<br/>Проверьте корректность введенных данных и подключение к базе данных.
+                            При создании пользователя произошла ошибка.<br/>Проверьте
+                            корректность введенных данных и подключение к базе
+                            данных.
                           </div> : <div/>
                       }
                     </div>
                 }
-              </div> :
-              <div>
-                <div><h2>Вы не авторизованы для создания новых пользователей</h2></div>
               </div>
-        }
+              :
+              <div>
+                <div><h2>Вы не авторизованы для создания новых
+                  пользователей</h2></div>
+              </div>
+          }
         </div>
     );
   }

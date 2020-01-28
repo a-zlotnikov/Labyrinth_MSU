@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
+import React, {
+  Component,
+} from 'react';
 import Logo from './Logo/Logo';
 import AdminPage from './adminPage/adminPage';
 import OtherPage from './otherPage/otherPage';
-const Cookies = require('js-cookie');
+import Cookies from 'js-cookie';
 
 class Mainpage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      // category: this.props.options.category,
-      category: Cookies.get('category'),
+      category: this.props.options,
       isAdmin: ['Преподаватель'],
       isNotAdmin: ['Студент', 'Диплонник'],
     };
   }
-
+  
   render() {
     // return ((this.state.isAdmin).includes(this.state.category)) ? (
     return (Cookies.get('category') === 'Преподаватель') ? (
@@ -24,10 +24,10 @@ class Mainpage extends Component {
         <OtherPage/>
         <AdminPage/>
       </div>
-    ) : (<div>
-      <Logo/>
-      <OtherPage/>
-    </div>
+    ) : (< div>
+        <Logo/>
+        <OtherPage/>
+      </div>
     );
   }
 }

@@ -35,6 +35,7 @@ class ResultDetail extends Component {
         <p>Название эксперимента: {this.state.details.nameExperiment}</p>
         <p>Номер опыта: {this.state.details.numberExperiment}</p>
         <p>Имя особи: {this.state.details.nameIndividual}</p>
+        <p>Тип эксперимента: {this.state.details.typeExperiment}</p>
         <hr/>
         <p>Эксперимент проведен</p>
         <p>Фамилия: {this.state.details.surname}</p>

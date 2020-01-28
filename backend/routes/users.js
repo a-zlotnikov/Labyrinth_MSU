@@ -4,12 +4,20 @@ const User = require('../models/user');
 // const bcryptjs = require('bcryptjs');
 
 /* GET users listing. */
-router.get('/', function(req, res) {
-  res.json(req.session);
+router.get('/', async function(req, res) {
+  try {
+    await res.json(req.session);
+  } catch (e) {
+    await res.json({success: false});
+  }
 });
 
 router.post('/search', async function(req, res) {
   try {
+    if (req.body.type === 'year') {
+      const result = await User.find({[req.body.type]: Number(req.body.query)});
+      await res.json({response: result});
+    }
     const result = await User.find({[req.body.type]: {$regex: new RegExp(req.body.query, 'i')}});
     await res.json({response: result});
   } catch (e) {

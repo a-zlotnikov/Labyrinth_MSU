@@ -7,8 +7,10 @@ const resultsSchema = new db.Schema({
   nameExperiment: String,
   numberExperiment: Number,
   nameIndividual: String,
+  typeExperiment: String,
   // user: {type: mongoose.Types.ObjectId, ref: 'User'},
   //---------------------------
+  username: String,
   surname: String,
   name: String,
   age: Number,
