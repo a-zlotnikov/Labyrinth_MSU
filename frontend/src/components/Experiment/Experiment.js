@@ -234,7 +234,7 @@ class Experiment extends Component {
             return <span>{element}</span>;
           })}</div>
           <div className={'expStstusBtnsContainer'}>
-            <StatusButtons class={'expStatusBtnsBox'} cellStatus={this.cellStatusExp}/>
+            <StatusButtons class={'expStatusBtnsBox'} btnClass={'expButton'} cellStatus={this.cellStatusExp}/>
           </div>
           <div>
             <button className={'expButton'} onClick={this.cellStatusExp}>Стартовая позиция</button>

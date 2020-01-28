@@ -219,7 +219,7 @@ class Field extends Component {
             </div>
 
             <div>
-              <StatusButtons class={'constStatusBtnsBox'} wall={this.state.wall} food={this.state.food} fakeFood={this.state.fakeFood} entry={this.state.entry} exit={this.state.exit} pedal={this.state.pedal} cellStatus={this.cellStatus}/>
+              <StatusButtons class={'constStatusBtnsBox'} btnClass={'constStatusBtn'} wall={this.state.wall} food={this.state.food} fakeFood={this.state.fakeFood} entry={this.state.entry} exit={this.state.exit} pedal={this.state.pedal} cellStatus={this.cellStatus}/>
             </div>
           </div>
           <div className={'constBottomBtnsBox unselectable'}>
