@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
   CHANGECOMP,
-  expField, MOVEDOWN, MOVELEFT, MOVERIGHT,
+  expField,
+  MOVEDOWN,
+  MOVELEFT,
+  MOVERIGHT,
   MOVEUP,
   NEWVALUE,
   STARTPOS,
@@ -23,7 +26,8 @@ class Experiment extends Component {
       pedal: false,
       changeStatus: false,
       startPosition: false,
-      expStatus: false
+      moveStatus: false,
+      expBegin: false,
     };
   }
 
@@ -114,41 +118,44 @@ class Experiment extends Component {
     this.setState(currentState);
   };
 
-
-
   startExp = () => {
-
-    this.setState({expStatus: !this.state.expStatus});
+    this.setState({expBegin: true});
 
     const move = (e) => {
 
       const x = e.key;
-
-      switch (x){
-        case 'ArrowUp':
-          e.preventDefault();
-          this.props.moveUp();
-          this.setState({expStatus: !this.state.expStatus});
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          this.props.moveDown();
-          this.setState({expStatus: !this.state.expStatus});
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          this.props.moveRight();
-          this.setState({expStatus: !this.state.expStatus});
-          break;
-        case 'ArrowLeft':
-          e.preventDefault();
-          this.props.moveLeft();
-          this.setState({expStatus: !this.state.expStatus});
-          break;
+      if (this.state.expBegin) {
+        switch (x) {
+          case 'ArrowUp':
+            e.preventDefault();
+            this.props.moveUp();
+            this.setState({expStatus: !this.state.moveStatus});
+            break;
+          case 'ArrowDown':
+            e.preventDefault();
+            this.props.moveDown();
+            this.setState({expStatus: !this.state.moveStatus});
+            break;
+          case 'ArrowRight':
+            e.preventDefault();
+            this.props.moveRight();
+            this.setState({expStatus: !this.state.moveStatus});
+            break;
+          case 'ArrowLeft':
+            e.preventDefault();
+            this.props.moveLeft();
+            this.setState({expStatus: !this.state.moveStatus});
+            break;
+        }
       }
     };
+
     document.onkeydown = move;
 
+  };
+
+  finishExp = () => {
+    this.setState({expBegin: false});
   };
 
   render() {
@@ -162,6 +169,7 @@ class Experiment extends Component {
           {this.state.exit && <div>Выход</div>}
           {this.state.pedal && <div>Педаль</div>}
           {this.state.startPosition && <div>Стартовая позиция</div>}
+          {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
 
           {this.props.expField.env &&
           this.props.expField.env.field.line.map((element, i) => {
@@ -210,6 +218,10 @@ class Experiment extends Component {
                 </div>
             );
           })}
+          <div>{this.props.expField.moves &&
+          this.props.expField.moves.map((element) => {
+            return <span>{element}</span>;
+          })}</div>
           <div>
             <StatusButtons cellStatus={this.cellStatusExp}/>
           </div>
@@ -217,7 +229,10 @@ class Experiment extends Component {
             <button onClick={this.cellStatusExp}>стартовая позиция</button>
           </div>
           <div>
-            <button onClick={this.startExp}>Начать эксперимент</button>
+            {this.state.expBegin ?
+                <button onClick={this.finishExp}>Завершить
+                  эксперимент</button> :
+                <button onClick={this.startExp}>Начать эксперимент</button>}
           </div>
         </div>
     );
@@ -242,20 +257,20 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(NEWVALUE(value, newValue));
     },
     startPos: (index) => {
-      dispatch(STARTPOS(index))
+      dispatch(STARTPOS(index));
     },
     moveUp: () => {
-      dispatch(MOVEUP())
+      dispatch(MOVEUP());
     },
     moveDown: () => {
-      dispatch(MOVEDOWN())
+      dispatch(MOVEDOWN());
     },
     moveRight: () => {
-      dispatch(MOVERIGHT())
+      dispatch(MOVERIGHT());
     },
     moveLeft: () => {
-      dispatch(MOVELEFT())
-  }
+      dispatch(MOVELEFT());
+    },
   };
 };
 
