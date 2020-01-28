@@ -8,10 +8,12 @@ useMiddleware(app);
 const resultsRouter = require('./routes/results');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
+const typesRouter = require('./routes/types');
 
 app.use('/results', resultsRouter);
 app.use('/users', usersRouter);
 app.use('/', indexRouter);
+app.use('/types', typesRouter);
 
 // Подключаем импортированные маршруты с определенным url префиксом.
 
