@@ -5,6 +5,8 @@ import classes from '../Results/Results.module.css';
 import CurrentType from '../Types/CurrentType/CurrentType';
 const Cookies = require('js-cookie');
 
+// TODO: Редактирование второй раз (висит предыдущий стэйт), ограничение нэйма при редактировании
+
 class Types extends Component {
   constructor(props) {
     super(props);
@@ -119,7 +121,7 @@ class Types extends Component {
               </div>
             </div> :
             <div>
-              <h2>их нет</h2>
+              <h2>Нет записей</h2>
             </div>
         }
       </div>
