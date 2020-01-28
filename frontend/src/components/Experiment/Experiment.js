@@ -126,18 +126,22 @@ class Experiment extends Component {
 
       switch (x){
         case 'ArrowUp':
+          e.preventDefault();
           this.props.moveUp();
           this.setState({expStatus: !this.state.expStatus});
           break;
         case 'ArrowDown':
+          e.preventDefault();
           this.props.moveDown();
           this.setState({expStatus: !this.state.expStatus});
           break;
         case 'ArrowRight':
+          e.preventDefault();
           this.props.moveRight();
           this.setState({expStatus: !this.state.expStatus});
           break;
         case 'ArrowLeft':
+          e.preventDefault();
           this.props.moveLeft();
           this.setState({expStatus: !this.state.expStatus});
           break;
