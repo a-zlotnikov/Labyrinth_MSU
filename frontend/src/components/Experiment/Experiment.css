@@ -14,7 +14,7 @@
     margin: auto;
 }
 
-.expStstusBtnsContainer {
+.expStatusBtnsContainer {
     margin-bottom: 30px;
 }
 
@@ -23,12 +23,16 @@
     width: 250px;
     height: 50px;
     border-radius: 5px;
-    background-color: lightgray;
     border: none;
+    background-color: lightgray;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
     font-size: 20px;
     outline: 0 !important;
-    margin: auto;
+}
+
+.expButton:hover {
+    cursor: pointer;
+    font-weight: bold;
 }

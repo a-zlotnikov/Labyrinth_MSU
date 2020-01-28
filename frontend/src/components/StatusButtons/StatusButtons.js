@@ -5,9 +5,9 @@ class StatusButtons extends Component {
     return (
         <div className={this.props.class}>
           {this.props.wall ?
-              <button className={'activeWall' + ' ' + this.props.btnClass}
+              <button className={this.props.btnClass + ' ' + 'activeWall'}
                       onClick={this.props.cellStatus}>стена</button> :
-              <button className={'wallBtn' + ' ' + this.props.btnClass}
+              <button className={this.props.btnClass + ' ' + 'wallBtn'}
                       onClick={this.props.cellStatus}>стена</button>}
           {this.props.food ?
               <button className={'activeFood' + ' ' + this.props.btnClass}
