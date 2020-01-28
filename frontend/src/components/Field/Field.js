@@ -171,7 +171,7 @@ class Field extends Component {
           {this.state.saveStatus && <div>Среда сохранена</div>}
           {this.state.nameStatus && <div>Введите имя</div>}
 
-          <div className={'constMainBox'}>
+          <div className={'constMainBox unselectable'}>
             <div className={'constFieldBox'}>
               {this.props.constructor &&
               this.props.constructor.map((element, i) => {
@@ -219,10 +219,10 @@ class Field extends Component {
             </div>
 
             <div>
-              <StatusButtons wall={this.state.wall} food={this.state.food} fakeFood={this.state.fakeFood} entry={this.state.entry} exit={this.state.exit} pedal={this.state.pedal} cellStatus={this.cellStatus}/>
+              <StatusButtons class={'constStatusBtnsBox'} wall={this.state.wall} food={this.state.food} fakeFood={this.state.fakeFood} entry={this.state.entry} exit={this.state.exit} pedal={this.state.pedal} cellStatus={this.cellStatus}/>
             </div>
           </div>
-          <div className={'constBottomBtnsBox'}>
+          <div className={'constBottomBtnsBox unselectable'}>
             <div>
               <button className={'constStatusBtn'} onClick={this.saveField}>Сохранить среду</button>
             </div>
