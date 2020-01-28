@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import classes from './Environment.module.css'
+import classes from './Environment.module.css';
 import Loader from '../../containers/Loader/Loader';
 import EnvironmentList from './EnvironmentList/EnvironmentList';
 
@@ -8,21 +8,39 @@ class Environment extends Component {
     super(props);
     
     this.state = {
-      results: ''
-    }
-    
-    
+      results: '',
+    };
   }
   
   componentDidMount = async () => {
     const response = await fetch('/environment');
     const results = await response.json();
     this.setState({
-      results
+      results,
     });
-    // console.log(this.state.results);
+    // console.log(results);
   };
   
+  onStartEx = async (props) => {
+    // console.log(props)
+    const response = await fetch(
+      '/startExp',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: props.name,
+          field: props.field,
+        }),
+      },
+    );
+    const result = await response.json();
+    // console.log(result)
+    this.props.history.push(`/experiment/${result.id}`);
+    
+  };
   
   onDelete = async id => {
     const response = await fetch('/environment', {
@@ -42,11 +60,12 @@ class Environment extends Component {
         <Loader/> :
         (<div className={classes.Environment}>
           <h1>Архив сред</h1>
-        {this.state.results.map((elem, index) =>
-          <EnvironmentList {...elem} key={index} onDelete={this.onDelete}/>
-        )}
-      </div>)
-    )
+          {this.state.results.map((elem, index) =>
+            <EnvironmentList {...elem} key={index} onDelete={this.onDelete}
+                             onStartEx={this.onStartEx}/>,
+          )}
+        </div>)
+    );
   }
 }
 
