@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import {
   FULL_FIELD,
   ADD_VALUE,
@@ -6,11 +6,13 @@ import {
   EXP_FIELD,
   CHANGE_COMP,
   NEW_VALUE,
-  START_POS
+  START_POS,
+  AUTH_SUCCESS,
+  AUTH_LOGOUT
 } from '../actions/actions';
-=======
-import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
->>>>>>> d8cc8ea847f544145383d3c2bac0b8a90340087c
+// =======
+// import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
+// >>>>>>> d8cc8ea847f544145383d3c2bac0b8a90340087c
 
 export const FULLFIELD = (field) => {
   return {
