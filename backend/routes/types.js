@@ -4,33 +4,38 @@ const Type = require('../models/type');
 
 router.get('/', async function(req, res) {
   try {
-    await res.json(req.session);
+    const result = await Type.find({});
+    await res.json({response: result});
   } catch (e) {
-    await res.json({success: false});
+    await res.json({response: false});
   }
 });
 
 router.post('/create', async function(req, res) {
   try {
-    await res.json(req.session);
+    const type = new Type({...req.body});
+    await type.save();
+    await res.json({succeeded: true});
   } catch (e) {
-    await res.json({success: false});
+    await res.json({succeeded: false});
   }
 });
 
 router.put('/edit', async function(req, res) {
   try {
-    await res.json(req.session);
+    await Type.findOneAndUpdate({_id: req.body.id}, req.body);
+    await res.json({succeeded: true});
   } catch (e) {
-    await res.json({success: false});
+    await res.json({succeeded: false});
   }
 });
 
 router.delete('/delete', async function(req, res) {
   try {
-    await res.json(req.session);
+    await Type.findOneAndDelete({_id: req.body.id});
+    await res.json({succeed: true});
   } catch (e) {
-    await res.json({success: false});
+    await res.json({succeed: false});
   }
 });
 
