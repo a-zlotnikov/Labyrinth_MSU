@@ -22,6 +22,7 @@ router.post('/create', async function(req, res) {
 });
 
 router.put('/edit', async function(req, res) {
+  console.log(req.body);
   try {
     await Type.findOneAndUpdate({_id: req.body.id}, req.body);
     await res.json({succeeded: true});
