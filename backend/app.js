@@ -8,7 +8,9 @@ useMiddleware(app);
 const resultsRouter = require('./routes/results');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
+const typesRouter = require('./routes/types');
 
+app.use('/types', typesRouter);
 app.use('/results', resultsRouter);
 app.use('/users', usersRouter);
 app.use('/', indexRouter);

@@ -6,9 +6,10 @@ const Cookies = require('js-cookie');
 
 class Navbar extends Component {
   logout = async () => {
-    let resp = await fetch('/users/logout', {
-      method: 'GET',
+    await fetch('/users/logout', {
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
+      // body: {}
     });
     Cookies.remove('user_id');
     Cookies.remove('username');
@@ -20,13 +21,13 @@ class Navbar extends Component {
     Cookies.remove('hand');
     Cookies.remove('group');
     Cookies.remove('year');
+    this.props.logout();
   };
 
   render() {
-    console.log(this.props.token);
     return (
       <div className={classes.Navbar}>
-        <Link class={'textNav'} to={'/'}>Главное меню</Link>
+        <Link className={'textNav'} to={'/'}>Главное меню</Link>
         <div className={'textNav'}>{Cookies.get('surname')} {Cookies.get('name')} / {Cookies.get('username')}
         <Link className={'textNav'} onClick={this.logout} to={'/'}>Выйти</Link>
         </div>

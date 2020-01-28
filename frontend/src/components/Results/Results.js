@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import lodash from 'lodash';
-// import {Resizable, ResizableBox} from 'react-resizable';
 import classes from './Results.module.css';
 import Loader from '../../containers/Loader/Loader';
 import {saveAs} from 'file-saver';
-// const FileSaver = require('file-saver');
 const Cookies = require('js-cookie');
 
 class Results extends Component {
@@ -19,8 +17,6 @@ class Results extends Component {
       loading: false,
       error: false,
       category: Cookies.get('category'),
-      
-      results: '',
       sort: 'asc',
       sortField: 'pp',
       row: null,
@@ -30,21 +26,6 @@ class Results extends Component {
   
   componentDidMount = async () => {
     await this.searchAll();
-  };
-  
-  // componentDidMount = async () => {
-  //   const response = await fetch('/results');
-  //   const results = await response.json();
-  //   this.setState({
-  //     results,
-  //   });
-  //   console.log(this.state.results)
-  // };
-  
-  onFinder = (e) => {
-    this.setState({
-      find: e.target.value,
-    });
   };
   
   onSort = sortField => {
@@ -67,12 +48,9 @@ class Results extends Component {
     const results = await response.json();
     const {
       data, time, nameEnvironment, nameExperiment,
-      numberExperiment, typeExperiment, surname, name, age, gender, hand, year,
+      numberExperiment, nameIndividual,typeExperiment, surname, name, age, gender, hand, year,
       group, numberOfReinforcements,
     } = results['0'];
-      let timeLine = [];
-    results['0'].result.map(
-      (elem) => timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`));
     
     const elemFile = [
       `${data}\n`,
@@ -88,24 +66,22 @@ class Results extends Component {
       `${hand}\n`,
       `${year}\n`,
       `${group}\n`,
-      `${numberOfReinforcements}\n`
-      ];
+      `${numberOfReinforcements}\n`,
+    ];
+    
+    let timeLine = [];
+    results['0'].result.map(
+      (elem) => timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`));
     
     const newFile = [...elemFile, ...timeLine];
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
-    await saveAs(blob, `${results['0'].nameEnvironment}_${results['0'].nameEnvironment}`);
+    await saveAs(blob,
+      `${nameEnvironment}_${typeExperiment}_${nameExperiment}_${numberExperiment}_${nameIndividual}`);
     
-    
-    console.log(newFile)
-  };
-  
-  onSaveXls = async id => {
-    // console.log(id)
   };
   
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
-      
       const response = await fetch('/results', {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
@@ -113,7 +89,7 @@ class Results extends Component {
       });
       const results = await response.json();
       this.setState({
-        response: results
+        response: results,
       });
     }
     
@@ -159,7 +135,7 @@ class Results extends Component {
     let resp = await fetch('/results/search', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({type, query})
+      body: JSON.stringify({type, query}),
     });
     const res = await resp.json();
     this.setState({loading: true});
@@ -182,10 +158,8 @@ class Results extends Component {
   };
   
   render() {
-    
     const cls = [classes.Option];
     const any = [classes.Option, classes.enable];
-    
     if (Cookies.get('category') === 'Преподаватель') {
       cls.push(classes.enable);
     } else {
@@ -201,19 +175,26 @@ class Results extends Component {
           <div className={'title'}><h1>Поиск</h1></div>
           <div>
             
-            <select className={'selector'} name="type" onChange={this.changeType}>
+            <select className={'selector'} name="type"
+                    onChange={this.changeType}>
               <option>Идентификатор пользователя</option>
               <option>Тип эксперимента</option>
               <option>Название эксперимента</option>
-              
+            
             </select>
-            {this.state.type === "username" ?
-              <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите идентификатор пользователя'}/> :
-              this.state.type === "typeExperiment" ?
-                <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип эксперемента'}/>:
-                this.state.type === "nameExperiment" ?
-           <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите название эксперемента'}/>:
-                    null
+            {this.state.type === 'username' ?
+              <input className={'topInput'} value={this.state.query}
+                     onChange={this.changeQuery}
+                     placeholder={'введите идентификатор пользователя'}/> :
+              this.state.type === 'typeExperiment' ?
+                <input className={'topInput'} value={this.state.query}
+                       onChange={this.changeQuery}
+                       placeholder={'введите тип эксперемента'}/> :
+                this.state.type === 'nameExperiment' ?
+                  <input className={'topInput'} value={this.state.query}
+                         onChange={this.changeQuery}
+                         placeholder={'введите название эксперемента'}/> :
+                  null
             }
             <div className={'btnRow'}>
               <div className={'button'} onClick={this.reset}>Сбросить</div>
@@ -224,8 +205,12 @@ class Results extends Component {
               <thead>
               <tr>
                 <th onClick={this.onSort.bind(this, 'data')}>Дата</th>
-                <th onClick={this.onSort.bind(this, 'typeExperiment')}>Тип эксперемента</th>
-                <th onClick={this.onSort.bind(this, 'username')}>Идентификатор пользователя</th>
+                <th onClick={this.onSort.bind(this, 'typeExperiment')}>Тип
+                  эксперемента
+                </th>
+                <th onClick={this.onSort.bind(this, 'username')}>Идентификатор
+                  пользователя
+                </th>
                 <th onClick={this.onSort.bind(this, 'nameExperiment')}>Название
                   эксперимента
                 </th>
@@ -235,7 +220,7 @@ class Results extends Component {
                 <th onClick={this.onSort.bind(this, 'nameIndividual')}>Имя
                   особи
                 </th>
-                <th colSpan="4">
+                <th colSpan="3">
                   Опции
                 </th>
               </tr>
@@ -258,11 +243,7 @@ class Results extends Component {
                   </td>
                   <td
                     className={any.join(' ')}
-                    onClick={this.onSaveTxt.bind(this, result._id)}>Скачать txt
-                  </td>
-                  <td
-                    className={any.join(' ')}
-                    onClick={this.onSaveXls.bind(this, result._id)}>Скачать xls
+                    onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
                   </td>
                   <td
                     className={cls.join(' ')}
@@ -275,13 +256,6 @@ class Results extends Component {
             </table>
           </div>
         </div>
-        {/*<ResizableBox*/}
-        {/*  width={200}*/}
-        {/*  height={200}*/}
-        {/*  draggableOpts={{...}}*/}
-        {/*  minConstraints={[100, 100]} maxConstraints={[300, 300]}>*/}
-        {/*  <span>Contents</span>*/}
-        {/*</ResizableBox>*/}
       </div>
     ) : (<Loader/>);
   }

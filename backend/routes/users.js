@@ -32,7 +32,7 @@ router.get('/search/all', async function(req, res) {
   } catch (e) {
     await res.json({response: false});
   }
-})
+});
 
 router.post('/signup', async function(req, res, next) { // Регистрация нового пользователя
   try {
@@ -92,18 +92,19 @@ router.delete('/delete', async function(req, res) {
   }
 });
 
-router.get ('/logout', async (req, res, next) => {
+router.post('/logout', async (req, res, next) => {
+  console.log(req.session);
   if (req.session.user) {
     try {
-      await req.session.destroy ()
-      res.clearCookie ('user_sid')
-      res.redirect ('/')
+      await req.session.destroy();
+      res.clearCookie('user_sid');
+      res.redirect('/');
     } catch (error) {
-      next (error)
+      next(error);
     }
   } else {
-    res.redirect ('/login')
+    res.redirect('/login');
   }
-})
+});
 
 module.exports = router;
