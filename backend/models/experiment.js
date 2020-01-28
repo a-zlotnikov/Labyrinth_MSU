@@ -5,8 +5,9 @@ const experimentSchema = new mongoose.Schema({
   envName: String,
   env: environmentSchema,
   expName: String,
-  individual: String,
-  expNumber: Number
+  animal: String,
+  expNumber: Number,
+  moves: Array
 });
 
 module.exports = {
