@@ -27,9 +27,11 @@ class App extends Component {
   }
 
   handler = () => {
-    // console.log(this.state);
     this.setState({logged_in: true, loading: false});
-    console.log(this.state)
+  };
+
+  logout = () => {
+    this.setState({logged_in: false, loading: false});
   };
   
   componentDidMount = async () => {
@@ -72,7 +74,7 @@ class App extends Component {
                       <Route render={(props) => {
                         return (
                             <div>
-                              <Navbar {...props} options={this.state.user.user}/>
+                              <Navbar {...props} logout={this.logout} options={this.state.user.user}/>
                             </div>
                         );
                       }}/>
