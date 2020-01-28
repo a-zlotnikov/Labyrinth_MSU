@@ -120,10 +120,13 @@ export default function expReducer(state = initialState, action) {
       let prevIndex;
       let newIndex;
       let walls = [];
+      let entry = [];
       expUpField.env.field.line.map((comp) => {
         line: comp.line.map(elem => {
           if (elem.wall) {
             walls.push(elem.index);
+          } else if (elem.entry){
+            entry.push(elem.index)
           }
         });
       });
@@ -142,7 +145,8 @@ export default function expReducer(state = initialState, action) {
               let prevIndexNum = Number(newIndexArray.join(''));
               let newIndexNum = Number(newIndexArray.join('')) - 1;
               if (newIndexNum === 0 ||
-                  walls.indexOf(`${letter}${newIndexNum}`) !== -1) {
+                  walls.indexOf(`${letter}${newIndexNum}`) !== -1 ||
+                  entry.indexOf(`${letter}${newIndexNum}`) !== -1) {
                 newIndex = `${letter}${prevIndexNum}`;
               } else {
                 newIndex = `${letter}${newIndexNum}`;
@@ -191,10 +195,13 @@ export default function expReducer(state = initialState, action) {
       let prevIndexDown;
       let newIndexDown;
       let wallsDown = [];
+      let exit = [];
       expDownField.env.field.line.map((comp) => {
         line: comp.line.map(elem => {
           if (elem.wall) {
             wallsDown.push(elem.index);
+          } else if (elem.exit){
+            exit.push(elem.index)
           }
         });
       });
@@ -209,7 +216,8 @@ export default function expReducer(state = initialState, action) {
               let newIndexNum = Number(newIndexArray.join('')) + 1;
 
               if (newIndexNum > 11 ||
-                  wallsDown.indexOf(`${letter}${newIndexNum}`) !== -1) {
+                  wallsDown.indexOf(`${letter}${newIndexNum}`) !== -1 ||
+                  exit.indexOf(`${letter}${newIndexNum}`) !== -1) {
                 newIndexDown = `${letter}${prevIndexNum}`;
               } else {
                 newIndexDown = `${letter}${newIndexNum}`;

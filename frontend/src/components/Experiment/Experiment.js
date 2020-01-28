@@ -165,6 +165,9 @@ class Experiment extends Component {
                 <div key={`${element} ${i}`}>{element.line.map(component => {
                   let action;
                   switch (true) {
+                    case component.start:
+                      action = 'start comp';
+                      break;
                     case component.wall:
                       action = 'wall comp';
                       break;
@@ -182,9 +185,6 @@ class Experiment extends Component {
                       break;
                     case component.pedal:
                       action = 'pedal comp';
-                      break;
-                    case component.start:
-                      action = 'start comp';
                       break;
                     default:
                       action = 'comp';
