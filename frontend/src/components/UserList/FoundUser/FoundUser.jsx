@@ -43,8 +43,9 @@ class FoundUser extends Component {
   };
 
   switchStatus = async (e) => {
+    console.log('switching')
     this.setState({saved: null});
-    const id = e.target.parentElement.parentElement.parentElement.id;
+    const id = this.state.id;
     let resp = await fetch('/users/switch_status', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
