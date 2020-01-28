@@ -203,12 +203,6 @@ class Field extends Component {
                         case component.pedal:
                           action = 'pedal comp';
                           break;
-                        case component.lamp:
-                          action = 'lamp comp';
-                          break;
-                        case component.sound:
-                          action = 'sound comp';
-                          break;
                         default:
                           action = 'comp';
                           break;

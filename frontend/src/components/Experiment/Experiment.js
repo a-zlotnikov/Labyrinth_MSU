@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {CHANGECOMP, expField, NEWVALUE, STARTPOS} from '../../store/creators/creators';
+import {
+  CHANGECOMP,
+  expField, MOVEDOWN, MOVELEFT, MOVERIGHT,
+  MOVEUP,
+  NEWVALUE,
+  STARTPOS,
+} from '../../store/creators/creators';
 import '../Field/Field.css';
 import StatusButtons from '../StatusButtons/StatusButtons';
 
@@ -15,10 +21,9 @@ class Experiment extends Component {
       entry: false,
       exit: false,
       pedal: false,
-      lamp: false,
-      sound: false,
       changeStatus: false,
       startPosition: false,
+      expStatus: false
     };
   }
 
@@ -62,12 +67,6 @@ class Experiment extends Component {
       case this.state.pedal:
         this.props.newComp(e.target.id, 'pedal');
         break;
-      case this.state.lamp:
-        this.props.newComp(e.target.id, 'lamp');
-        break;
-      case this.state.sound:
-        this.props.newComp(e.target.id, 'sound');
-        break;
       case this.state.startPosition:
         this.props.startPos(e.target.id);
         break;
@@ -99,12 +98,6 @@ class Experiment extends Component {
       case 'педаль':
         translate = 'pedal';
         break;
-      case 'лампочка':
-        translate = 'lamp';
-        break;
-      case 'звук':
-        translate = 'sound';
-        break;
       case 'стартовая позиция':
         translate = 'startPosition';
         break;
@@ -121,24 +114,40 @@ class Experiment extends Component {
     this.setState(currentState);
   };
 
-  // startExp = () => {
-  //   const getValue = (e) => {
-  //
-  //     const x = e.key;
-  //     const regex = /[\u0400-\u04FF0-9]+/g;
-  //     const match = regex.exec(x);
-  //     if (x === 'Backspace') {
-  //       this.props.newValue(prevValue, null);
-  //     } else if (match) {
-  //       this.props.newValue(prevValue, x);
-  //       this.setState({changeStatus: !this.state.changeStatus})
-  //     }
-  //   };
-  //   document.onkeydown = getValue;
-  // };
+
+
+  startExp = () => {
+
+    this.setState({expStatus: !this.state.expStatus});
+
+    const move = (e) => {
+
+      const x = e.key;
+
+      switch (x){
+        case 'ArrowUp':
+          this.props.moveUp();
+          this.setState({expStatus: !this.state.expStatus});
+          break;
+        case 'ArrowDown':
+          this.props.moveDown();
+          this.setState({expStatus: !this.state.expStatus});
+          break;
+        case 'ArrowRight':
+          this.props.moveRight();
+          this.setState({expStatus: !this.state.expStatus});
+          break;
+        case 'ArrowLeft':
+          this.props.moveLeft();
+          this.setState({expStatus: !this.state.expStatus});
+          break;
+      }
+    };
+    document.onkeydown = move;
+
+  };
 
   render() {
-    console.log(this.props.expField);
     return (
         <div className='board'>
 
@@ -148,10 +157,8 @@ class Experiment extends Component {
           {this.state.entry && <div>Вход</div>}
           {this.state.exit && <div>Выход</div>}
           {this.state.pedal && <div>Педаль</div>}
-          {this.state.lamp && <div>Лампочка</div>}
-          {this.state.sound && <div>Звук</div>}
+          {this.state.startPosition && <div>Стартовая позиция</div>}
 
-          {/*{this.props.expField._id && this.props.expField._id}*/}
           {this.props.expField.env &&
           this.props.expField.env.field.line.map((element, i) => {
             return (
@@ -175,12 +182,6 @@ class Experiment extends Component {
                       break;
                     case component.pedal:
                       action = 'pedal comp';
-                      break;
-                    case component.lamp:
-                      action = 'lamp comp';
-                      break;
-                    case component.sound:
-                      action = 'sound comp';
                       break;
                     case component.start:
                       action = 'start comp';
@@ -211,6 +212,9 @@ class Experiment extends Component {
           <div>
             <button onClick={this.cellStatusExp}>стартовая позиция</button>
           </div>
+          <div>
+            <button onClick={this.startExp}>Начать эксперимент</button>
+          </div>
         </div>
     );
   }
@@ -235,7 +239,19 @@ const mapDispatchToProps = (dispatch) => {
     },
     startPos: (index) => {
       dispatch(STARTPOS(index))
-    }
+    },
+    moveUp: () => {
+      dispatch(MOVEUP())
+    },
+    moveDown: () => {
+      dispatch(MOVEDOWN())
+    },
+    moveRight: () => {
+      dispatch(MOVERIGHT())
+    },
+    moveLeft: () => {
+      dispatch(MOVELEFT())
+  }
   };
 };
 
