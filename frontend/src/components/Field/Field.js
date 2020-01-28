@@ -71,27 +71,21 @@ class Field extends Component {
     switch (e.target.innerText) {
       case 'стена':
         translate = 'wall';
-        e.target.classList.toggle('activeWall');
         break;
       case 'кормушка':
         translate = 'food';
-        e.target.classList.toggle('activeFood');
         break;
       case 'ложная кормушка':
         translate = 'fakeFood';
-        e.target.classList.toggle('activeFakeFood');
         break;
       case 'вход':
         translate = 'entry';
-        e.target.classList.toggle('activeEntry');
         break;
       case 'выход':
         translate = 'exit';
-        e.target.classList.toggle('activeExit');
         break;
       case 'педаль':
         translate = 'pedal';
-        e.target.classList.toggle('activePedal');
         break;
     }
 
@@ -207,7 +201,6 @@ class Field extends Component {
                           action = 'comp';
                           break;
                       }
-
                       return (
                           <span key={component.index}
                                 id={component.index}
@@ -226,7 +219,7 @@ class Field extends Component {
             </div>
 
             <div>
-              <StatusButtons cellStatus={this.cellStatus}/>
+              <StatusButtons wall={this.state.wall} food={this.state.food} fakeFood={this.state.fakeFood} entry={this.state.entry} exit={this.state.exit} pedal={this.state.pedal} cellStatus={this.cellStatus}/>
             </div>
           </div>
           <div className={'constBottomBtnsBox'}>
