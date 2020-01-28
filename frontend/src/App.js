@@ -12,6 +12,7 @@ import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+import Types from './components/Types/Types';
 
 import {connect} from 'react-redux'
 const Cookies = require('js-cookie');
@@ -79,6 +80,7 @@ class App extends Component {
                         );
                       }}/>
                       <Switch>
+                        <Route path={'/types'} component={Types}/>
                         <Route path={'/registration'} component={SignUp}/>
 
                         {/*<Route path={'/constructor'} component={Field}/>*/}
