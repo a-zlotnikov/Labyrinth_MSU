@@ -12,6 +12,7 @@ import Results from './components/Results/Results';
 import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
+import Types from './components/Types/Types';
 
 import {connect} from 'react-redux'
 const Cookies = require('js-cookie');
@@ -27,9 +28,11 @@ class App extends Component {
   }
 
   handler = () => {
-    // console.log(this.state);
     this.setState({logged_in: true, loading: false});
-    console.log(this.state)
+  };
+
+  logout = () => {
+    this.setState({logged_in: false, loading: false});
   };
   
   componentDidMount = async () => {
@@ -72,11 +75,12 @@ class App extends Component {
                       <Route render={(props) => {
                         return (
                             <div>
-                              <Navbar {...props} options={this.state.user.user}/>
+                              <Navbar {...props} logout={this.logout} options={this.state.user.user}/>
                             </div>
                         );
                       }}/>
                       <Switch>
+                        <Route path={'/types'} component={Types}/>
                         <Route path={'/registration'} component={SignUp}/>
 
                         {/*<Route path={'/constructor'} component={Field}/>*/}

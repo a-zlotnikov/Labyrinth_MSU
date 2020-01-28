@@ -1,4 +1,18 @@
-import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
+// <<<<<<< HEAD
+import {
+  FULL_FIELD,
+  ADD_VALUE,
+  CHANGE_VALUE,
+  EXP_FIELD,
+  CHANGE_COMP,
+  NEW_VALUE,
+  START_POS,
+  AUTH_SUCCESS,
+  AUTH_LOGOUT
+} from '../actions/actions';
+// =======
+// import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
+// >>>>>>> d8cc8ea847f544145383d3c2bac0b8a90340087c
 
 export const FULLFIELD = (field) => {
   return {
@@ -28,6 +42,29 @@ export const EXPFIELD = (field) => {
     type: EXP_FIELD,
     field,
   };
+};
+
+export const CHANGECOMP = (index, newComp) => {
+  return {
+    type: CHANGE_COMP,
+    index,
+    newComp
+  }
+};
+
+export const NEWVALUE = (index, newValue) => {
+  return {
+    type: NEW_VALUE,
+    index,
+    newValue
+  };
+};
+
+export const STARTPOS = (index) => {
+  return {
+    type: START_POS,
+    index
+  }
 };
 
 export const fetchField = () => {

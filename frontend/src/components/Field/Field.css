@@ -57,6 +57,11 @@
     color: black;
 }
 
+.start {
+    background-color: black;
+    color: white;
+}
+
 b {
     display: flex;
     justify-content: center;
