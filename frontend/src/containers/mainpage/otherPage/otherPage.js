@@ -7,7 +7,7 @@ class OtherPage extends Component {
     return (
       <div className={classes.OtherPage}>
         <Link to={'/constructor'}>Конструктор</Link>
-        <Link to={'/fields'}>Архив сред</Link>
+        <Link to={'/environment'}>Архив сред</Link>
         <Link to={'/results'}>Архив экспериментов</Link>
       </div>
     );

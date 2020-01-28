@@ -13,8 +13,10 @@ import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
 import Types from './components/Types/Types';
+import Video from './components/Webcam/Webcam';
 
 import {connect} from 'react-redux'
+import Environment from './components/Environment/Environment';
 const Cookies = require('js-cookie');
 class App extends Component {
   constructor(props) {
@@ -113,7 +115,9 @@ class App extends Component {
                         <Route path={'/results/:id'} component={ResultDetail}/>
                         <Route path={'/users'} component={UserList}/>
                         <Route path={'/readme'} component={Documentation}/>
-
+                        <Route path={'/webcam'} component={Video}/>
+                        <Route path={'/environment'} component={Environment}/>
+  
                         <Route exact path={'/'} render={(props) => {
                           return (
                               <div>
