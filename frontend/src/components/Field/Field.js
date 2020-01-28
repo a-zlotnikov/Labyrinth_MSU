@@ -15,8 +15,6 @@ class Field extends Component {
       entry: false,
       exit: false,
       pedal: false,
-      lamp: false,
-      sound: false,
       fieldName: '',
       saveStatus: false,
       nameStatus: false
@@ -62,12 +60,6 @@ class Field extends Component {
       case this.state.pedal:
         this.props.action(e.target.id, 'pedal');
         break;
-      case this.state.lamp:
-        this.props.action(e.target.id, 'lamp');
-        break;
-      case this.state.sound:
-        this.props.action(e.target.id, 'sound');
-        break;
       default:
         this.changeValue(e.target.id);
         break;
@@ -94,12 +86,6 @@ class Field extends Component {
         break;
       case 'педаль':
         translate = 'pedal';
-        break;
-      case 'лампочка':
-        translate = 'lamp';
-        break;
-      case 'звук':
-        translate = 'sound';
         break;
     }
 
@@ -189,8 +175,6 @@ class Field extends Component {
           {this.state.entry && <div>Вход</div>}
           {this.state.exit && <div>Выход</div>}
           {this.state.pedal && <div>Педаль</div>}
-          {this.state.lamp && <div>Лампочка</div>}
-          {this.state.sound && <div>Звук</div>}
           {this.state.fieldName && this.state.fieldName}
           {this.state.saveStatus && <div>Среда сохранена</div>}
           {this.state.nameStatus && <div>Введите имя</div>}
@@ -218,12 +202,6 @@ class Field extends Component {
                       break;
                     case component.pedal:
                       action = 'pedal comp';
-                      break;
-                    case component.lamp:
-                      action = 'lamp comp';
-                      break;
-                    case component.sound:
-                      action = 'sound comp';
                       break;
                     default:
                       action = 'comp';
