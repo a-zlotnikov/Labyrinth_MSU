@@ -11,15 +11,77 @@
     height: 40px;
 }
 
-.comp {
+.constInput {
+    font-family: 'Montserrat', sans-serif;
+    width: 380px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0;
+    margin-top: 35px;
+    outline: 0 !important;
     text-align: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid black;
+}
+
+.comp {
+    background-color: lightgray;
+    text-align: center;
+    width: 45px;
+    height: 45px;
+    border: none;
+    box-sizing: border-box;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.constMainBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 30px 0;
+}
+
+.constFieldBox {
+    width: 60%;
+}
+
+.constStatusBtnsBox {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-right: 30px;
+}
+
+.constStatusBtn {
+    display: flex;
+    width: 250px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: lightgray;
+    border: none;
+    margin: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    outline: 0 !important;
+}
+
+.constStatusBtn:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.constBottomBtnsBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.comp:hover {
+    cursor: pointer;
 }
 
 .wall {
-    background-color: blue;
+    background-color: #4050ff;
     color: white;
 }
 
@@ -29,12 +91,12 @@
 }
 
 .fakeFood {
-    background-color: violet;
+    background-color: #a3f;
     color: black;
 }
 
 .entry {
-    background-color: green;
+    background-color: #0ea600;
     color: black;
 }
 
@@ -45,15 +107,6 @@
 
 .pedal {
     background-color: lemonchiffon;
-    color: black;
-}
-.lamp {
-    background-color: purple;
-    color: white;
-}
-
-.sound {
-    background-color: red;
     color: black;
 }
 
@@ -67,3 +120,67 @@ b {
     justify-content: center;
     align-items: center;
 }
+
+.wallBtn {
+    background-color: #8c96ff;
+}
+
+.activeWall {
+    background-color: #4050ff;
+    font-size: 24px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.foodBtn {
+    background-color: #ffd47f;
+}
+
+.activeFood {
+    background-color: orange;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.fakeFoodBtn {
+    background-color: #d599ff;
+}
+
+.activeFakeFood {
+    background-color: #a3f;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.entryBtn {
+    background-color: #7fd977;
+}
+
+.activeEntry {
+    background-color: #0ea600;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.exitBtn {
+    background-color: #d9f5ff;
+}
+
+.activeExit {
+    background-color: lightblue;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.pedalBtn {
+    background-color: #fffef7;
+}
+
+.activePedal {
+    background-color: lemonchiffon;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+
