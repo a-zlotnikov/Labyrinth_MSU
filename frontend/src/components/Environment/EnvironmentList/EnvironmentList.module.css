@@ -1,0 +1,32 @@
+.EnvironmentList {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+    /*margin-left: 20%;*/
+/*top:10px;*/
+}
+
+.title {
+    padding: 5px 10px;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    width: 200px;
+    text-align: center;
+}
+
+.menu {
+    padding: 5px 10px;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    width: 200px;
+    text-align: center;
+}
+
+.menu:hover {
+    font-weight: bold;
+}
+
+.menu:active {
+    background-color: lightgrey;
+}
+
