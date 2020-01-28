@@ -15,11 +15,9 @@ class Field extends Component {
       entry: false,
       exit: false,
       pedal: false,
-      lamp: false,
-      sound: false,
       fieldName: '',
       saveStatus: false,
-      nameStatus: false
+      nameStatus: false,
     };
   }
 
@@ -62,12 +60,6 @@ class Field extends Component {
       case this.state.pedal:
         this.props.action(e.target.id, 'pedal');
         break;
-      case this.state.lamp:
-        this.props.action(e.target.id, 'lamp');
-        break;
-      case this.state.sound:
-        this.props.action(e.target.id, 'sound');
-        break;
       default:
         this.changeValue(e.target.id);
         break;
@@ -79,27 +71,27 @@ class Field extends Component {
     switch (e.target.innerText) {
       case 'стена':
         translate = 'wall';
+        e.target.classList.toggle('activeWall');
         break;
       case 'кормушка':
         translate = 'food';
+        e.target.classList.toggle('activeFood');
         break;
       case 'ложная кормушка':
         translate = 'fakeFood';
+        e.target.classList.toggle('activeFakeFood');
         break;
       case 'вход':
         translate = 'entry';
+        e.target.classList.toggle('activeEntry');
         break;
       case 'выход':
         translate = 'exit';
+        e.target.classList.toggle('activeExit');
         break;
       case 'педаль':
         translate = 'pedal';
-        break;
-      case 'лампочка':
-        translate = 'lamp';
-        break;
-      case 'звук':
-        translate = 'sound';
+        e.target.classList.toggle('activePedal');
         break;
     }
 
@@ -123,7 +115,7 @@ class Field extends Component {
   saveField = async () => {
     this.setState({
       nameStatus: false,
-      saveStatus: false
+      saveStatus: false,
     });
     if (this.state.fieldName.length > 0) {
       const response = await fetch(
@@ -144,13 +136,13 @@ class Field extends Component {
         this.setState({saveStatus: true});
       }
     } else {
-      this.setState({nameStatus: true})
+      this.setState({nameStatus: true});
     }
   };
 
   startExperiment = async () => {
 
-    const response = await fetch (
+    const response = await fetch(
         '/startExp',
         {
           method: 'POST',
@@ -165,94 +157,91 @@ class Field extends Component {
     );
     const result = await response.json();
     console.log(result);
-  if(result.id){
-    this.props.history.push(`/experiment/${result.id}`)
-  } else {
-    this.setState({nameStatus: true})
-  }
+    if (result.id) {
+      this.props.history.push(`/experiment/${result.id}`);
+    } else {
+      this.setState({nameStatus: true});
+    }
 
-   // if(this.state.saveStatus){
+    // if(this.state.saveStatus){
     //
     // }
     // this.props.history.push('/experiment/123')
   };
 
-
   render() {
 
     return (
         <div className='board'>
-          <input onChange={this.fieldName} value={this.state.fieldName}/>
-          {this.state.wall && <div>Стена</div>}
-          {this.state.food && <div>Кормушка</div>}
-          {this.state.fakeFood && <div>Ложная кормушка</div>}
-          {this.state.entry && <div>Вход</div>}
-          {this.state.exit && <div>Выход</div>}
-          {this.state.pedal && <div>Педаль</div>}
-          {this.state.lamp && <div>Лампочка</div>}
-          {this.state.sound && <div>Звук</div>}
-          {this.state.fieldName && this.state.fieldName}
+          <input className={'constInput'} onChange={this.fieldName} value={this.state.fieldName} placeholder={'Введите имя среды'}/>
           {this.state.saveStatus && <div>Среда сохранена</div>}
           {this.state.nameStatus && <div>Введите имя</div>}
 
-          {this.props.constructor &&
-          this.props.constructor.map((element, i) => {
-            return (
-                <div key={`${element} ${i}`}>{element.line.map(component => {
-                  let action;
-                  switch (true) {
-                    case component.wall:
-                      action = 'wall comp';
-                      break;
-                    case component.food:
-                      action = 'food comp';
-                      break;
-                    case component.fakeFood:
-                      action = 'fakeFood comp';
-                      break;
-                    case component.entry:
-                      action = 'entry comp';
-                      break;
-                    case component.exit:
-                      action = 'exit comp';
-                      break;
-                    case component.pedal:
-                      action = 'pedal comp';
-                      break;
-                    case component.lamp:
-                      action = 'lamp comp';
-                      break;
-                    case component.sound:
-                      action = 'sound comp';
-                      break;
-                    default:
-                      action = 'comp';
-                      break;
-                  }
+          <div className={'constMainBox'}>
+            <div className={'constFieldBox'}>
+              {this.props.constructor &&
+              this.props.constructor.map((element, i) => {
+                return (
+                    <div key={`${element} ${i}`}>{element.line.map(component => {
+                      let action;
+                      switch (true) {
+                        case component.wall:
+                          action = 'wall comp';
+                          break;
+                        case component.food:
+                          action = 'food comp';
+                          break;
+                        case component.fakeFood:
+                          action = 'fakeFood comp';
+                          break;
+                        case component.entry:
+                          action = 'entry comp';
+                          break;
+                        case component.exit:
+                          action = 'exit comp';
+                          break;
+                        case component.pedal:
+                          action = 'pedal comp';
+                          break;
+                        case component.lamp:
+                          action = 'lamp comp';
+                          break;
+                        case component.sound:
+                          action = 'sound comp';
+                          break;
+                        default:
+                          action = 'comp';
+                          break;
+                      }
 
-                  return (
-                      <span key={component.index}
-                            id={component.index}
-                            className={action}
-                            onClick={this.action}
-                      >
+                      return (
+                          <span key={component.index}
+                                id={component.index}
+                                className={action}
+                                onClick={this.action}
+                          >
                         {component.value ?
                             <b>{component.value}</b> :
                             component.index}
                       </span>
-                  );
-                })}
-                </div>
-            );
-          })}
-          <div>
-            <StatusButtons cellStatus={this.cellStatus}/>
+                      );
+                    })}
+                    </div>
+                );
+              })}
+            </div>
+
+            <div>
+              <StatusButtons cellStatus={this.cellStatus}/>
+            </div>
           </div>
-          <div>
-            <button onClick={this.saveField}>Сохранить среду</button>
-          </div>
-          <div>
-            <button onClick={this.startExperiment}>Начать эксперимент</button>
+          <div className={'constBottomBtnsBox'}>
+            <div>
+              <button className={'constStatusBtn'} onClick={this.saveField}>Сохранить среду</button>
+            </div>
+            <div>
+              <button className={'constStatusBtn'} onClick={this.startExperiment}>Начать эксперимент</button>
+            </div>
           </div>
         </div>
     );
