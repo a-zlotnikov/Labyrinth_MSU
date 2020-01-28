@@ -1,4 +1,3 @@
-// <<<<<<< HEAD
 import {
   FULL_FIELD,
   ADD_VALUE,
@@ -8,11 +7,9 @@ import {
   NEW_VALUE,
   START_POS,
   AUTH_SUCCESS,
-  AUTH_LOGOUT
+  AUTH_LOGOUT, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT,
 } from '../actions/actions';
-// =======
-// import {FULL_FIELD, ADD_VALUE, CHANGE_VALUE, EXP_FIELD, AUTH_SUCCESS, AUTH_LOGOUT} from '../actions/actions';
-// >>>>>>> d8cc8ea847f544145383d3c2bac0b8a90340087c
+
 
 export const FULLFIELD = (field) => {
   return {
@@ -63,6 +60,33 @@ export const NEWVALUE = (index, newValue) => {
 export const STARTPOS = (index) => {
   return {
     type: START_POS,
+    index
+  }
+};
+
+export const MOVEUP = () => {
+  return {
+    type: MOVE_UP
+  }
+};
+
+export const MOVEDOWN = (index) => {
+  return {
+    type: MOVE_DOWN,
+    index
+  }
+};
+
+export const MOVELEFT = (index) => {
+  return {
+    type: MOVE_LEFT,
+    index
+  }
+};
+
+export const MOVERIGHT = (index) => {
+  return {
+    type: MOVE_RIGHT,
     index
   }
 };
