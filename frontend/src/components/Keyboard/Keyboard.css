@@ -1,0 +1,117 @@
+.Keyboard {
+    width: 240px;
+    height: 300px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 20px;
+}
+
+.Keyboard:hover {
+    cursor: pointer;
+}
+
+.keyBtnRow {
+    display: flex;
+    flex-direction: row;
+}
+
+/*.keyTopRow {*/
+/*    margin-left: 60px;*/
+/*}*/
+
+.keyBtnTop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 60px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    lightgray,
+                    #b3b3b3
+            );
+}
+
+.keyBtnTop:active {
+    font-size: 16px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    gray,
+                    #b3b3b3
+            );
+}
+
+.keyBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    lightgray,
+                    #b3b3b3
+            );
+}
+
+.keyBtn:active {
+    font-size: 16px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    gray,
+                    #b3b3b3
+            );
+}
+
+.keyLongBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 240px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    lightgray,
+                    #b3b3b3
+            );
+}
+
+.keyLongBtn:active {
+    font-size: 16px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    gray,
+                    #b3b3b3
+            );
+}
+
+.keyWideBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 60px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    lightgray,
+                    #b3b3b3
+            );
+}
+
+.keyWideBtn:active {
+    font-size: 16px;
+    background-image:
+            radial-gradient(
+                    circle at top right,
+                    gray,
+                    #b3b3b3
+            );
+}

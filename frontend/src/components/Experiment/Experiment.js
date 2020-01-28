@@ -12,6 +12,8 @@ import {
 } from '../../store/creators/creators';
 import '../Field/Field.css';
 import StatusButtons from '../StatusButtons/StatusButtons';
+import Keyboard from '../Keyboard/Keyboard';
+import './Experiment.css'
 
 class Experiment extends Component {
   constructor(props) {
@@ -171,68 +173,77 @@ class Experiment extends Component {
           {this.state.startPosition && <div>Стартовая позиция</div>}
           {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
 
-          {this.props.expField.env &&
-          this.props.expField.env.field.line.map((element, i) => {
-            return (
-                <div key={`${element} ${i}`}>{element.line.map(component => {
-                  let action;
-                  switch (true) {
-                    case component.start:
-                      action = 'start comp';
-                      break;
-                    case component.wall:
-                      action = 'wall comp';
-                      break;
-                    case component.food:
-                      action = 'food comp';
-                      break;
-                    case component.fakeFood:
-                      action = 'fakeFood comp';
-                      break;
-                    case component.entry:
-                      action = 'entry comp';
-                      break;
-                    case component.exit:
-                      action = 'exit comp';
-                      break;
-                    case component.pedal:
-                      action = 'pedal comp';
-                      break;
-                    default:
-                      action = 'comp';
-                      break;
-                  }
+          <div className={'expMainBox'}>
+            <div>
+              {this.props.expField.env &&
+              this.props.expField.env.field.line.map((element, i) => {
+                return (
+                    <div key={`${element} ${i}`}>{element.line.map(component => {
+                      let action;
+                      switch (true) {
+                        case component.start:
+                          action = 'start comp';
+                          break;
+                        case component.wall:
+                          action = 'wall comp';
+                          break;
+                        case component.food:
+                          action = 'food comp';
+                          break;
+                        case component.fakeFood:
+                          action = 'fakeFood comp';
+                          break;
+                        case component.entry:
+                          action = 'entry comp';
+                          break;
+                        case component.exit:
+                          action = 'exit comp';
+                          break;
+                        case component.pedal:
+                          action = 'pedal comp';
+                          break;
+                        default:
+                          action = 'comp';
+                          break;
+                      }
 
-                  return (
-                      <span key={component.index}
-                            id={component.index}
-                            className={action}
-                            onClick={this.action}
-                      >
+                      return (
+                          <span key={component.index}
+                                id={component.index}
+                                className={action}
+                                onClick={this.action}
+                          >
                         {component.value ?
                             <b>{component.value}</b> :
                             component.index}
                       </span>
-                  );
-                })}
-                </div>
-            );
-          })}
+                      );
+                    })}
+                    </div>
+                );
+              })}
+            </div>
+
+            <Keyboard/>
+          </div>
+
+
+
           <div>{this.props.expField.moves &&
           this.props.expField.moves.map((element) => {
             return <span>{element}</span>;
           })}</div>
-          <div>
-            <StatusButtons cellStatus={this.cellStatusExp}/>
+          <div className={'expStstusBtnsContainer'}>
+            <StatusButtons class={'expStatusBtnsBox'} cellStatus={this.cellStatusExp}/>
           </div>
           <div>
-            <button onClick={this.cellStatusExp}>стартовая позиция</button>
+            <button className={'expButton'} onClick={this.cellStatusExp}>Стартовая позиция</button>
           </div>
           <div>
             {this.state.expBegin ?
-                <button onClick={this.finishExp}>Завершить
+                <button className={'expButton'} onClick={this.finishExp}>Завершить
                   эксперимент</button> :
-                <button onClick={this.startExp}>Начать эксперимент</button>}
+                <button className={'expButton'} onClick={this.startExp}>Начать эксперимент</button>}
           </div>
         </div>
     );
