@@ -1,8 +1,9 @@
 .Results {
+    padding-top: 20px;
 }
 
 .Results th {
-   background-color: darkgray;
+    background-color: darkgray;
     border: 1px solid black;
 }
 
@@ -11,10 +12,6 @@
     text-align: center;
     margin: 0;
 }
-
-/*.Results tr:hover {*/
-/*    background-color: lightgrey;*/
-/*}*/
 
 .Header {
     display: flex;
@@ -41,4 +38,32 @@
 
 .Option.disable {
     background-color: darkgray;
+}
+
+.selector {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0px;
+}
+
+.topInput {
+    font-family: 'Montserrat', sans-serif;
+    width: 430px;
+    font-size: 20px;
+    background-color: whitesmoke;
+    border: 0;
+    margin: 0 5px;
+    outline: 0 !important;
+}
+
+.button {
+    display: flex;
+    width: 170px;
+    height: 25px;
+    background-color: lightgray;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }

@@ -4,6 +4,7 @@ import lodash from 'lodash';
 import classes from './Results.module.css';
 import Loader from '../../containers/Loader/Loader';
 import {saveAs} from 'file-saver';
+
 const Cookies = require('js-cookie');
 
 class Results extends Component {
@@ -48,7 +49,7 @@ class Results extends Component {
     const results = await response.json();
     const {
       data, time, nameEnvironment, nameExperiment,
-      numberExperiment, nameIndividual,typeExperiment, surname, name, age, gender, hand, year,
+      numberExperiment, nameIndividual, typeExperiment, surname, name, age, gender, hand, year,
       group, numberOfReinforcements,
     } = results['0'];
     
@@ -173,32 +174,45 @@ class Results extends Component {
         </div>
         <div className={classes.LayoutRes}>
           <div className={'title'}><h1>Поиск</h1></div>
-          <div>
+          <div className={classes.Header}>
             
-            <select className={'selector'} name="type"
-                    onChange={this.changeType}>
+            <select
+              className={classes.selector}
+              name="type"
+              onChange={this.changeType}>
               <option>Идентификатор пользователя</option>
               <option>Тип эксперимента</option>
               <option>Название эксперимента</option>
             
             </select>
             {this.state.type === 'username' ?
-              <input className={'topInput'} value={this.state.query}
-                     onChange={this.changeQuery}
-                     placeholder={'введите идентификатор пользователя'}/> :
+              <input
+                className={classes.topInput}
+                value={this.state.query}
+                onChange={this.changeQuery}
+                placeholder={'введите идентификатор пользователя'}
+              /> :
               this.state.type === 'typeExperiment' ?
-                <input className={'topInput'} value={this.state.query}
-                       onChange={this.changeQuery}
-                       placeholder={'введите тип эксперемента'}/> :
+                <input
+                  className={classes.topInput}
+                  value={this.state.query}
+                  onChange={this.changeQuery}
+                  placeholder={'введите тип эксперемента'}
+                /> :
                 this.state.type === 'nameExperiment' ?
-                  <input className={'topInput'} value={this.state.query}
-                         onChange={this.changeQuery}
-                         placeholder={'введите название эксперемента'}/> :
+                  <input
+                    className={classes.topInput}
+                    value={this.state.query}
+                    onChange={this.changeQuery}
+                    placeholder={'введите название эксперемента'}
+                  /> :
                   null
             }
-            <div className={'btnRow'}>
-              <div className={'button'} onClick={this.reset}>Сбросить</div>
-            </div>
+              <div
+                className={classes.button}
+                onClick={this.reset}
+              >Сбросить
+              </div>
           </div>
           <div className={classes.Results}>
             <table>
