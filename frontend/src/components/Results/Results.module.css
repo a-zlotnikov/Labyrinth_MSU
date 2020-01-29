@@ -2,6 +2,10 @@
     padding-top: 20px;
 }
 
+.Results {
+    /*border: 1px solid black;*/
+}
+
 .Results th {
     background-color: darkgray;
     border: 1px solid black;
