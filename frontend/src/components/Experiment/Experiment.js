@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
   CHANGECOMP,
-  expField,
+  expField, KEYBOARDACTION,
   MOVEDOWN,
   MOVELEFT,
   MOVERIGHT,
@@ -23,6 +23,9 @@ class Experiment extends Component {
 
     this.state = {
       expName: '',
+      expNumber: 1,
+      expAnimal: null,
+      expType: '',
       timer: 0,
       wall: false,
       food: false,
@@ -42,22 +45,22 @@ class Experiment extends Component {
     };
   }
 
-  // fetchTypes = async () => {
-  //   console.log('>>> FETCH TYPES')
-  //   this.setState({response: null});
-  //   let resp = await fetch('/types', {
-  //     method: 'GET',
-  //     headers: {'Content-Type': 'application/json'},
-  //   });
-  //   const res = await resp.json();
-  //   this.setState({loading: true});
-  //   if (res.response) {
-  //     this.setState({loading: false, error: false, response: res.response});
-  //   } else {
-  //     this.setState({loading: false, error: true});
-  //   }
-  //   console.log(this.state.response)
-  // };
+  fetchTypes = async () => {
+    console.log('>>> FETCH TYPES');
+    this.setState({response: null});
+    let resp = await fetch('/types', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    });
+    const res = await resp.json();
+    this.setState({loading: true});
+    if (res.response) {
+      this.setState({loading: false, error: false, response: res.response});
+    } else {
+      this.setState({loading: false, error: true});
+    }
+    console.log(this.state.response)
+  };
 
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
@@ -107,6 +110,18 @@ class Experiment extends Component {
     document.onkeydown = getValue;
   };
 
+  newExpNumber = (e) => {
+    this.setState({expNumber: e.target.value})
+  };
+
+  newExpAnimal = (e) => {
+    this.setState({expAnimal: e.target.value})
+  };
+
+  expType = (e) => {
+    this.setState({expType: e.target.value});
+  };
+
   action = (e) => {
     switch (true) {
       case this.state.wall:
@@ -129,7 +144,6 @@ class Experiment extends Component {
         break;
       case this.state.startPosition:
         this.props.startPos(e.target.id);
-        console.log('start position');
         break;
       default:
         this.changeValue(e.target.id);
@@ -185,11 +199,24 @@ class Experiment extends Component {
   }
 
   startExp = () => {
+    let keyButton = this.props.keyboard;
+
+         let timer = this.state.timer
+
     this.setState({expBegin: true});
     this.intervalId = setInterval(this.timer.bind(this), 1000);
+    let clickCount = 0;
     const move = (e) => {
+      function singleClick( ) {
+        keyButton('asd',timer);
+      }
 
-      const x = e.key;
+      function doubleClick() {
+        keyButton('qwe',timer);
+      }
+
+      const x = e.code;
+      let singleClickTimer
       if (this.state.expBegin) {
         switch (x) {
           case 'ArrowUp':
@@ -212,18 +239,38 @@ class Experiment extends Component {
             this.props.moveLeft(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
+          // case 'Numpad1':
+          //   // let singleClickTimer;
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick()
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick();
+          //   }
+          //   break;
+
+
+
+            // e.preventDefault();
+            // this.props.keyboard('asd',this.state.timer);
+            // this.setState({expStatus: !this.state.moveStatus});
+            // break;
+
         }
       }
     };
-
     document.onkeydown = move;
-
   };
 
   finishExp = () => {
     this.setState({expBegin: false});
-    this.props.saveExperiment(this.props.match.params.id, this.state.expName,
-        this.props.expField.moves, this.props.expField.name);
+    this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name, this.state.expNumber, this.state.expAnimal, this.state.type);
     this.props.newExp(this.props.expField.name);
   };
 
@@ -232,9 +279,8 @@ class Experiment extends Component {
   };
 
   setType = (e) => {
-    this.setState({type: e.target.value})
+    this.setState({type: e.target.value});
     this.setState({description: e.target.options[e.target.selectedIndex].getAttribute('description')})
-    // console.log(this.state)
   };
 
   render() {
@@ -255,10 +301,11 @@ class Experiment extends Component {
                    : null}
               </div>
               <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName} placeholder={'Введите название'}/></div>
-              <div className={'expInputTitle'}>Номер опыта:<input className={'expInput'} placeholder={'Введите номер'}/></div>
-              <div className={'expInputTitle'}>Имя особи:<input className={'expInput'} placeholder={"Введите имя"}/></div>
+              <div className={'expInputTitle'}>Номер опыта:<input onChange={this.newExpNumber} className={'expInput'} placeholder={'Введите номер'}/></div>
+              <div className={'expInputTitle'}>Имя особи:<input onChange={this.newExpAnimal} className={'expInput'} placeholder={"Введите имя"}/></div>
             </div>
             <div className={'expTypeDescription'}>{this.state.description}</div>
+
           </div>
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
@@ -346,9 +393,6 @@ class Experiment extends Component {
             for (let key in element){
               return <span key={i}>{key}: {element[key]}</span>
             }
-          //   return (
-          //   <span key={i}>{element}</span>
-          // )
           })}</div>
         </div>
     );
@@ -387,12 +431,15 @@ const mapDispatchToProps = (dispatch) => {
     moveLeft: (timer) => {
       dispatch(MOVELEFT(timer));
     },
-    saveExperiment: (id, expName, moves, envName) => {
-      dispatch(saveExp(id, expName, moves, envName));
+    saveExperiment: (id, expName, moves, envName, expNumber, expAnimal, expType) => {
+      dispatch(saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
     },
     newExp: (envName) => {
       dispatch(newExp(envName));
     },
+    keyboard: (value, time) => {
+      dispatch(KEYBOARDACTION(value, time))
+    }
   };
 };
 

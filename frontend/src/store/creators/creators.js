@@ -7,7 +7,13 @@ import {
   NEW_VALUE,
   START_POS,
   AUTH_SUCCESS,
-  AUTH_LOGOUT, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, SAVE_EXP,
+  AUTH_LOGOUT,
+  MOVE_UP,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+  SAVE_EXP,
+  KEYBOARD_ACTION,
 } from '../actions/actions';
 
 
@@ -92,6 +98,14 @@ export const MOVERIGHT = (time) => {
   }
 };
 
+export const KEYBOARDACTION = (value, time) => {
+  return {
+    type: KEYBOARD_ACTION,
+    value,
+    time
+  }
+};
+
 export const fetchField = () => {
   return async (dispatch) => {
     const response = await fetch('/getField');
@@ -119,7 +133,7 @@ export const expField = (id) => {
   };
 };
 
-export const saveExp = (id, expName, moves, envName) => {
+export const saveExp = (id, expName, moves, envName, expNumber, expAnimal, expType) => {
   return async () => {
     const response = await fetch(
         '/saveExp',
@@ -132,7 +146,10 @@ export const saveExp = (id, expName, moves, envName) => {
             id,
             expName,
             moves,
-            envName
+            envName,
+            expNumber,
+            expAnimal,
+            expType
           }),
         }
     );

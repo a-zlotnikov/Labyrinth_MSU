@@ -13,6 +13,7 @@ const MOVE_RIGHT = 'MOVE_RIGHT';
 const MOVE_LEFT = 'MOVE_LEFT';
 const SAVE_EXP = 'SAVE_EXP';
 const NEW_EXP = 'NEW_EXP';
+const KEYBOARD_ACTION = 'KEYBOARD_ACTION';
 export {
   FULL_FIELD,
   ADD_VALUE,
@@ -28,5 +29,6 @@ export {
   MOVE_RIGHT,
   MOVE_LEFT,
   SAVE_EXP,
-    NEW_EXP
+  NEW_EXP,
+  KEYBOARD_ACTION
 };

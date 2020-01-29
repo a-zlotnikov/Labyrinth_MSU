@@ -7,6 +7,7 @@ import {
   MOVE_UP,
   NEW_VALUE,
   START_POS,
+  KEYBOARD_ACTION,
 } from '../actions/actions';
 
 const initialState = {
@@ -441,6 +442,21 @@ export default function expReducer(state = initialState, action) {
       return {
         expField: expLeftField,
       };
+
+    case KEYBOARD_ACTION:
+      const expKeyField = state.expField;
+      let prevMovesKey = state.expField.moves;
+      if(prevMovesKey){
+        let obj = {};
+        obj[action.time] = action.value;
+        prevMovesKey.push(obj);
+      } else if(!prevMovesKey){
+        let obj = {};
+        obj[action.time] = action.value;
+        prevMovesKey = [obj]
+      }
+      expKeyField.moves = prevMovesKey;
+
 
     default:
       return state;
