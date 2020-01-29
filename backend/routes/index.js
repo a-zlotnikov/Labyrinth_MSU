@@ -21,13 +21,19 @@ router.post('/saveField', async (req, res) => {
 });
 
 router.post('/startExp', async (req, res) => {
-  console.log(req.body)
 
   let newEnv;
   let newExp;
   const envName = req.body.name;
   const envCheck = await Environment.find({name: envName});
-  if(envCheck[0]){
+
+  if (req.body.archive){
+    newExp = await new Experiment({
+      env: req.body.name
+    });
+    await newExp.save();
+    res.json({id: newExp._id})
+  } else if(envCheck[0]){
     res.json({answer: 'envName is busy'})
   } else {
     newEnv = await new Environment({
