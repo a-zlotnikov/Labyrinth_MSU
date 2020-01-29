@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
   CHANGECOMP,
-  expField,
+  expField, KEYBOARDACTION,
   MOVEDOWN,
   MOVELEFT,
   MOVERIGHT,
@@ -144,7 +144,6 @@ class Experiment extends Component {
         break;
       case this.state.startPosition:
         this.props.startPos(e.target.id);
-        console.log('start position');
         break;
       default:
         this.changeValue(e.target.id);
@@ -200,11 +199,24 @@ class Experiment extends Component {
   }
 
   startExp = () => {
+    let keyButton = this.props.keyboard;
+
+         let timer = this.state.timer
+
     this.setState({expBegin: true});
     this.intervalId = setInterval(this.timer.bind(this), 1000);
+    let clickCount = 0;
     const move = (e) => {
+      function singleClick( ) {
+        keyButton('asd',timer);
+      }
+
+      function doubleClick() {
+        keyButton('qwe',timer);
+      }
 
       const x = e.code;
+      let singleClickTimer
       if (this.state.expBegin) {
         switch (x) {
           case 'ArrowUp':
@@ -227,6 +239,29 @@ class Experiment extends Component {
             this.props.moveLeft(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
+          // case 'Numpad1':
+          //   // let singleClickTimer;
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick()
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick();
+          //   }
+          //   break;
+
+
+
+            // e.preventDefault();
+            // this.props.keyboard('asd',this.state.timer);
+            // this.setState({expStatus: !this.state.moveStatus});
+            // break;
+
         }
       }
     };
@@ -235,8 +270,6 @@ class Experiment extends Component {
 
   finishExp = () => {
     this.setState({expBegin: false});
-    // console.log(this.state.type);
-    // console.log(this.state.expAnimal);
     this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name, this.state.expNumber, this.state.expAnimal, this.state.type);
     this.props.newExp(this.props.expField.name);
   };
@@ -248,7 +281,6 @@ class Experiment extends Component {
   setType = (e) => {
     this.setState({type: e.target.value});
     this.setState({description: e.target.options[e.target.selectedIndex].getAttribute('description')})
-    // console.log(this.state)
   };
 
   render() {
@@ -405,6 +437,9 @@ const mapDispatchToProps = (dispatch) => {
     newExp: (envName) => {
       dispatch(newExp(envName));
     },
+    keyboard: (value, time) => {
+      dispatch(KEYBOARDACTION(value, time))
+    }
   };
 };
 

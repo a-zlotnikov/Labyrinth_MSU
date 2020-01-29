@@ -98,7 +98,7 @@ export const MOVERIGHT = (time) => {
   }
 };
 
-export const KEYBOADRACTION = (value, time) => {
+export const KEYBOARDACTION = (value, time) => {
   return {
     type: KEYBOARD_ACTION,
     value,
