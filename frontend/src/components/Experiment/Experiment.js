@@ -246,7 +246,7 @@ class Experiment extends Component {
               <div className={'expInputTitle'}>
                 Тип эксперимента:
                 {this.state.response ?
-                   <select onChange={this.setType}>
+                   <select className={'expSelector'} onChange={this.setType}>
                    <option/>
                   {this.state.response.map((result, index) =>
                     <option key={index} description={result.description}>{result.name}</option>
@@ -254,9 +254,9 @@ class Experiment extends Component {
                 </select>
                    : null}
               </div>
-              <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName}/></div>
-              <div className={'expInputTitle'}>Номер опыта:<input className={'expInput'}/></div>
-              <div className={'expInputTitle'}>Имя особи:<input className={'expInput'}/></div>
+              <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName} placeholder={'Введите название'}/></div>
+              <div className={'expInputTitle'}>Номер опыта:<input className={'expInput'} placeholder={'Введите номер'}/></div>
+              <div className={'expInputTitle'}>Имя особи:<input className={'expInput'} placeholder={"Введите имя"}/></div>
             </div>
             <div className={'expTypeDescription'}>{this.state.description}</div>
           </div>
@@ -301,7 +301,7 @@ class Experiment extends Component {
                                 onClick={this.action}
                           >
                         {component.value ?
-                            <b>{component.value}</b> :
+                            <span className={'ValueBtn'}>{component.value}</span> :
                             component.index}
                       </span>
                       );

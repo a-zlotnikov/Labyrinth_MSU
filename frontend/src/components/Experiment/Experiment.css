@@ -3,7 +3,6 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 30px;
 }
 
 .expProgress {
@@ -17,7 +16,7 @@
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .expStatusBtnsContainer {
@@ -194,4 +193,9 @@
     font-size: 18px;
     background-color: whitesmoke;
     border: 0px;
+}
+
+.ValueBtn {
+    font-family: Archangelsk;
+    font-weight: bolder;
 }
