@@ -33,7 +33,7 @@ class Environment extends Component {
         body: JSON.stringify({
           name: props.name,
           field: props.field,
-          arhive: true,
+          archive: true,
         }),
       },
     );
