@@ -34,11 +34,57 @@ class Experiment extends Component {
       startPosition: false,
       moveStatus: false,
       expBegin: false,
+      loading: false,
+      error: false,
+      response: null,
+      type: null,
+      description: null,
     };
   }
 
-  componentDidMount() {
+  // fetchTypes = async () => {
+  //   console.log('>>> FETCH TYPES')
+  //   this.setState({response: null});
+  //   let resp = await fetch('/types', {
+  //     method: 'GET',
+  //     headers: {'Content-Type': 'application/json'},
+  //   });
+  //   const res = await resp.json();
+  //   this.setState({loading: true});
+  //   if (res.response) {
+  //     this.setState({loading: false, error: false, response: res.response});
+  //   } else {
+  //     this.setState({loading: false, error: true});
+  //   }
+  //   console.log(this.state.response)
+  // };
+
+  componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
+    console.log('>>> START FETCH')
+
+    console.log('>>> FETCH TYPES')
+    this.setState({response: null});
+    let resp = await fetch('/types', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    });
+    const res = await resp.json();
+    this.setState({loading: true});
+    if (res.response) {
+      this.setState({loading: false, error: false, response: res.response});
+    } else {
+      this.setState({loading: false, error: true});
+    }
+    console.log('>>> SUCCESS')
+    console.log(this.state.response)
+
+    // this.fetchTypes;
+    // fetch('/types', {
+    //   method: 'GET',
+    //   headers: {'Content-Type': 'application/json'},
+    // }).then(
+    //   res => res.json()).then(result => console.log(result))
   }
 
   componentWillUnmount(){
@@ -185,6 +231,12 @@ class Experiment extends Component {
     this.setState({expName: e.target.value});
   };
 
+  setType = (e) => {
+    this.setState({type: e.target.value})
+    this.setState({description: e.target.options[e.target.selectedIndex].getAttribute('description')})
+    // console.log(this.state)
+  };
+
   render() {
     return (
         <div className='board'>
@@ -193,17 +245,20 @@ class Experiment extends Component {
               <div className={'expInputTitle'}>Название среды:</div>
               <div className={'expInputTitle'}>
                 Тип эксперимента:
-                <select className={'expSelector'}>
-                  <option>ABC</option>
-                  <option>DEF</option>
-                  <option>123</option>
+                {this.state.response ?
+                   <select onChange={this.setType}>
+                   <option/>
+                  {this.state.response.map((result, index) =>
+                    <option key={index} description={result.description}>{result.name}</option>
+                  )}
                 </select>
+                   : null}
               </div>
               <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName}/></div>
               <div className={'expInputTitle'}>Номер опыта:<input className={'expInput'}/></div>
               <div className={'expInputTitle'}>Имя особи:<input className={'expInput'}/></div>
             </div>
-            <div className={'expTypeDescription'}>описание эксперимента: ыпрыпgb fgh drg ghgdfghdgfh dfghd fghdfghdfghdfgh dfghdfghdfgh dfghdfghdfgh dfghdfghdfghdgh dfgh</div>
+            <div className={'expTypeDescription'}>{this.state.description}</div>
           </div>
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>

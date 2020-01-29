@@ -17,7 +17,7 @@ import Video from './components/Webcam/Webcamv2';
 
 import {connect} from 'react-redux'
 import Environment from './components/Environment/Environment';
-const Cookies = require('js-cookie');
+// const Cookies = require('js-cookie');
 class App extends Component {
   constructor(props) {
     super(props);
