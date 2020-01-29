@@ -175,8 +175,21 @@ class Experiment extends Component {
   render() {
     return (
         <div className='board'>
+          <div>
+            <div>Название среды:</div>
+            <div>
+              Тип эксперимента:
+              <selector>
+                <option>ABC</option>
+                <option>DEF</option>
+                <option>123</option>
+              </selector>
+            </div>
+            <div>Название эксперимента:<input onChange={this.newExpName}/></div>
+            <div>Номер опыта:</div>
+            <div>Имя особи:</div>
+          </div>
 
-          <input onChange={this.newExpName}/>
           {this.state.startPosition && <div>Стартовая позиция</div>}
           {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
           <div className={'expMainBox'}>
