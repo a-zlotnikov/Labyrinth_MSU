@@ -10,7 +10,7 @@ const Cookies = require('js-cookie');
 class Results extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       type: 'username',
       query: '',
@@ -22,15 +22,15 @@ class Results extends Component {
       sortField: 'pp',
       row: null,
       find: '',
-      option: []
+      option: [],
     };
   }
-
+  
   componentDidMount = async () => {
     await this.searchAll();
-   
+    
   };
-
+  
   onSort = sortField => {
     const cloneData = this.state.response;
     const sortType = this.state.sort === 'asc' ? 'desc' : 'asc';
@@ -41,48 +41,54 @@ class Results extends Component {
       sortField,
     });
   };
-
+  
   onSaveTxt = async id => {
-    const response = await fetch('/results', {
+    const response = await fetch('/experiment', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({id}),
     });
     const results = await response.json();
+    console.log(results);
     const {
-      data, time, nameEnvironment, nameExperiment,
-      numberExperiment, nameIndividual, typeExperiment, surname, name, age, gender, hand, year,
-      group, numberOfReinforcements,
+      date, time, expName,
+      expNumber, animalName, expType,
     } = results['0'];
-
+    
     const elemFile = [
-      `${data}\n`,
+      `${date}\n`,
       `${time}\n`,
-      `${nameEnvironment}\n`,
-      `${nameExperiment}\n`,
-      `${numberExperiment}\n`,
-      `${typeExperiment}\n`,
-      `${surname}\n`,
-      `${name}\n`,
-      `${age}\n`,
-      `${gender}\n`,
-      `${hand}\n`,
-      `${year}\n`,
-      `${group}\n`,
-      `${numberOfReinforcements}\n`,
+      `${results['0'].env.name}\n`,
+      `${expName}\n`,
+      `${expNumber}\n`,
+      `${animalName}\n`,
+      `${expType}\n`,
+      `${results['0'].user.surname}\n`,
+      `${results['0'].user.name}\n`,
+      `${results['0'].user.age ? results['0'].user.age : '-'}\n`,
+      `${results['0'].user.gender}\n`,
+      `${results['0'].user.hand}\n`,
+      `${results['0'].user.year ? results['0'].user.year : '-'}\n`,
+      `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
-
+    
+    console.log(results['0'].moves);
+    
     let timeLine = [];
-    results['0'].result.map(
-      (elem) => timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`));
-
+    if (results['0'].moves !== null) {
+      results['0'].moves.map((elem) => {
+        timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`);
+      });
+    }
+    
     const newFile = [...elemFile, ...timeLine];
+    
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
-      `${nameEnvironment}_${typeExperiment}_${nameExperiment}_${numberExperiment}_${nameIndividual}`);
-
+      `${results['0'].env.name}_${expType}_${expName}_${expNumber}_${animalName}`);
+    
   };
-
+  
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
       const response = await fetch('/experiment', {
@@ -95,9 +101,9 @@ class Results extends Component {
         response: results,
       });
     }
-
+    
   };
-
+  
   searchAll = async () => {
     let response = await fetch('/experiment', {
       method: 'GET',
@@ -105,17 +111,20 @@ class Results extends Component {
     });
     const result = await response.json();
     
-    this.setState({loading: true, option:['Идентификатор пользователя','Тип' +
-      ' эксперимента','Название эксперимента']});
-
+    this.setState({
+      loading: true, option: [
+        'Идентификатор пользователя', 'Тип' +
+        ' эксперимента', 'Название эксперимента'],
+    });
+    
     if (result) {
       this.setState({loading: false, error: false, response: result});
     } else {
       this.setState({loading: false, error: true});
     }
-
+    
   };
-
+  
   changeType = async (e) => {
     if (e.target.value === 'Идентификатор пользователя') {
       this.setState({type: 'username'});
@@ -129,12 +138,12 @@ class Results extends Component {
     }
     await this.search();
   };
-
+  
   changeQuery = async (e) => {
     await this.setState({query: e.target.value});
     await this.search();
   };
-
+  
   search = async () => {
     const {type, query} = this.state;
     let resp = await fetch('/results/search', {
@@ -150,7 +159,7 @@ class Results extends Component {
       this.setState({loading: false, error: true});
     }
   };
-
+  
   reset = async () => {
     this.setState({
       type: 'username',
@@ -158,12 +167,12 @@ class Results extends Component {
       response: [],
       loading: false,
       error: false,
-      option: []
-
+      option: [],
+      
     });
     await this.searchAll();
   };
-
+  
   render() {
     const cls = [classes.Option];
     const any = [classes.Option, classes.enable];
@@ -172,7 +181,7 @@ class Results extends Component {
     } else {
       cls.push(classes.disable);
     }
-
+    
     return this.state.response ? (
       <div>
         <div className={classes.Header}>
@@ -181,21 +190,21 @@ class Results extends Component {
         <div className={classes.LayoutRes}>
           <div className={'title'}><h1>Поиск</h1></div>
           <div className={classes.Header}>
-
+            
             <select
               className={classes.selector}
               name="type"
               onChange={this.changeType}>
-              {this.state.option.map((elem, index)=>{
-                return(
-                <option key={index}>
-                  {elem}
-                </option>)
+              {this.state.option.map((elem, index) => {
+                return (
+                  <option key={index}>
+                    {elem}
+                  </option>);
               })}
               {/*<option>Идентификатор пользователя</option>*/}
               {/*<option>Тип эксперимента</option>*/}
               {/*<option>Название эксперимента</option>*/}
-
+            
             </select>
             {this.state.type === 'username' ?
               <input
@@ -220,17 +229,17 @@ class Results extends Component {
                   /> :
                   null
             }
-              <div
-                className={classes.button}
-                onClick={this.reset}
-              >Сбросить
-              </div>
+            <div
+              className={classes.button}
+              onClick={this.reset}
+            >Сбросить
+            </div>
           </div>
           <div className={classes.Results}>
             <table>
               <thead>
               <tr>
-                <th onClick={this.onSort.bind(this, 'data')}>Дата</th>
+                <th onClick={this.onSort.bind(this, 'date')}>Дата</th>
                 <th onClick={this.onSort.bind(this, 'typeExperiment')}>Тип
                   эксперемента
                 </th>
@@ -253,7 +262,7 @@ class Results extends Component {
               </thead>
               <tbody>
               {this.state.response.map((result, index) => {
-                console.log(result)
+                console.log(result);
                 return (
                   <tr key={index} name={result._id}
                   >
@@ -279,7 +288,7 @@ class Results extends Component {
                     >Удалить
                     </td>
                   </tr>
-                )
+                );
               })
               }
               </tbody>

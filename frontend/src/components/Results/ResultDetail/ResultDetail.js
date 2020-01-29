@@ -22,7 +22,6 @@ class ResultDetail extends Component {
       body: JSON.stringify({id}),
     });
     const result = await response.json();
-    console.log(result)
     this.setState({details: result[0], loading: false});
   };
   
