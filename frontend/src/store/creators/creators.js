@@ -119,7 +119,7 @@ export const expField = (id) => {
   };
 };
 
-export const saveExp = (id, expName, moves, envName) => {
+export const saveExp = (id, expName, moves, envName, expNumber, expAnimal, expType) => {
   return async () => {
     const response = await fetch(
         '/saveExp',
@@ -132,7 +132,10 @@ export const saveExp = (id, expName, moves, envName) => {
             id,
             expName,
             moves,
-            envName
+            envName,
+            expNumber,
+            expAnimal,
+            expType
           }),
         }
     );

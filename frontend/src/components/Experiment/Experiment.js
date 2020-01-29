@@ -23,6 +23,9 @@ class Experiment extends Component {
 
     this.state = {
       expName: '',
+      expNumber: 1,
+      expAnimal: '',
+      expType: '',
       timer: 0,
       wall: false,
       food: false,
@@ -59,6 +62,20 @@ class Experiment extends Component {
       }
     };
     document.onkeydown = getValue;
+  };
+
+  newExpNumber = (e) => {
+    console.log(e);
+    console.log(typeof e);
+    this.setState({expNumber: e.target.value})
+  };
+
+  newExpAnimal = (e) => {
+    this.setState({expAnimal: e.target.value})
+  };
+
+  expType = (e) => {
+    this.setState({expType: e.target.value});
   };
 
   action = (e) => {
@@ -176,8 +193,7 @@ class Experiment extends Component {
 
   finishExp = () => {
     this.setState({expBegin: false});
-    this.props.saveExperiment(this.props.match.params.id, this.state.expName,
-        this.props.expField.moves, this.props.expField.name);
+    this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name, this.state.expNumber, this.state.expAnimal, this.state.expType);
     this.props.newExp(this.props.expField.name);
   };
 
@@ -192,15 +208,15 @@ class Experiment extends Component {
             <div>Название среды:</div>
             <div>
               Тип эксперимента:
-              <select>
+              <select onClick={this.expType}>
                 <option>ABC</option>
                 <option>DEF</option>
                 <option>123</option>
               </select>
             </div>
             <div>Название эксперимента:<input onChange={this.newExpName}/></div>
-            <div>Номер опыта:<input/></div>
-            <div>Имя особи:<input/></div>
+            <div>Номер опыта:<input onChange={this.newExpNumber}/></div>
+            <div>Имя особи:<input onChange={this.newExpAnimal}/></div>
           </div>
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
@@ -328,8 +344,8 @@ const mapDispatchToProps = (dispatch) => {
     moveLeft: (timer) => {
       dispatch(MOVELEFT(timer));
     },
-    saveExperiment: (id, expName, moves, envName) => {
-      dispatch(saveExp(id, expName, moves, envName));
+    saveExperiment: (id, expName, moves, envName, expNumber, expAnimal, expType) => {
+      dispatch(saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
     },
     newExp: (envName) => {
       dispatch(newExp(envName));

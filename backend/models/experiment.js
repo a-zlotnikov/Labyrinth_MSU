@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 const {environmentSchema} = require('./environment');
 
 const experimentSchema = new mongoose.Schema({
+  date: Date,
   user: {type: mongoose.Types.ObjectId, ref: "User"},
-  envName: String,
   env: environmentSchema,
   expName: String,
-  animal: String,
+  animalName: String,
   expNumber: Number,
+  expType: String,
   moves: Array
 });
 
