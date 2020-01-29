@@ -7,8 +7,8 @@
 }
 
 .expStatusBtnsBox {
-    width: 310px;
-    height: 65px;
+    width: 330px;
+    height: 80px;
     display: flex;
     flex-wrap: wrap;
     margin: auto;
@@ -23,6 +23,7 @@
     display: flex;
     width: 100px;
     height: 30px;
+    margin: 5px;
     border-radius: 5px;
     border: none;
     background-color: lightgray;
@@ -95,4 +96,35 @@
 .activePedal {
     background-color: lemonchiffon;
     font-weight: bold;
+}
+
+.startBtnsRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: -20px;
+}
+
+.expStartButton {
+    display: flex;
+    width: 152px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: lightgray;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    outline: 0 !important;
+}
+
+.expStartButton:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.expStartButton:active {
+    background-color: grey;
 }

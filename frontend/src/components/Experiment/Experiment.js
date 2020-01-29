@@ -175,8 +175,21 @@ class Experiment extends Component {
   render() {
     return (
         <div className='board'>
+          <div>
+            <div>Название среды:</div>
+            <div>
+              Тип эксперимента:
+              <selector>
+                <option>ABC</option>
+                <option>DEF</option>
+                <option>123</option>
+              </selector>
+            </div>
+            <div>Название эксперимента:<input onChange={this.newExpName}/></div>
+            <div>Номер опыта:</div>
+            <div>Имя особи:</div>
+          </div>
 
-          <input onChange={this.newExpName}/>
           {this.state.startPosition && <div>Стартовая позиция</div>}
           {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
           <div className={'expMainBox'}>
@@ -240,26 +253,27 @@ class Experiment extends Component {
                                pedal={this.state.pedal}
                                cellStatus={this.cellStatusExp}/>
               </div>
+              <div className={'startBtnsRow'}>
+                <div>
+                  <button className={'expStartButton'}
+                          onClick={this.cellStatusExp}>Стартовая позиция
+                  </button>
+                </div>
+                <div>
+                  {this.state.expBegin ?
+                      <button className={'expStartButton'}
+                              onClick={this.finishExp}>Завершить
+                        эксперимент</button> :
+                      <button className={'expStartButton'} onClick={this.startExp}>Начать
+                        эксперимент</button>}
+                </div>
+              </div>
             </div>
           </div>
           <div>{this.props.expField.moves &&
           this.props.expField.moves.map((element, i) => {
             return <span key={i}>{element}</span>;
           })}</div>
-
-          <div>
-            <button className={'expButton'}
-                    onClick={this.cellStatusExp}>Стартовая позиция
-            </button>
-          </div>
-          <div>
-            {this.state.expBegin ?
-                <button className={'expButton'}
-                        onClick={this.finishExp}>Завершить
-                  эксперимент</button> :
-                <button className={'expButton'} onClick={this.startExp}>Начать
-                  эксперимент</button>}
-          </div>
         </div>
     );
   }
