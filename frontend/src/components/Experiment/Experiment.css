@@ -6,6 +6,11 @@
     margin-bottom: 30px;
 }
 
+.expProgress {
+    height: 25px;
+    font-weight: bold;
+}
+
 .expStatusBtnsBox {
     width: 330px;
     height: 80px;

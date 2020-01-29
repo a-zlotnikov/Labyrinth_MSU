@@ -202,10 +202,7 @@ class Experiment extends Component {
             <div>Номер опыта:<input/></div>
             <div>Имя особи:<input/></div>
           </div>
-
-          {this.state.startPosition && <div>Стартовая позиция</div>}
-          {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
-
+          {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
             <div>
               {this.state.timer}
