@@ -108,7 +108,7 @@ class UserList extends Component {
 
   reset = async () => {
     this.setState({
-      type: 'group',
+      // type: 'group',
       query: '',
       response: [],
       loading: false,
