@@ -179,15 +179,15 @@ class Experiment extends Component {
             <div>Название среды:</div>
             <div>
               Тип эксперимента:
-              <selector>
+              <select>
                 <option>ABC</option>
                 <option>DEF</option>
                 <option>123</option>
-              </selector>
+              </select>
             </div>
             <div>Название эксперимента:<input onChange={this.newExpName}/></div>
-            <div>Номер опыта:</div>
-            <div>Имя особи:</div>
+            <div>Номер опыта:<input/></div>
+            <div>Имя особи:<input/></div>
           </div>
 
           {this.state.startPosition && <div>Стартовая позиция</div>}
