@@ -150,17 +150,12 @@ class Field extends Component {
         },
     );
     const result = await response.json();
-    console.log(result);
     if (result.id) {
       this.props.history.push(`/experiment/${result.id}`);
     } else {
       this.setState({nameStatus: true});
     }
 
-    // if(this.state.saveStatus){
-    //
-    // }
-    // this.props.history.push('/experiment/123')
   };
 
   render() {

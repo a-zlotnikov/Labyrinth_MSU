@@ -7,7 +7,7 @@ import {
   NEW_VALUE,
   START_POS,
   AUTH_SUCCESS,
-  AUTH_LOGOUT, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT,
+  AUTH_LOGOUT, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, SAVE_EXP,
 } from '../actions/actions';
 
 
@@ -114,8 +114,50 @@ export const expField = (id) => {
         }
     );
     const result = await response.json();
-
+    console.log(result);
     dispatch(EXPFIELD(result));
+  };
+};
+
+export const saveExp = (id, expName, moves, envName) => {
+  return async () => {
+    const response = await fetch(
+        '/saveExp',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id,
+            expName,
+            moves,
+            envName
+          }),
+        }
+    );
+    const result = await response.json();
+
+  }
+};
+
+export const newExp = (envName) => {
+  return async (dispatch) => {
+    const response = await fetch(
+        '/getNewExpField',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            envName
+          }),
+        }
+    );
+    const result = await response.json();
+    console.log(result);
+    // dispatch(EXPFIELD(result));
   };
 };
 

@@ -9,6 +9,8 @@ import {
   MOVEUP,
   NEWVALUE,
   STARTPOS,
+  saveExp,
+    newExp
 } from '../../store/creators/creators';
 import '../Field/Field.css';
 import StatusButtons from '../StatusButtons/StatusButtons';
@@ -18,6 +20,7 @@ class Experiment extends Component {
     super(props);
 
     this.state = {
+      expName: '',
       wall: false,
       food: false,
       fakeFood: false,
@@ -156,12 +159,19 @@ class Experiment extends Component {
 
   finishExp = () => {
     this.setState({expBegin: false});
+    console.log(this.props.expField.moves);
+    this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name);
+    this.props.newExp(this.props.expField.name)
+  };
+
+  newExpName = (e) => {
+    this.setState({expName: e.target.value})
   };
 
   render() {
     return (
         <div className='board'>
-
+          <input onChange={this.newExpName}/>
           {this.state.wall && <div>Стена</div>}
           {this.state.food && <div>Кормушка</div>}
           {this.state.fakeFood && <div>Ложная кормушка</div>}
@@ -171,8 +181,8 @@ class Experiment extends Component {
           {this.state.startPosition && <div>Стартовая позиция</div>}
           {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
 
-          {this.props.expField.env &&
-          this.props.expField.env.field.line.map((element, i) => {
+          {this.props.expField.field &&
+          this.props.expField.field.line.map((element, i) => {
             return (
                 <div key={`${element} ${i}`}>{element.line.map(component => {
                   let action;
@@ -219,8 +229,8 @@ class Experiment extends Component {
             );
           })}
           <div>{this.props.expField.moves &&
-          this.props.expField.moves.map((element) => {
-            return <span>{element}</span>;
+          this.props.expField.moves.map((element, i) => {
+            return <span key={i}>{element}</span>;
           })}</div>
           <div>
             <StatusButtons cellStatus={this.cellStatusExp}/>
@@ -271,6 +281,12 @@ const mapDispatchToProps = (dispatch) => {
     moveLeft: () => {
       dispatch(MOVELEFT());
     },
+    saveExperiment: (id, expName, moves, envName) => {
+      dispatch(saveExp(id, expName, moves, envName))
+    },
+    newExp: (envName) => {
+      dispatch(newExp(envName))
+    }
   };
 };
 
