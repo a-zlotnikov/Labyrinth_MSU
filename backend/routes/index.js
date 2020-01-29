@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const {Field} = require('../models/field');
@@ -26,14 +25,14 @@ router.post('/startExp', async (req, res) => {
   let newExp;
   const envName = req.body.name;
   const envCheck = await Environment.find({name: envName});
-  if (req.body.archive){
+  if (req.body.archive) {
     newExp = await new Experiment({
-      env: {name: req.body.name}
+      env: {name: req.body.name},
     });
-      await newExp.save().then(data => console.log(`true: ${data}`)).catch(data => console.log(data));
-    res.json({id: newExp._id})
-  } else if(envCheck[0]){
-    res.json({answer: 'envName is busy'})
+    await newExp.save();
+    res.json({id: newExp._id});
+  } else if (envCheck[0]) {
+    res.json({answer: 'envName is busy'});
   } else {
     newEnv = await new Environment({
       name: req.body.name,
@@ -43,27 +42,38 @@ router.post('/startExp', async (req, res) => {
     const newEnvId = await Environment.find({name: req.body.name});
 
     newExp = await new Experiment({
-      env: {name: newEnvId[0].name}
+      env: {name: newEnvId[0].name},
     });
     await newExp.save();
-    res.json({id: newExp._id})
+    // const newExpId = await Experiment.find({})
+    res.json({id: newExp._id});
   }
 
 });
 
 router.post('/saveExp', async (req, res) => {
+  const date = new Date();
+  console.log(req.body);
   const user = {
-    _id: req.session.user._id
+    _id: req.session.user._id,
   };
-  await Experiment.updateOne({_id: req.body.id}, {user: user, expName: req.body.expName, moves: req.body.moves, env: {name: req.body.envName}});
-
+  await Experiment.updateOne({_id: req.body.id}, {
+    date: date,
+    user: user,
+    env: {name: req.body.envName},
+    expName: req.body.expName,
+    animalName: req.body.expAnimal,
+    expNumber: Number(req.body.expNumber),
+    expType: req.body.expType,
+    moves: req.body.moves,
+  });
 });
 
 router.post('/getExpField', async (req, res) => {
   const exp = await Experiment.find({_id: req.body.id});
   const env = exp[0].env.name;
   const environ = await Environment.find({name: env});
-  res.json(environ[0])
+  res.json(environ[0]);
 });
 
 router.post('/getNewExpField', async (req, res) => {
