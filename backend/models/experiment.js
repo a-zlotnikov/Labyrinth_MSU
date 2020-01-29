@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const {environmentSchema} = require('./environment');
 
 const experimentSchema = new mongoose.Schema({
-  date: Date,
+  date: String,
+  time: String,
   user: {type: mongoose.Types.ObjectId, ref: "User"},
   env: environmentSchema,
   expName: String,
