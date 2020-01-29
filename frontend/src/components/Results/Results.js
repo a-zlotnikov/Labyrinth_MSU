@@ -28,6 +28,7 @@ class Results extends Component {
 
   componentDidMount = async () => {
     await this.searchAll();
+   
   };
 
   onSort = sortField => {
@@ -84,7 +85,7 @@ class Results extends Component {
 
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
-      const response = await fetch('/results', {
+      const response = await fetch('/experiment', {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({id}),
@@ -98,11 +99,12 @@ class Results extends Component {
   };
 
   searchAll = async () => {
-    let response = await fetch('/results', {
+    let response = await fetch('/experiment', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     });
     const result = await response.json();
+    
     this.setState({loading: true, option:['Идентификатор пользователя','Тип' +
       ' эксперимента','Название эксперимента']});
 
@@ -250,32 +252,36 @@ class Results extends Component {
               </tr>
               </thead>
               <tbody>
-              {this.state.response.map((result, index) =>
-                <tr key={index} name={result._id}
-                >
-                  <td>{result.data}</td>
-                  <td>{result.typeExperiment}</td>
-                  <td>{result.username}</td>
-                  <td>{result.nameExperiment}</td>
-                  <td>{result.numberExperiment}</td>
-                  <td>{result.nameIndividual}</td>
-                  <td
-                    className={any.join(' ')}
-                    onClick={() => this.props.history.push(
-                      '/results/' + result._id)}
-                  >Смотреть
-                  </td>
-                  <td
-                    className={any.join(' ')}
-                    onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
-                  </td>
-                  <td
-                    className={cls.join(' ')}
-                    onClick={this.onDelete.bind(this, result._id)}
-                  >Удалить
-                  </td>
-                </tr>,
-              )}
+              {this.state.response.map((result, index) => {
+                console.log(result)
+                return (
+                  <tr key={index} name={result._id}
+                  >
+                    <td>{result.date}</td>
+                    <td>{result.expType}</td>
+                    <td>{result.user ? result.user.username : null}</td>
+                    <td>{result.expName}</td>
+                    <td>{result.expNumber}</td>
+                    <td>{result.animalName}</td>
+                    <td
+                      className={any.join(' ')}
+                      onClick={() => this.props.history.push(
+                        '/results/' + result._id)}
+                    >Смотреть
+                    </td>
+                    <td
+                      className={any.join(' ')}
+                      onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
+                    </td>
+                    <td
+                      className={cls.join(' ')}
+                      onClick={this.onDelete.bind(this, result._id)}
+                    >Удалить
+                    </td>
+                  </tr>
+                )
+              })
+              }
               </tbody>
             </table>
           </div>

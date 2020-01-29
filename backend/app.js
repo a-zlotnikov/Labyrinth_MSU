@@ -11,7 +11,9 @@ const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 const typesRouter = require('./routes/types');
 const environmentRouter = require('./routes/environment');
+const experimentRouter = require('./routes/experiment')
 
+app.use('/experiment', experimentRouter);
 app.use('/environment', environmentRouter);
 app.use('/types', typesRouter);
 app.use('/results', resultsRouter);
