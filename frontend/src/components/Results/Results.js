@@ -10,7 +10,7 @@ const Cookies = require('js-cookie');
 class Results extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       type: 'username',
       query: '',
@@ -25,11 +25,11 @@ class Results extends Component {
       option: []
     };
   }
-  
+
   componentDidMount = async () => {
     await this.searchAll();
   };
-  
+
   onSort = sortField => {
     const cloneData = this.state.response;
     const sortType = this.state.sort === 'asc' ? 'desc' : 'asc';
@@ -40,7 +40,7 @@ class Results extends Component {
       sortField,
     });
   };
-  
+
   onSaveTxt = async id => {
     const response = await fetch('/results', {
       method: 'POST',
@@ -53,7 +53,7 @@ class Results extends Component {
       numberExperiment, nameIndividual, typeExperiment, surname, name, age, gender, hand, year,
       group, numberOfReinforcements,
     } = results['0'];
-    
+
     const elemFile = [
       `${data}\n`,
       `${time}\n`,
@@ -70,18 +70,18 @@ class Results extends Component {
       `${group}\n`,
       `${numberOfReinforcements}\n`,
     ];
-    
+
     let timeLine = [];
     results['0'].result.map(
       (elem) => timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`));
-    
+
     const newFile = [...elemFile, ...timeLine];
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
       `${nameEnvironment}_${typeExperiment}_${nameExperiment}_${numberExperiment}_${nameIndividual}`);
-    
+
   };
-  
+
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
       const response = await fetch('/results', {
@@ -94,9 +94,9 @@ class Results extends Component {
         response: results,
       });
     }
-    
+
   };
-  
+
   searchAll = async () => {
     let response = await fetch('/results', {
       method: 'GET',
@@ -105,15 +105,15 @@ class Results extends Component {
     const result = await response.json();
     this.setState({loading: true, option:['Идентификатор пользователя','Тип' +
       ' эксперимента','Название эксперимента']});
-    
+
     if (result) {
       this.setState({loading: false, error: false, response: result});
     } else {
       this.setState({loading: false, error: true});
     }
-    
+
   };
-  
+
   changeType = async (e) => {
     if (e.target.value === 'Идентификатор пользователя') {
       this.setState({type: 'username'});
@@ -127,12 +127,12 @@ class Results extends Component {
     }
     await this.search();
   };
-  
+
   changeQuery = async (e) => {
     await this.setState({query: e.target.value});
     await this.search();
   };
-  
+
   search = async () => {
     const {type, query} = this.state;
     let resp = await fetch('/results/search', {
@@ -148,7 +148,7 @@ class Results extends Component {
       this.setState({loading: false, error: true});
     }
   };
-  
+
   reset = async () => {
     this.setState({
       type: 'username',
@@ -157,11 +157,11 @@ class Results extends Component {
       loading: false,
       error: false,
       option: []
-  
+
     });
     await this.searchAll();
   };
-  
+
   render() {
     const cls = [classes.Option];
     const any = [classes.Option, classes.enable];
@@ -170,16 +170,16 @@ class Results extends Component {
     } else {
       cls.push(classes.disable);
     }
-    
+
     return this.state.response ? (
       <div>
         <div className={classes.Header}>
-          <div><img src="/img/logo.png" alt=""/></div>
+          <div><img src="/img/logo.png" alt="" className={classes.logo}/></div>
         </div>
         <div className={classes.LayoutRes}>
           <div className={'title'}><h1>Поиск</h1></div>
           <div className={classes.Header}>
-            
+
             <select
               className={classes.selector}
               name="type"
@@ -193,7 +193,7 @@ class Results extends Component {
               {/*<option>Идентификатор пользователя</option>*/}
               {/*<option>Тип эксперимента</option>*/}
               {/*<option>Название эксперимента</option>*/}
-            
+
             </select>
             {this.state.type === 'username' ?
               <input

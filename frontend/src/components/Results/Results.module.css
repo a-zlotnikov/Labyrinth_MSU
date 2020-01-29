@@ -7,8 +7,12 @@
 }
 
 .Results th {
-    background-color: darkgray;
+    background-color: lightgray;
     border: 1px solid black;
+}
+
+.Results th:hover {
+    cursor: pointer;
 }
 
 .Results td {
@@ -70,4 +74,16 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:active {
+    background-color: grey;
+}
+
+.logo {
+    margin-top: 30px;
 }
