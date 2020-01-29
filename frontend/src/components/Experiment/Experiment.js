@@ -190,20 +190,20 @@ class Experiment extends Component {
         <div className='board'>
           <div className={'expInputBox'}>
             <div className={'expInputs'}>
-              <div>Название среды:</div>
-              <div>
+              <div className={'expInputTitle'}>Название среды:</div>
+              <div className={'expInputTitle'}>
                 Тип эксперимента:
-                <select>
+                <select className={'expSelector'}>
                   <option>ABC</option>
                   <option>DEF</option>
                   <option>123</option>
                 </select>
               </div>
-              <div>Название эксперимента:<input onChange={this.newExpName}/></div>
-              <div>Номер опыта:<input/></div>
-              <div>Имя особи:<input/></div>
+              <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName}/></div>
+              <div className={'expInputTitle'}>Номер опыта:<input className={'expInput'}/></div>
+              <div className={'expInputTitle'}>Имя особи:<input className={'expInput'}/></div>
             </div>
-            <div className={'expTypeDescription'}>описание эксперимента: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut purus non mi iaculis vulputate. Curabitur fermentum, magna et consectetur iaculis, lorem ante condimentum elit, id vehicula lectus nisl ut velit. Nulla dignissim tortor et nibh placerat, sed tristique odio vestibulum. Praesent erat velit, maximus sed turpis non, egestas mollis libero. Nam eu massa eu dolor elementum ullamcorper. Ut cursus hendrerit dapibus. Nam id orci lectus. In iaculis rutrum purus. Phasellus quis mi id erat vestibulum sodales efficitur quis lacus. Duis nulla metus, interdum at nunc sed, pretium imperdiet dui.</div>
+            <div className={'expTypeDescription'}>описание эксперимента: ыпрыпgb fgh drg ghgdfghdgfh dfghd fghdfghdfghdfgh dfghdfghdfgh dfghdfghdfgh dfghdfghdfghdgh dfgh</div>
           </div>
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
