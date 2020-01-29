@@ -9,7 +9,9 @@ const resultsRouter = require('./routes/results');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 const typesRouter = require('./routes/types');
+const environmentRouter = require('./routes/environment');
 
+app.use('/environment', environmentRouter);
 app.use('/types', typesRouter);
 app.use('/results', resultsRouter);
 app.use('/users', usersRouter);

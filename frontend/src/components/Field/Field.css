@@ -55,14 +55,14 @@
     width: 250px;
     height: 50px;
     border-radius: 5px;
-    background-color: lightgray;
     border: none;
-    margin: 5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
     font-size: 20px;
     outline: 0 !important;
+    margin-top: 10px;
+    background-color: lightgray;
 }
 
 .constStatusBtn:hover {
@@ -182,5 +182,14 @@ b {
     font-weight: bold;
 }
 
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
 
 

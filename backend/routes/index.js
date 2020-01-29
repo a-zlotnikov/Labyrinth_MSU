@@ -12,7 +12,6 @@ router.get('/getField', async (req, res) => {
 });
 
 router.post('/saveField', async (req, res) => {
-
   const newEnv = await new Environment({
     name: req.body.name,
     field: {line: req.body.field},
@@ -22,6 +21,8 @@ router.post('/saveField', async (req, res) => {
 });
 
 router.post('/startExp', async (req, res) => {
+  console.log(req.body)
+  
   let newEnv;
   let newExp;
   const envName = req.body.name;

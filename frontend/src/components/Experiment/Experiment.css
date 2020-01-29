@@ -1,0 +1,38 @@
+.expMainBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.expStatusBtnsBox {
+    width: 760px;
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.expStatusBtnsContainer {
+    margin-bottom: 30px;
+}
+
+.expButton {
+    display: flex;
+    width: 250px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    background-color: lightgray;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    outline: 0 !important;
+}
+
+.expButton:hover {
+    cursor: pointer;
+    font-weight: bold;
+}

@@ -162,67 +162,79 @@ class Field extends Component {
 
     return (
         <div className='board'>
-          <input className={'constInput'} onChange={this.fieldName} value={this.state.fieldName} placeholder={'Введите имя среды'}/>
+          <input className={'constInput'} onChange={this.fieldName}
+                 value={this.state.fieldName}
+                 placeholder={'Введите имя среды'}/>
           {this.state.saveStatus && <div>Среда сохранена</div>}
           {this.state.nameStatus && <div>Введите имя</div>}
 
-          <div className={'constMainBox'}>
+          <div className={'constMainBox unselectable'}>
             <div className={'constFieldBox'}>
               {this.props.constructor &&
               this.props.constructor.map((element, i) => {
                 return (
-                    <div key={`${element} ${i}`}>{element.line.map(component => {
-                      let action;
-                      switch (true) {
-                        case component.wall:
-                          action = 'wall comp';
-                          break;
-                        case component.food:
-                          action = 'food comp';
-                          break;
-                        case component.fakeFood:
-                          action = 'fakeFood comp';
-                          break;
-                        case component.entry:
-                          action = 'entry comp';
-                          break;
-                        case component.exit:
-                          action = 'exit comp';
-                          break;
-                        case component.pedal:
-                          action = 'pedal comp';
-                          break;
-                        default:
-                          action = 'comp';
-                          break;
-                      }
-                      return (
-                          <span key={component.index}
-                                id={component.index}
-                                className={action}
-                                onClick={this.action}
-                          >
+                    <div key={`${element} ${i}`}>{element.line.map(
+                        component => {
+                          let action;
+                          switch (true) {
+                            case component.wall:
+                              action = 'wall comp';
+                              break;
+                            case component.food:
+                              action = 'food comp';
+                              break;
+                            case component.fakeFood:
+                              action = 'fakeFood comp';
+                              break;
+                            case component.entry:
+                              action = 'entry comp';
+                              break;
+                            case component.exit:
+                              action = 'exit comp';
+                              break;
+                            case component.pedal:
+                              action = 'pedal comp';
+                              break;
+                            default:
+                              action = 'comp';
+                              break;
+                          }
+                          return (
+                              <span key={component.index}
+                                    id={component.index}
+                                    className={action}
+                                    onClick={this.action}
+                              >
                         {component.value ?
                             <b>{component.value}</b> :
                             component.index}
                       </span>
-                      );
-                    })}
+                          );
+                        })}
                     </div>
                 );
               })}
             </div>
-
             <div>
-              <StatusButtons wall={this.state.wall} food={this.state.food} fakeFood={this.state.fakeFood} entry={this.state.entry} exit={this.state.exit} pedal={this.state.pedal} cellStatus={this.cellStatus}/>
+              <StatusButtons class={'constStatusBtnsBox'}
+                             btnClass={'constStatusBtn'} wall={this.state.wall}
+                             food={this.state.food}
+                             fakeFood={this.state.fakeFood}
+                             entry={this.state.entry} exit={this.state.exit}
+                             pedal={this.state.pedal}
+                             cellStatus={this.cellStatus}/>
             </div>
           </div>
-          <div className={'constBottomBtnsBox'}>
+          <div className={'constBottomBtnsBox unselectable'}>
             <div>
-              <button className={'constStatusBtn'} onClick={this.saveField}>Сохранить среду</button>
+              <button className={'constStatusBtn'}
+                      onClick={this.saveField}>Сохранить среду
+              </button>
             </div>
             <div>
-              <button className={'constStatusBtn'} onClick={this.startExperiment}>Начать эксперимент</button>
+              <button className={'constStatusBtn'}
+                      onClick={this.startExperiment}>Начать эксперимент
+              </button>
             </div>
           </div>
         </div>

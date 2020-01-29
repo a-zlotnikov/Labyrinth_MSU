@@ -14,6 +14,8 @@ import {
 } from '../../store/creators/creators';
 import '../Field/Field.css';
 import StatusButtons from '../StatusButtons/StatusButtons';
+import Keyboard from '../Keyboard/Keyboard';
+import './Experiment.css';
 
 class Experiment extends Component {
   constructor(props) {
@@ -171,13 +173,8 @@ class Experiment extends Component {
   render() {
     return (
         <div className='board'>
+
           <input onChange={this.newExpName}/>
-          {this.state.wall && <div>Стена</div>}
-          {this.state.food && <div>Кормушка</div>}
-          {this.state.fakeFood && <div>Ложная кормушка</div>}
-          {this.state.entry && <div>Вход</div>}
-          {this.state.exit && <div>Выход</div>}
-          {this.state.pedal && <div>Педаль</div>}
           {this.state.startPosition && <div>Стартовая позиция</div>}
           {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
 
@@ -212,37 +209,52 @@ class Experiment extends Component {
                       action = 'comp';
                       break;
                   }
-
-                  return (
-                      <span key={component.index}
-                            id={component.index}
-                            className={action}
-                            onClick={this.action}
-                      >
+                          return (
+                              <span key={component.index}
+                                    id={component.index}
+                                    className={action}
+                                    onClick={this.action}
+                              >
                         {component.value ?
                             <b>{component.value}</b> :
                             component.index}
                       </span>
-                  );
-                })}
-                </div>
-            );
-          })}
+                          );
+                        })}
+                    </div>
+                );
+              })}
+            </div>
+
+            <Keyboard/>
+          </div>
+
+
           <div>{this.props.expField.moves &&
           this.props.expField.moves.map((element, i) => {
             return <span key={i}>{element}</span>;
           })}</div>
-          <div>
-            <StatusButtons cellStatus={this.cellStatusExp}/>
+          <div className={'expStatusBtnsContainer'}>
+            <StatusButtons class={'expStatusBtnsBox'}
+                           btnClass={'expButton'} wall={this.state.wall}
+                           food={this.state.food}
+                           fakeFood={this.state.fakeFood}
+                           entry={this.state.entry} exit={this.state.exit}
+                           pedal={this.state.pedal}
+                           cellStatus={this.cellStatusExp}/>
           </div>
           <div>
-            <button onClick={this.cellStatusExp}>стартовая позиция</button>
+            <button className={'expButton'}
+                    onClick={this.cellStatusExp}>Стартовая позиция
+            </button>
           </div>
           <div>
             {this.state.expBegin ?
-                <button onClick={this.finishExp}>Завершить
+                <button className={'expButton'}
+                        onClick={this.finishExp}>Завершить
                   эксперимент</button> :
-                <button onClick={this.startExp}>Начать эксперимент</button>}
+                <button className={'expButton'} onClick={this.startExp}>Начать
+                  эксперимент</button>}
           </div>
         </div>
     );

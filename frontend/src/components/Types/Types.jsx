@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import './Types.css';
 import classes from '../Results/Results.module.css';
+import CurrentType from '../Types/CurrentType/CurrentType';
 const Cookies = require('js-cookie');
+
+// TODO: Редактирование второй раз (висит предыдущий стэйт), ограничение нэйма при редактировании
 
 class Types extends Component {
   constructor(props) {
@@ -53,8 +56,15 @@ class Types extends Component {
     }
   };
 
-  changeValue = (e) => {
-    this.setState({[e.target.name]: e.target.value});
+  changeName = (e) => {
+    // if (e.target.value.match(/[0-9]/)) {
+    //   this.setState({name: ''});
+    // }
+    this.setState({name: e.target.value.toUpperCase()});
+  };
+
+  changeDescription = (e) => {
+    this.setState({description: e.target.value});
   };
 
   render() {
@@ -69,12 +79,14 @@ class Types extends Component {
                        name="name"
                        value={this.state.name}
                        placeholder="имя"
-                       onChange={this.changeValue}/>
+                       maxLength="3"
+                       onChange={this.changeName}
+                />
                 <input className={'regInput regTextEdit'}
                        name="description"
                        value={this.state.description}
                        placeholder="описание"
-                       onChange={this.changeValue}/>
+                       onChange={this.changeDescription}/>
               </div>
               <div className={'regButton'}
                    onClick={this.save}>сохранить
@@ -91,21 +103,25 @@ class Types extends Component {
                     <tr>
                       <th>Имя</th>
                       <th>Описание</th>
+                      <th colSpan="2">
+                        Опции
+                      </th>
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.response.map((result, index) =>
-                        <tr key={index} name={result._id}>
-                          <td>{result.name}</td>
-                          <td>{result.description}</td>
-                        </tr>,
+                    {this.state.response.map((result) =>
+                        <CurrentType 
+                        id={result._id}
+                        name={result.name}
+                        description={result.description}
+                        />,
                     )}
                     </tbody>
                   </table>
               </div>
             </div> :
             <div>
-              <h2>их нет</h2>
+              <h2>Нет записей</h2>
             </div>
         }
       </div>
