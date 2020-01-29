@@ -5,7 +5,7 @@ import classes from '../Results/Results.module.css';
 import CurrentType from '../Types/CurrentType/CurrentType';
 const Cookies = require('js-cookie');
 
-// TODO: Редактирование второй раз (висит предыдущий стэйт), ограничение нэйма при редактировании
+// TODO: Otrai reizi rediģet (iepriekšajs state)
 
 class Types extends Component {
   constructor(props) {
