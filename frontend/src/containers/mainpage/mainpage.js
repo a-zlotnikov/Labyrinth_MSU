@@ -8,17 +8,7 @@ import OtherPage from './otherPage/otherPage';
 import Cookies from 'js-cookie';
 
 class Mainpage extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     category: Cookies.get('category'),
-  //     isAdmin: ['Преподаватель'],
-  //     isNotAdmin: ['Студент', 'Диплонник'],
-  //   };
-  // }
-
   render() {
-    // return ((this.state.isAdmin).includes(this.state.category)) ? (
     return (Cookies.get('category') === 'Преподаватель') ? (
       <div>
         <Logo/>
