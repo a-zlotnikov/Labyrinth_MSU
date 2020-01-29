@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 const {Field} = require('../models/field');
 const {Environment} = require('../models/environment');
 const {Experiment} = require('../models/experiment');
@@ -52,14 +53,16 @@ router.post('/startExp', async (req, res) => {
 });
 
 router.post('/saveExp', async (req, res) => {
-  const date = new Date();
+  const date = moment().format('L');
+  const time = moment().format('LTS')
   console.log(req.body);
   const user = {
     _id: req.session.user._id,
   };
   await Experiment.updateOne({_id: req.body.id}, {
-    date: date,
-    user: user,
+    date,
+    time,
+    user,
     env: {name: req.body.envName},
     expName: req.body.expName,
     animalName: req.body.expAnimal,
