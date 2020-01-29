@@ -23,6 +23,7 @@ class Experiment extends Component {
 
     this.state = {
       expName: '',
+      timer: 0,
       wall: false,
       food: false,
       fakeFood: false,
@@ -38,6 +39,10 @@ class Experiment extends Component {
 
   componentDidMount() {
     this.props.fullField(this.props.match.params.id);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalId);
   }
 
   changeValue = (prevValue) => {
@@ -124,9 +129,18 @@ class Experiment extends Component {
     this.setState(currentState);
   };
 
+  timer() {
+    this.setState({
+      timer: this.state.timer + 1
+    });
+    if(!this.state.expBegin) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   startExp = () => {
     this.setState({expBegin: true});
-
+    this.intervalId = setInterval(this.timer.bind(this), 1000);
     const move = (e) => {
 
       const x = e.key;
@@ -134,22 +148,22 @@ class Experiment extends Component {
         switch (x) {
           case 'ArrowUp':
             e.preventDefault();
-            this.props.moveUp();
+            this.props.moveUp(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
           case 'ArrowDown':
             e.preventDefault();
-            this.props.moveDown();
+            this.props.moveDown(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
           case 'ArrowRight':
             e.preventDefault();
-            this.props.moveRight();
+            this.props.moveRight(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
           case 'ArrowLeft':
             e.preventDefault();
-            this.props.moveLeft();
+            this.props.moveLeft(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
         }
@@ -162,7 +176,6 @@ class Experiment extends Component {
 
   finishExp = () => {
     this.setState({expBegin: false});
-    console.log('finishing');
     this.props.saveExperiment(this.props.match.params.id, this.state.expName,
         this.props.expField.moves, this.props.expField.name);
     this.props.newExp(this.props.expField.name);
@@ -179,6 +192,7 @@ class Experiment extends Component {
           <input onChange={this.newExpName}/>
           {this.state.startPosition && <div>Стартовая позиция</div>}
           {this.state.expBegin && <div><b>Эксперимент в процессе</b></div>}
+          {this.state.timer}
 
           {this.props.expField.field &&
           this.props.expField.field.line.map((element, i) => {
@@ -233,7 +247,12 @@ class Experiment extends Component {
 
           <div>{this.props.expField.moves &&
           this.props.expField.moves.map((element, i) => {
-            return <span key={i}>{element}</span>;
+            for (let key in element){
+              return <span key={i}>{key}: {element[key]}</span>
+            }
+          //   return (
+          //   <span key={i}>{element}</span>
+          // )
           })}</div>
           <div className={'expStatusBtnsContainer'}>
             <StatusButtons class={'expStatusBtnsBox'}
@@ -282,17 +301,17 @@ const mapDispatchToProps = (dispatch) => {
     startPos: (index) => {
       dispatch(STARTPOS(index));
     },
-    moveUp: () => {
-      dispatch(MOVEUP());
+    moveUp: (timer) => {
+      dispatch(MOVEUP(timer));
     },
-    moveDown: () => {
-      dispatch(MOVEDOWN());
+    moveDown: (timer) => {
+      dispatch(MOVEDOWN(timer));
     },
-    moveRight: () => {
-      dispatch(MOVERIGHT());
+    moveRight: (timer) => {
+      dispatch(MOVERIGHT(timer));
     },
-    moveLeft: () => {
-      dispatch(MOVELEFT());
+    moveLeft: (timer) => {
+      dispatch(MOVELEFT(timer));
     },
     saveExperiment: (id, expName, moves, envName) => {
       dispatch(saveExp(id, expName, moves, envName));
