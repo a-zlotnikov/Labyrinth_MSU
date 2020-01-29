@@ -7,10 +7,10 @@ import {
   MOVELEFT,
   MOVERIGHT,
   MOVEUP,
+  newExp,
   NEWVALUE,
-  STARTPOS,
   saveExp,
-    newExp
+  STARTPOS,
 } from '../../store/creators/creators';
 import '../Field/Field.css';
 import StatusButtons from '../StatusButtons/StatusButtons';
@@ -162,12 +162,13 @@ class Experiment extends Component {
   finishExp = () => {
     this.setState({expBegin: false});
     console.log(this.props.expField.moves);
-    this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name);
-    this.props.newExp(this.props.expField.name)
+    this.props.saveExperiment(this.props.match.params.id, this.state.expName,
+        this.props.expField.moves, this.props.expField.name);
+    this.props.newExp(this.props.expField.name);
   };
 
   newExpName = (e) => {
-    this.setState({expName: e.target.value})
+    this.setState({expName: e.target.value});
   };
 
   render() {
@@ -209,23 +210,22 @@ class Experiment extends Component {
                       action = 'comp';
                       break;
                   }
-                          return (
-                              <span key={component.index}
-                                    id={component.index}
-                                    className={action}
-                                    onClick={this.action}
-                              >
+                  return (
+                      <span key={component.index}
+                            id={component.index}
+                            className={action}
+                            onClick={this.action}
+                      >
                         {component.value ?
                             <b>{component.value}</b> :
                             component.index}
                       </span>
-                          );
-                        })}
-                    </div>
-                );
-              })}
-            </div>
-
+                  );
+                })}
+                </div>
+            );
+          })}
+          <div>
             <Keyboard/>
           </div>
 
@@ -294,11 +294,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(MOVELEFT());
     },
     saveExperiment: (id, expName, moves, envName) => {
-      dispatch(saveExp(id, expName, moves, envName))
+      dispatch(saveExp(id, expName, moves, envName));
     },
     newExp: (envName) => {
-      dispatch(newExp(envName))
-    }
+      dispatch(newExp(envName));
+    },
   };
 };
 
