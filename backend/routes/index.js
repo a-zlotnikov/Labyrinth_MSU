@@ -30,7 +30,7 @@ router.post('/startExp', async (req, res) => {
     newExp = await new Experiment({
       env: {name: req.body.name}
     });
-    await newExp.save();
+      await newExp.save().then(data => console.log(`true: ${data}`)).catch(data => console.log(data));
     res.json({id: newExp._id})
   } else if(envCheck[0]){
     res.json({answer: 'envName is busy'})
