@@ -7,8 +7,8 @@
 }
 
 .expStatusBtnsBox {
-    width: 760px;
-    height: 100px;
+    width: 310px;
+    height: 65px;
     display: flex;
     flex-wrap: wrap;
     margin: auto;
@@ -20,19 +20,80 @@
 
 .expButton {
     display: flex;
-    width: 250px;
-    height: 50px;
+    width: 100px;
+    height: 30px;
     border-radius: 5px;
     border: none;
     background-color: lightgray;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-    font-size: 20px;
+    font-size: 10px;
     outline: 0 !important;
 }
 
 .expButton:hover {
     cursor: pointer;
+    font-weight: bold;
+}
+
+.wallBtn {
+    background-color: #8c96ff;
+}
+
+.activeWall {
+    background-color: #4050ff;
+    font-size: 12px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.foodBtn {
+    background-color: #ffd47f;
+}
+
+.activeFood {
+    background-color: orange;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.fakeFoodBtn {
+    background-color: #d599ff;
+}
+
+.activeFakeFood {
+    background-color: #a3f;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.entryBtn {
+    background-color: #7fd977;
+}
+
+.activeEntry {
+    background-color: #0ea600;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.exitBtn {
+    background-color: #d9f5ff;
+}
+
+.activeExit {
+    background-color: lightblue;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pedalBtn {
+    background-color: #fffef7;
+}
+
+.activePedal {
+    background-color: lemonchiffon;
+    font-size: 12px;
     font-weight: bold;
 }

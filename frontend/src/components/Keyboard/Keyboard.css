@@ -5,6 +5,7 @@
     border-radius: 10px;
     overflow: hidden;
     font-size: 20px;
+    margin: auto;
 }
 
 .Keyboard:hover {

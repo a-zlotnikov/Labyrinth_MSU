@@ -23,7 +23,7 @@ export default function expReducer(state = initialState, action) {
 
     case CHANGE_COMP:
       const newExpField = state.expField;
-      const newLine = newExpField.env.field.line.map((comp) => {
+      const newLine = newExpField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
 
@@ -45,7 +45,7 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      newExpField.env.field.line = newLine;
+      newExpField.field.line = newLine;
 
       return {
         expField: newExpField,
@@ -53,7 +53,7 @@ export default function expReducer(state = initialState, action) {
 
     case NEW_VALUE:
       const field = state.expField;
-      const newValue = state.expField.env.field.line.map((comp) => {
+      const newValue = state.expField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.index === action.index) {
@@ -72,14 +72,15 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      field.env.field.line = newValue;
+      field.field.line = newValue;
       return {
         expField: field,
       };
 
     case START_POS:
+      console.log('startpos');
       const stateField = state.expField;
-      const startPos = stateField.env.field.line.map((comp) => {
+      const startPos = stateField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.start === true && elem.index !== action.index) {
@@ -111,7 +112,7 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      stateField.env.field.line = startPos;
+      stateField.field.line = startPos;
       return {
         expField: stateField,
       };
@@ -123,7 +124,7 @@ export default function expReducer(state = initialState, action) {
       let newIndex;
       let walls = [];
       let entry = [];
-      expUpField.env.field.line.map((comp) => {
+      expUpField.field.line.map((comp) => {
         line: comp.line.map(elem => {
           if (elem.wall) {
             walls.push(elem.index);
@@ -133,7 +134,7 @@ export default function expReducer(state = initialState, action) {
         });
       });
 
-      expUpField.env.field.line.map((comp) => {
+      expUpField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
 
@@ -157,12 +158,14 @@ export default function expReducer(state = initialState, action) {
         };
       });
 
-      const moveUp = state.expField.env.field.line.map((comp) => {
+      const moveUp = state.expField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newIndex) {
-              if(elem.value){
+              if(elem.value && prevMovesUp){
                 prevMovesUp.push(elem.value);
+              } else if(elem.value && !prevMovesUp){
+                prevMovesUp = [elem.value]
               }
               for (let key in elem) {
                 if (key === 'start') {
@@ -188,7 +191,7 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      expUpField.env.field.line = moveUp;
+      expUpField.field.line = moveUp;
       expUpField.moves = prevMovesUp;
       return {
         expField: expUpField,
@@ -201,7 +204,7 @@ export default function expReducer(state = initialState, action) {
       let newIndexDown;
       let wallsDown = [];
       let exit = [];
-      expDownField.env.field.line.map((comp) => {
+      expDownField.field.line.map((comp) => {
         line: comp.line.map(elem => {
           if (elem.wall) {
             wallsDown.push(elem.index);
@@ -210,7 +213,7 @@ export default function expReducer(state = initialState, action) {
           }
         });
       });
-      expDownField.env.field.line.map((comp) => {
+      expDownField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.start === true) {
@@ -233,12 +236,14 @@ export default function expReducer(state = initialState, action) {
         };
       });
 
-      const moveDown = state.expField.env.field.line.map((comp) => {
+      const moveDown = state.expField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newIndexDown) {
-              if(elem.value){
+              if(elem.value && prevMovesDown){
                 prevMovesDown.push(elem.value);
+              } else if(elem.value && !prevMovesDown){
+                prevMovesDown = [elem.value]
               }
 
               for (let key in elem) {
@@ -265,7 +270,7 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      expDownField.env.field.line = moveDown;
+      expDownField.field.line = moveDown;
       expDownField.moves = prevMovesDown;
       return {
         expField: expDownField,
@@ -278,14 +283,14 @@ export default function expReducer(state = initialState, action) {
       let prevLetRight;
       let newLetRight;
       let wallsRight = [];
-      expRightField.env.field.line.map((comp) => {
+      expRightField.field.line.map((comp) => {
         line: comp.line.map(elem => {
           if (elem.wall) {
             wallsRight.push(elem.index);
           }
         });
       });
-      expRightField.env.field.line.map((comp) => {
+      expRightField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.start === true) {
@@ -307,12 +312,14 @@ export default function expReducer(state = initialState, action) {
         };
       });
 
-      const moveRight = state.expField.env.field.line.map((comp) => {
+      const moveRight = state.expField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newLetRight) {
-              if(elem.value){
+              if(elem.value && prevMovesRight){
                 prevMovesRight.push(elem.value);
+              } else if(elem.value && !prevMovesRight){
+                prevMovesRight = [elem.value]
               }
               for (let key in elem) {
                 if (key === 'start') {
@@ -338,7 +345,7 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      expRightField.env.field.line = moveRight;
+      expRightField.field.line = moveRight;
       expRightField.moves = prevMovesRight;
 
       return {
@@ -351,14 +358,14 @@ export default function expReducer(state = initialState, action) {
       let prevLetLeft;
       let newLetLeft;
       let wallsLeft = [];
-      expLeftField.env.field.line.map((comp) => {
+      expLeftField.field.line.map((comp) => {
         line: comp.line.map(elem => {
           if (elem.wall) {
             wallsLeft.push(elem.index);
           }
         });
       });
-      expLeftField.env.field.line.map((comp) => {
+      expLeftField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.start === true) {
@@ -379,12 +386,14 @@ export default function expReducer(state = initialState, action) {
         };
       });
 
-      const moveLeft = state.expField.env.field.line.map((comp) => {
+      const moveLeft = state.expField.field.line.map((comp) => {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newLetLeft) {
-              if(elem.value){
+              if(elem.value && prevMovesLeft){
                 prevMovesLeft.push(elem.value);
+              } else if(elem.value && !prevMovesLeft){
+                prevMovesLeft = [elem.value]
               }
               for (let key in elem) {
                 if (key === 'start') {
@@ -410,7 +419,7 @@ export default function expReducer(state = initialState, action) {
           }),
         };
       });
-      expLeftField.env.field.line = moveLeft;
+      expLeftField.field.line = moveLeft;
       expLeftField.moves = prevMovesLeft;
       return {
         expField: expLeftField,
