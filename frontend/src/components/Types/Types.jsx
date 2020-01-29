@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import './Types.css';
 import classes from '../Results/Results.module.css';
 import CurrentType from '../Types/CurrentType/CurrentType';
