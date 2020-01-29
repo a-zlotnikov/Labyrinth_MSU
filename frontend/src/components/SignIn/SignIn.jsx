@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import  { Redirect } from 'react-router-dom';
+// import  { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {AUTHSUCCESS} from '../../store/creators/creators';
 import './SignIn.css';
