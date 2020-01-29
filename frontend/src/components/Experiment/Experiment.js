@@ -242,8 +242,8 @@ class Experiment extends Component {
         <div className='board'>
           <div className={'expInputBox'}>
             <div className={'expInputs'}>
-              <div>Название среды:</div>
-              <div>
+              <div className={'expInputTitle'}>Название среды:</div>
+              <div className={'expInputTitle'}>
                 Тип эксперимента:
                 {this.state.response ?
                    <select onChange={this.setType}>
@@ -254,9 +254,9 @@ class Experiment extends Component {
                 </select>
                    : null}
               </div>
-              <div>Название эксперимента:<input onChange={this.newExpName}/></div>
-              <div>Номер опыта:<input/></div>
-              <div>Имя особи:<input/></div>
+              <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName}/></div>
+              <div className={'expInputTitle'}>Номер опыта:<input className={'expInput'}/></div>
+              <div className={'expInputTitle'}>Имя особи:<input className={'expInput'}/></div>
             </div>
             <div className={'expTypeDescription'}>{this.state.description}</div>
           </div>
