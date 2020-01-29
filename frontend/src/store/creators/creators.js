@@ -64,30 +64,31 @@ export const STARTPOS = (index) => {
   }
 };
 
-export const MOVEUP = () => {
+export const MOVEUP = (time) => {
   return {
-    type: MOVE_UP
+    type: MOVE_UP,
+    time
   }
 };
 
-export const MOVEDOWN = (index) => {
+export const MOVEDOWN = (time) => {
   return {
     type: MOVE_DOWN,
-    index
+    time
   }
 };
 
-export const MOVELEFT = (index) => {
+export const MOVELEFT = (time) => {
   return {
     type: MOVE_LEFT,
-    index
+    time
   }
 };
 
-export const MOVERIGHT = (index) => {
+export const MOVERIGHT = (time) => {
   return {
     type: MOVE_RIGHT,
-    index
+    time
   }
 };
 
