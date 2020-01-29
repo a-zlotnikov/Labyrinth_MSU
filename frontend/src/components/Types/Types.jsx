@@ -110,8 +110,9 @@ class Types extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.response.map((result) =>
+                    {this.state.response.map((result, index) =>
                         <CurrentType
+                        key={index}
                         id={result._id}
                         name={result.name}
                         description={result.description}
