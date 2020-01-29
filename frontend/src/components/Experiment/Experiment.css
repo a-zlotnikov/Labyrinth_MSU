@@ -150,3 +150,21 @@
     font-weight: bold;
     font-size: 20px;
 }
+
+.expInputBox {
+    display: flex;
+    flex-direction: row;
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.expInputs {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.expTypeDescription {
+    margin-left: 30px;
+    width: 500px;
+}
