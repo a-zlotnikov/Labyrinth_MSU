@@ -31,7 +31,7 @@ class ResultDetail extends Component {
       <div className={classes.ResultDetail}>
         <hr/>
         <p>Дата: {this.state.details.date ? this.state.details.date : '-'}</p>
-        {/*<p>Время: {this.state.details.time}</p>*/}
+        <p>Время: {this.state.details.time ? this.state.details.time : '-'}</p>
         <p>Название среды: {this.state.details.env.name ? this.state.details.env.name : '-'}</p>
         <p>Название эксперимента: {this.state.details.expName ? this.state.details.expName : '-'}</p>
         <p>Номер опыта: {this.state.details.expNumber ? this.state.details.expNumber : '-'}</p>

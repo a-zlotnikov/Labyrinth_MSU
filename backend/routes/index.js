@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
+moment.locale('ru');
 const {Field} = require('../models/field');
 const {Environment} = require('../models/environment');
 const {Experiment} = require('../models/experiment');
