@@ -206,7 +206,7 @@ class Field extends Component {
                                     onClick={this.action}
                               >
                         {component.value ?
-                            <b>{component.value}</b> :
+                            <span className={'ValueBtn'}>{component.value}</span> :
                             component.index}
                       </span>
                           );

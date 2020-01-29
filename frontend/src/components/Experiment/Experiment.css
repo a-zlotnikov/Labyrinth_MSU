@@ -199,3 +199,9 @@
     font-family: Archangelsk;
     font-weight: bolder;
 }
+
+.expResultInput {
+    font-size: 20px;
+    min-height: 22px;
+    margin: 10px;
+}
