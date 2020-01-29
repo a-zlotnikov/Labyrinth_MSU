@@ -13,7 +13,7 @@ import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
 import Types from './components/Types/Types';
-import Video from './components/Webcam/Webcam';
+import Video from './components/Webcam/Webcamv2';
 
 import {connect} from 'react-redux'
 import Environment from './components/Environment/Environment';
