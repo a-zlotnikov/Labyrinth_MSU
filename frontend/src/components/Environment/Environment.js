@@ -33,11 +33,12 @@ class Environment extends Component {
         body: JSON.stringify({
           name: props.name,
           field: props.field,
+          arhive: true,
         }),
       },
     );
     const result = await response.json();
-    // console.log(result)
+    console.log(result)
     this.props.history.push(`/experiment/${result.id}`);
     
   };
