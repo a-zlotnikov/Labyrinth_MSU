@@ -22,7 +22,7 @@ router.post('/saveField', async (req, res) => {
 
 router.post('/startExp', async (req, res) => {
   console.log(req.body)
-  
+
   let newEnv;
   let newExp;
   const envName = req.body.name;
@@ -57,12 +57,8 @@ router.post('/saveExp', async (req, res) => {
 
 router.post('/getExpField', async (req, res) => {
   const exp = await Experiment.find({_id: req.body.id});
-  console.log(exp);
   const env = exp[0].env.name;
-  console.log(req.body.id);
-  console.log(env);
   const environ = await Environment.find({name: env});
-  console.log(environ);
   res.json(environ[0])
 });
 

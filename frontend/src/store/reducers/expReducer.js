@@ -78,6 +78,7 @@ export default function expReducer(state = initialState, action) {
       };
 
     case START_POS:
+      console.log('startpos');
       const stateField = state.expField;
       const startPos = stateField.field.line.map((comp) => {
         return {
