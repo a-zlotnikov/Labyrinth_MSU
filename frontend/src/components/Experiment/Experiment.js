@@ -240,25 +240,27 @@ class Experiment extends Component {
                                pedal={this.state.pedal}
                                cellStatus={this.cellStatusExp}/>
               </div>
+              <div className={'startBtnsRow'}>
+                <div>
+                  <button className={'expStartButton'}
+                          onClick={this.cellStatusExp}>Стартовая позиция
+                  </button>
+                </div>
+                <div>
+                  {this.state.expBegin ?
+                      <button className={'expStartButton'}
+                              onClick={this.finishExp}>Завершить
+                        эксперимент</button> :
+                      <button className={'expStartButton'} onClick={this.startExp}>Начать
+                        эксперимент</button>}
+                </div>
+              </div>
             </div>
           </div>
           <div>{this.props.expField.moves &&
           this.props.expField.moves.map((element, i) => {
             return <span key={i}>{element}</span>;
           })}</div>
-          <div>
-            <button className={'expButton'}
-                    onClick={this.cellStatusExp}>Стартовая позиция
-            </button>
-          </div>
-          <div>
-            {this.state.expBegin ?
-                <button className={'expButton'}
-                        onClick={this.finishExp}>Завершить
-                  эксперимент</button> :
-                <button className={'expButton'} onClick={this.startExp}>Начать
-                  эксперимент</button>}
-          </div>
         </div>
     );
   }
