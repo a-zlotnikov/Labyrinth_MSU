@@ -78,6 +78,7 @@ class Experiment extends Component {
         break;
       case this.state.startPosition:
         this.props.startPos(e.target.id);
+        console.log('start position');
         break;
       default:
         this.changeValue(e.target.id);
@@ -107,7 +108,7 @@ class Experiment extends Component {
       case 'педаль':
         translate = 'pedal';
         break;
-      case 'стартовая позиция':
+      case 'Стартовая позиция':
         translate = 'startPosition';
         break;
     }
@@ -161,7 +162,7 @@ class Experiment extends Component {
 
   finishExp = () => {
     this.setState({expBegin: false});
-    console.log(this.props.expField.moves);
+    console.log('finishing');
     this.props.saveExperiment(this.props.match.params.id, this.state.expName,
         this.props.expField.moves, this.props.expField.name);
     this.props.newExp(this.props.expField.name);

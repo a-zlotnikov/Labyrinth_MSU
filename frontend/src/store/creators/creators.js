@@ -114,7 +114,6 @@ export const expField = (id) => {
         }
     );
     const result = await response.json();
-    console.log(result);
     dispatch(EXPFIELD(result));
   };
 };
