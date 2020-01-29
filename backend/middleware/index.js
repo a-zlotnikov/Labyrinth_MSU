@@ -7,8 +7,9 @@ module.exports = function(app) {
   const session = require('express-session');
   const FileStore = require('session-file-store')(session);
   const mongoose = require('mongoose');
+  const bdLink = process.env.BD_LINK;
 
-  mongoose.connect('mongodb+srv://admin:LnCC67f8@labirynth-420rj.mongodb.net', {
+  mongoose.connect(bdLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
