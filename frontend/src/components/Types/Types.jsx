@@ -70,26 +70,26 @@ class Types extends Component {
 
   render() {
     return (
-      <div>
+      <div className={'typeContainer'}>
         <h1>Типы экспериментов</h1>
         {Cookies.get('category') === 'Преподаватель' ?
             <div>
               <h2>Создать новый</h2>
               <div>
-                <input className={'regInput regTextEdit'}
+                <input className={'typeNameInput'}
                        name="name"
                        value={this.state.name}
                        placeholder="имя"
                        maxLength="3"
                        onChange={this.changeName}
                 />
-                <input className={'regInput regTextEdit'}
+                <input className={'typeDescriptionInput'}
                        name="description"
                        value={this.state.description}
                        placeholder="описание"
                        onChange={this.changeDescription}/>
               </div>
-              <div className={'regButton'}
+              <div className={'typeSaveButton'}
                    onClick={this.save}>сохранить
               </div>
               <hr/>
@@ -111,7 +111,7 @@ class Types extends Component {
                     </thead>
                     <tbody>
                     {this.state.response.map((result) =>
-                        <CurrentType 
+                        <CurrentType
                         id={result._id}
                         name={result.name}
                         description={result.description}
