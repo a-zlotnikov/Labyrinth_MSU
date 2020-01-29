@@ -13,26 +13,62 @@ class Keyboard extends Component {
           <div className={'keyBtnRow'}>
             <div>
               <div className={'keyBtnRow'}>
-                <div className={'keyBtn'}>7</div>
-                <div className={'keyBtn'}>8</div>
-                <div className={'keyBtn'}>9</div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>t</div>
+                  <div className={'right'}>?</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>h</div>
+                  <div className={'right'}>_</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>o</div>
+                  <div className={'right'}>i</div>
+                </div>
               </div>
               <div className={'keyBtnRow'}>
-                <div className={'keyBtn'}>4</div>
-                <div className={'keyBtn'}>5</div>
-                <div className={'keyBtn'}>6</div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>j</div>
+                  <div className={'right'}>q</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>╎</div>
+                  <div className={'right'}>b</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>s</div>
+                  <div className={'right'}>l</div>
+                </div>
               </div>
               <div className={'keyBtnRow'}>
-                <div className={'keyBtn'}>1</div>
-                <div className={'keyBtn'}>2</div>
-                <div className={'keyBtn'}>3</div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>e</div>
+                  <div className={'right'}>x</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>w</div>
+                  <div className={'right'}>z</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>r</div>
+                  <div className={'right'}>m</div>
+                </div>
               </div>
               <div className={'keyBtnRow'}>
-                <div className={'keyWideBtn'}>0</div>
-                <div className={'keyBtn'}>.</div>
+                <div className={'keyWideBtn'}>
+                  <div className={'left'}>y</div>
+                  <div className={'right'}>d</div>
+                </div>
+                <div className={'keyBtn'}>
+                  <div className={'left'}>k</div>
+                  <div className={'right'}>g</div>
+                </div>
               </div>
             </div>
-            <div className={'keyLongBtn'}>+</div>
+            <div className={'keyLongBtn'}>
+              <div className={'left'}>+</div>
+              <div className={'right'}>a</div>
+            </div>
           </div>
         </div>
     );
