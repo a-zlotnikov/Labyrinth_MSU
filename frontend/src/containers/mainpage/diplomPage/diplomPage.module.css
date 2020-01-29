@@ -1,0 +1,34 @@
+.diplomPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    flex-grow: 1;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.diplomPage a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30vw;
+    height: 5vh;
+    border-radius: 6px;
+    text-decoration: none;
+    color: black;
+    padding: 3px;
+    margin: 10px;
+    background-color: lightgrey;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+.diplomPage a:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.diplomPage a:active {
+    font-weight: bold;
+    background-color: grey;
+}
