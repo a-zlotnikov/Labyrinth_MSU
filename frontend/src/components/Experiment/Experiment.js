@@ -188,19 +188,22 @@ class Experiment extends Component {
   render() {
     return (
         <div className='board'>
-          <div>
-            <div>Название среды:</div>
-            <div>
-              Тип эксперимента:
-              <select>
-                <option>ABC</option>
-                <option>DEF</option>
-                <option>123</option>
-              </select>
+          <div className={'expInputBox'}>
+            <div className={'expInputs'}>
+              <div>Название среды:</div>
+              <div>
+                Тип эксперимента:
+                <select>
+                  <option>ABC</option>
+                  <option>DEF</option>
+                  <option>123</option>
+                </select>
+              </div>
+              <div>Название эксперимента:<input onChange={this.newExpName}/></div>
+              <div>Номер опыта:<input/></div>
+              <div>Имя особи:<input/></div>
             </div>
-            <div>Название эксперимента:<input onChange={this.newExpName}/></div>
-            <div>Номер опыта:<input/></div>
-            <div>Имя особи:<input/></div>
+            <div className={'expTypeDescription'}>описание эксперимента: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut purus non mi iaculis vulputate. Curabitur fermentum, magna et consectetur iaculis, lorem ante condimentum elit, id vehicula lectus nisl ut velit. Nulla dignissim tortor et nibh placerat, sed tristique odio vestibulum. Praesent erat velit, maximus sed turpis non, egestas mollis libero. Nam eu massa eu dolor elementum ullamcorper. Ut cursus hendrerit dapibus. Nam id orci lectus. In iaculis rutrum purus. Phasellus quis mi id erat vestibulum sodales efficitur quis lacus. Duis nulla metus, interdum at nunc sed, pretium imperdiet dui.</div>
           </div>
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
