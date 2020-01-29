@@ -239,7 +239,7 @@ class Experiment extends Component {
 
   render() {
     return (
-        <div className='board'>
+        <div className='board unselectable'>
           <div className={'expInputBox'}>
             <div className={'expInputs'}>
               <div className={'expInputTitle'}>Название среды:</div>
@@ -341,7 +341,7 @@ class Experiment extends Component {
               </div>
             </div>
           </div>
-          <div>{this.props.expField.moves &&
+          <div className={'expResultInput'}>{this.props.expField.moves &&
           this.props.expField.moves.map((element, i) => {
             for (let key in element){
               return <span key={i}>{key}: {element[key]}</span>
