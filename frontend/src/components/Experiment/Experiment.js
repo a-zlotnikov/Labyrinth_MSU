@@ -205,7 +205,6 @@ class Experiment extends Component {
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
             <div>
-              {this.state.timer}
               {this.props.expField.field &&
               this.props.expField.field.line.map((element, i) => {
                 return (
@@ -255,6 +254,8 @@ class Experiment extends Component {
             </div>
 
             <div>
+              <div className={'expTimer'}><div>Таймер:</div> <div className={'expTimerInt'}>{this.state.timer}</div><div>сек.</div></div>
+              <div className={'expTimer'}>Подкреплений: <div className={'expTimerInt'}>?</div></div>
               <Keyboard/>
               <div className={'expStatusBtnsContainer'}>
                 <StatusButtons class={'expStatusBtnsBox'}
