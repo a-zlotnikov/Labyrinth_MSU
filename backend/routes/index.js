@@ -27,7 +27,6 @@ router.post('/startExp', async (req, res) => {
   let newExp;
   const envName = req.body.name;
   const envCheck = await Environment.find({name: envName});
-  // console.log(envCheck[0]);
   if(envCheck[0]){
     res.json({answer: 'envName is busy'})
   } else {
@@ -36,9 +35,10 @@ router.post('/startExp', async (req, res) => {
       field: {line: req.body.field},
     });
     await newEnv.save();
+    const newEnvId = await Environment.find({name: req.body.name});
 
     newExp = await new Experiment({
-      env: newEnv
+      env: {name: newEnvId[0].name}
     });
     await newExp.save();
     res.json({id: newExp._id})
@@ -46,10 +46,29 @@ router.post('/startExp', async (req, res) => {
 
 });
 
+router.post('/saveExp', async (req, res) => {
+  console.log(req.body);
+  const user = {
+    _id: req.session.user._id
+  };
+  await Experiment.updateOne({_id: req.body.id}, {user: user, expName: req.body.expName, moves: req.body.moves, env: {name: req.body.envName}});
+
+});
+
 router.post('/getExpField', async (req, res) => {
   const exp = await Experiment.find({_id: req.body.id});
-  // console.log(exp);
-  res.json(exp[0])
+  console.log(exp);
+  const env = exp[0].env.name;
+  console.log(req.body.id);
+  console.log(env);
+  const environ = await Environment.find({name: env});
+  console.log(environ);
+  res.json(environ[0])
+});
+
+router.post('/getNewExpField', async (req, res) => {
+  console.log(req.body.name);
+
 });
 
 module.exports = router;
