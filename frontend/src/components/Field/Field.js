@@ -226,16 +226,12 @@ class Field extends Component {
             </div>
           </div>
           <div className={'constBottomBtnsBox unselectable'}>
-            <div>
               <button className={'constStatusBtn'}
                       onClick={this.saveField}>Сохранить среду
               </button>
-            </div>
-            <div>
               <button className={'constStatusBtn'}
                       onClick={this.startExperiment}>Начать эксперимент
               </button>
-            </div>
           </div>
         </div>
     );
