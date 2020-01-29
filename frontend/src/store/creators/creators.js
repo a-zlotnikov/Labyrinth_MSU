@@ -7,7 +7,13 @@ import {
   NEW_VALUE,
   START_POS,
   AUTH_SUCCESS,
-  AUTH_LOGOUT, MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, SAVE_EXP,
+  AUTH_LOGOUT,
+  MOVE_UP,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+  SAVE_EXP,
+  KEYBOARD_ACTION,
 } from '../actions/actions';
 
 
@@ -88,6 +94,14 @@ export const MOVELEFT = (time) => {
 export const MOVERIGHT = (time) => {
   return {
     type: MOVE_RIGHT,
+    time
+  }
+};
+
+export const KEYBOADRACTION = (value, time) => {
+  return {
+    type: KEYBOARD_ACTION,
+    value,
     time
   }
 };

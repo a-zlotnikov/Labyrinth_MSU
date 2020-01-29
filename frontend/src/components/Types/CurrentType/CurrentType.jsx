@@ -22,7 +22,7 @@ class CurrentType extends Component {
       changeName = (e) => {
         this.setState({name: e.target.value.toUpperCase()});
       };
-    
+
       changeDescription = (e) => {
         this.setState({description: e.target.value});
       };
@@ -48,7 +48,7 @@ class CurrentType extends Component {
           this.setState({saved: false});
           this.setState(this.props);
         }
-      };  
+      };
 
     delete = async (e) => { // Удаляется, но карточка висит в результатах
         const id = this.state.id;
@@ -61,6 +61,7 @@ class CurrentType extends Component {
         this.setState({loading: true});
         if (res.succeed) {
           this.setState({loading: false});
+          this.props.fetch();
           alert('Тип удален');
         } else {
           this.setState({loading: false});
@@ -71,34 +72,34 @@ class CurrentType extends Component {
     render() {
         return (
                 <tr name={this.state.id}>
-                    {this.state.edit ? 
+                    {this.state.edit ?
                     <td>
-                        <input className={'input textEdit'} name="name"
+                        <input className={'typeCurInput'} name="name"
                         placeholder="название"
                         value={this.state.name}
                         maxLength="3"
                         onChange={this.changeName}
                         />
-                    </td> : 
+                    </td> :
                     <td>{this.state.name}</td>}
 
-                    {this.state.edit ? 
+                    {this.state.edit ?
                     <td>
-                        <input className={'input textEdit'} name="description"
+                        <input className={'typeCurInput'} name="description"
                         placeholder="описание"
                         value={this.state.description}
                         onChange={this.changeDescription}
                         />
-                    </td> : 
+                    </td> :
                     <td>{this.state.description}</td>}
 
-                    {this.state.edit ? 
-                    <td onClick={this.save}>Сохранить</td> : 
-                    <td onClick={this.editMode}>Редактировать</td>}
-                    
-                    {this.state.edit ? 
-                    <td onClick={this.editMode}>Отменить</td> : 
-                    <td onClick={this.delete}>Удалить</td>}
+                    {this.state.edit ?
+                    <td className={'typeCurButton'} onClick={this.save}>Сохранить</td> :
+                    <td className={'typeCurButton'} onClick={this.editMode}>Редактировать</td>}
+
+                    {this.state.edit ?
+                    <td className={'typeCurButton'} onClick={this.editMode}>Отменить</td> :
+                    <td className={'typeCurButton'} onClick={this.delete}>Удалить</td>}
                 </tr>
         );
     }

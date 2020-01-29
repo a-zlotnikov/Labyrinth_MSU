@@ -108,7 +108,7 @@ class UserList extends Component {
 
   reset = async () => {
     this.setState({
-      type: 'group',
+      // type: 'group',
       query: '',
       response: [],
       loading: false,
@@ -159,7 +159,8 @@ class UserList extends Component {
                           <div>
                             {this.state.response.length !== 0 ?
                                 <div>
-                                  {this.state.response.map((result) => <FoundUser
+                                  {this.state.response.map((result, index) => <FoundUser
+                                      key = {index}
                                       id = {result._id}
                                       active = {result.active}
                                       surname = {result.surname}

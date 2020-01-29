@@ -24,7 +24,7 @@ class Experiment extends Component {
     this.state = {
       expName: '',
       expNumber: 1,
-      expAnimal: '',
+      expAnimal: null,
       expType: '',
       timer: 0,
       wall: false,
@@ -37,11 +37,57 @@ class Experiment extends Component {
       startPosition: false,
       moveStatus: false,
       expBegin: false,
+      loading: false,
+      error: false,
+      response: null,
+      type: null,
+      description: null,
     };
   }
 
-  componentDidMount() {
+  fetchTypes = async () => {
+    console.log('>>> FETCH TYPES');
+    this.setState({response: null});
+    let resp = await fetch('/types', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    });
+    const res = await resp.json();
+    this.setState({loading: true});
+    if (res.response) {
+      this.setState({loading: false, error: false, response: res.response});
+    } else {
+      this.setState({loading: false, error: true});
+    }
+    console.log(this.state.response)
+  };
+
+  componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
+    console.log('>>> START FETCH')
+
+    console.log('>>> FETCH TYPES')
+    this.setState({response: null});
+    let resp = await fetch('/types', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    });
+    const res = await resp.json();
+    this.setState({loading: true});
+    if (res.response) {
+      this.setState({loading: false, error: false, response: res.response});
+    } else {
+      this.setState({loading: false, error: true});
+    }
+    console.log('>>> SUCCESS')
+    console.log(this.state.response)
+
+    // this.fetchTypes;
+    // fetch('/types', {
+    //   method: 'GET',
+    //   headers: {'Content-Type': 'application/json'},
+    // }).then(
+    //   res => res.json()).then(result => console.log(result))
   }
 
   componentWillUnmount(){
@@ -65,8 +111,6 @@ class Experiment extends Component {
   };
 
   newExpNumber = (e) => {
-    console.log(e);
-    console.log(typeof e);
     this.setState({expNumber: e.target.value})
   };
 
@@ -160,7 +204,7 @@ class Experiment extends Component {
     this.intervalId = setInterval(this.timer.bind(this), 1000);
     const move = (e) => {
 
-      const x = e.key;
+      const x = e.code;
       if (this.state.expBegin) {
         switch (x) {
           case 'ArrowUp':
@@ -186,14 +230,14 @@ class Experiment extends Component {
         }
       }
     };
-
     document.onkeydown = move;
-
   };
 
   finishExp = () => {
     this.setState({expBegin: false});
-    this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name, this.state.expNumber, this.state.expAnimal, this.state.expType);
+    // console.log(this.state.type);
+    // console.log(this.state.expAnimal);
+    this.props.saveExperiment(this.props.match.params.id, this.state.expName, this.props.expField.moves, this.props.expField.name, this.state.expNumber, this.state.expAnimal, this.state.type);
     this.props.newExp(this.props.expField.name);
   };
 
@@ -201,27 +245,39 @@ class Experiment extends Component {
     this.setState({expName: e.target.value});
   };
 
+  setType = (e) => {
+    this.setState({type: e.target.value});
+    this.setState({description: e.target.options[e.target.selectedIndex].getAttribute('description')})
+    // console.log(this.state)
+  };
+
   render() {
     return (
         <div className='board'>
-          <div>
-            <div>Название среды:</div>
-            <div>
-              Тип эксперимента:
-              <select onClick={this.expType}>
-                <option>ABC</option>
-                <option>DEF</option>
-                <option>123</option>
-              </select>
+          <div className={'expInputBox'}>
+            <div className={'expInputs'}>
+              <div className={'expInputTitle'}>Название среды:</div>
+              <div className={'expInputTitle'}>
+                Тип эксперимента:
+                {this.state.response ?
+                   <select className={'expSelector'} onChange={this.setType}>
+                   <option/>
+                  {this.state.response.map((result, index) =>
+                    <option key={index} description={result.description}>{result.name}</option>
+                  )}
+                </select>
+                   : null}
+              </div>
+              <div className={'expInputTitle'}>Название эксперимента:<input className={'expInput'} onChange={this.newExpName} placeholder={'Введите название'}/></div>
+              <div className={'expInputTitle'}>Номер опыта:<input onChange={this.newExpNumber} className={'expInput'} placeholder={'Введите номер'}/></div>
+              <div className={'expInputTitle'}>Имя особи:<input onChange={this.newExpAnimal} className={'expInput'} placeholder={"Введите имя"}/></div>
             </div>
-            <div>Название эксперимента:<input onChange={this.newExpName}/></div>
-            <div>Номер опыта:<input onChange={this.newExpNumber}/></div>
-            <div>Имя особи:<input onChange={this.newExpAnimal}/></div>
+            <div className={'expTypeDescription'}>{this.state.description}</div>
+
           </div>
           {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в процессе</div> : <div className={'expProgress'}></div>}
           <div className={'expMainBox'}>
             <div>
-              {this.state.timer}
               {this.props.expField.field &&
               this.props.expField.field.line.map((element, i) => {
                 return (
@@ -260,7 +316,7 @@ class Experiment extends Component {
                                 onClick={this.action}
                           >
                         {component.value ?
-                            <b>{component.value}</b> :
+                            <span className={'ValueBtn'}>{component.value}</span> :
                             component.index}
                       </span>
                       );
@@ -271,6 +327,8 @@ class Experiment extends Component {
             </div>
 
             <div>
+              <div className={'expTimer'}><div>Таймер:</div> <div className={'expTimerInt'}>{this.state.timer}</div><div>сек.</div></div>
+              <div className={'expTimer'}>Подкреплений: <div className={'expTimerInt'}>?</div></div>
               <Keyboard/>
               <div className={'expStatusBtnsContainer'}>
                 <StatusButtons class={'expStatusBtnsBox'}
@@ -303,9 +361,6 @@ class Experiment extends Component {
             for (let key in element){
               return <span key={i}>{key}: {element[key]}</span>
             }
-          //   return (
-          //   <span key={i}>{element}</span>
-          // )
           })}</div>
         </div>
     );

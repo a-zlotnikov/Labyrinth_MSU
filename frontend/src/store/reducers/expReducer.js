@@ -1,6 +1,6 @@
 import {
   CHANGE_COMP,
-  EXP_FIELD,
+  EXP_FIELD, KEYBOARD_ACTION,
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
@@ -441,6 +441,12 @@ export default function expReducer(state = initialState, action) {
       return {
         expField: expLeftField,
       };
+
+    case KEYBOARD_ACTION:
+      const expKeyField = state.expField;
+      let prevMovesKey = state.expField.moves;
+
+
 
     default:
       return state;
