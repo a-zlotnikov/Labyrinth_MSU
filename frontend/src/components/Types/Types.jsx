@@ -22,6 +22,7 @@ class Types extends Component {
   }
 
   fetchTypes = async () => {
+    this.setState({response: null});
     let resp = await fetch('/types', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
@@ -114,6 +115,7 @@ class Types extends Component {
                         id={result._id}
                         name={result.name}
                         description={result.description}
+                        fetch={this.fetchTypes}
                         />,
                     )}
                     </tbody>

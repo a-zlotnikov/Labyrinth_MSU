@@ -61,6 +61,7 @@ class CurrentType extends Component {
         this.setState({loading: true});
         if (res.succeed) {
           this.setState({loading: false});
+          this.props.fetch();
           alert('Тип удален');
         } else {
           this.setState({loading: false});
