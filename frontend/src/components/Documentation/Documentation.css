@@ -11,3 +11,20 @@
 p {
     text-indent: 20px;
 }
+
+table {
+    border: black 1px solid;
+    width: 100%;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+tr {
+    border: black 1px solid;
+}
+
+td {
+    border: black 1px solid;
+    padding: 5px;
+    text-align: left;
+}
