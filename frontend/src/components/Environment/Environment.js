@@ -6,12 +6,12 @@ import EnvironmentList from './EnvironmentList/EnvironmentList';
 class Environment extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       results: '',
     };
   }
-  
+
   componentDidMount = async () => {
     const response = await fetch('/environment');
     const results = await response.json();
@@ -20,7 +20,7 @@ class Environment extends Component {
     });
     // console.log(results);
   };
-  
+
   onStartEx = async (props) => {
     // console.log(props)
     const response = await fetch(
@@ -33,15 +33,16 @@ class Environment extends Component {
         body: JSON.stringify({
           name: props.name,
           field: props.field,
+          archive: true
         }),
       },
     );
     const result = await response.json();
-    // console.log(result)
+    console.log(result);
     this.props.history.push(`/experiment/${result.id}`);
-    
+
   };
-  
+
   onDelete = async id => {
     const response = await fetch('/environment', {
       method: 'DELETE',
@@ -53,7 +54,7 @@ class Environment extends Component {
       results,
     });
   };
-  
+
   render() {
     return (
       !this.state.results ?
