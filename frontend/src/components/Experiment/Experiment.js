@@ -242,9 +242,6 @@ class Experiment extends Component {
               </div>
             </div>
           </div>
-
-
-
           <div>{this.props.expField.moves &&
           this.props.expField.moves.map((element, i) => {
             return <span key={i}>{element}</span>;

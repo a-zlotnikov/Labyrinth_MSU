@@ -12,6 +12,7 @@
     display: flex;
     flex-wrap: wrap;
     margin: auto;
+    margin-top: 20px;
 }
 
 .expStatusBtnsContainer {
@@ -28,7 +29,7 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-    font-size: 10px;
+    font-size: 12px;
     outline: 0 !important;
 }
 
@@ -43,7 +44,6 @@
 
 .activeWall {
     background-color: #4050ff;
-    font-size: 12px;
     font-weight: bold;
     color: whitesmoke;
 }
@@ -54,8 +54,8 @@
 
 .activeFood {
     background-color: orange;
-    font-size: 12px;
     font-weight: bold;
+    color: whitesmoke;
 }
 
 .fakeFoodBtn {
@@ -64,8 +64,8 @@
 
 .activeFakeFood {
     background-color: #a3f;
-    font-size: 12px;
     font-weight: bold;
+    color: whitesmoke;
 }
 
 .entryBtn {
@@ -74,8 +74,8 @@
 
 .activeEntry {
     background-color: #0ea600;
-    font-size: 12px;
     font-weight: bold;
+    color: whitesmoke;
 }
 
 .exitBtn {
@@ -84,8 +84,8 @@
 
 .activeExit {
     background-color: lightblue;
-    font-size: 12px;
     font-weight: bold;
+    color: whitesmoke;
 }
 
 .pedalBtn {
@@ -94,6 +94,5 @@
 
 .activePedal {
     background-color: lemonchiffon;
-    font-size: 12px;
     font-weight: bold;
 }
