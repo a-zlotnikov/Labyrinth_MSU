@@ -246,7 +246,6 @@ class Experiment extends Component {
           this.props.expField.moves.map((element, i) => {
             return <span key={i}>{element}</span>;
           })}</div>
-
           <div>
             <button className={'expButton'}
                     onClick={this.cellStatusExp}>Стартовая позиция

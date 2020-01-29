@@ -57,6 +57,7 @@
                     lightgray,
                     #b3b3b3
             );
+    flex-direction: column;
 }
 
 .keyBtn:active {
@@ -81,6 +82,7 @@
                     lightgray,
                     #b3b3b3
             );
+    flex-direction: column;
 }
 
 .keyLongBtn:active {
@@ -105,6 +107,7 @@
                     lightgray,
                     #b3b3b3
             );
+    flex-direction: column;
 }
 
 .keyWideBtn:active {
@@ -115,4 +118,12 @@
                     gray,
                     #b3b3b3
             );
+}
+
+.left {
+    padding-right: 20px;
+}
+
+.right {
+    padding-left: 20px;
 }
