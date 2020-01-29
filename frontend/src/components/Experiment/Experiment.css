@@ -36,3 +36,64 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+.wallBtn {
+    background-color: #8c96ff;
+}
+
+.activeWall {
+    background-color: #4050ff;
+    font-size: 24px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.foodBtn {
+    background-color: #ffd47f;
+}
+
+.activeFood {
+    background-color: orange;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.fakeFoodBtn {
+    background-color: #d599ff;
+}
+
+.activeFakeFood {
+    background-color: #a3f;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.entryBtn {
+    background-color: #7fd977;
+}
+
+.activeEntry {
+    background-color: #0ea600;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.exitBtn {
+    background-color: #d9f5ff;
+}
+
+.activeExit {
+    background-color: lightblue;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.pedalBtn {
+    background-color: #fffef7;
+}
+
+.activePedal {
+    background-color: lemonchiffon;
+    font-size: 24px;
+    font-weight: bold;
+}
