@@ -22,6 +22,7 @@ class Results extends Component {
       sortField: 'pp',
       row: null,
       find: '',
+      option: []
     };
   }
   
@@ -102,7 +103,8 @@ class Results extends Component {
       headers: {'Content-Type': 'application/json'},
     });
     const result = await response.json();
-    this.setState({loading: true});
+    this.setState({loading: true, option:['Идентификатор пользователя','Тип' +
+      ' эксперимента','Название эксперимента']});
     
     if (result) {
       this.setState({loading: false, error: false, response: result});
@@ -154,6 +156,8 @@ class Results extends Component {
       response: [],
       loading: false,
       error: false,
+      option: []
+  
     });
     await this.searchAll();
   };
@@ -180,9 +184,15 @@ class Results extends Component {
               className={classes.selector}
               name="type"
               onChange={this.changeType}>
-              <option>Идентификатор пользователя</option>
-              <option>Тип эксперимента</option>
-              <option>Название эксперимента</option>
+              {this.state.option.map((elem, index)=>{
+                return(
+                <option key={index}>
+                  {elem}
+                </option>)
+              })}
+              {/*<option>Идентификатор пользователя</option>*/}
+              {/*<option>Тип эксперимента</option>*/}
+              {/*<option>Название эксперимента</option>*/}
             
             </select>
             {this.state.type === 'username' ?
