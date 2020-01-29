@@ -3,7 +3,6 @@ import classes from './EnvironmentList.module.css';
 
 class EnvironmentList extends Component {
   render() {
-    console.log(this.props)
     return (
       <div className={classes.EnvironmentList}>
         <div className={classes.title}>{this.props.name}</div>

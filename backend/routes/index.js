@@ -26,10 +26,9 @@ router.post('/startExp', async (req, res) => {
   let newExp;
   const envName = req.body.name;
   const envCheck = await Environment.find({name: envName});
-
   if (req.body.archive){
     newExp = await new Experiment({
-      env: req.body.name
+      env: {name: req.body.name}
     });
       await newExp.save().then(data => console.log(`true: ${data}`)).catch(data => console.log(data));
     res.json({id: newExp._id})
@@ -53,7 +52,6 @@ router.post('/startExp', async (req, res) => {
 });
 
 router.post('/saveExp', async (req, res) => {
-  console.log(req.body);
   const user = {
     _id: req.session.user._id
   };
