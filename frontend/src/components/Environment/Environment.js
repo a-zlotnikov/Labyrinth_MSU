@@ -36,7 +36,6 @@ class Environment extends Component {
       },
     );
     const result = await response.json();
-    console.log(result);
     this.props.history.push(`/experiment/${result.id}`);
 
   };
