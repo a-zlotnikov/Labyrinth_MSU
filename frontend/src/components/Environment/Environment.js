@@ -18,11 +18,9 @@ class Environment extends Component {
     this.setState({
       results,
     });
-    // console.log(results);
   };
 
   onStartEx = async (props) => {
-    // console.log(props)
     const response = await fetch(
       '/startExp',
       {
