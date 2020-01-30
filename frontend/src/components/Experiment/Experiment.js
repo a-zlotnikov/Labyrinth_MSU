@@ -268,7 +268,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('e')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -282,7 +282,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('w')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -296,7 +296,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('r')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -310,7 +310,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('j')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -324,7 +324,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('|')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -338,7 +338,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('s')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -352,7 +352,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('t')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -366,7 +366,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('h')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -380,7 +380,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('o')
-              }, 400);
+              }, 200);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
