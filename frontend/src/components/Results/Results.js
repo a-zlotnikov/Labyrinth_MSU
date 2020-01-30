@@ -227,9 +227,9 @@ console.log(elemFile)
                 <th onClick={this.onSort.bind(this, 'date')}>Дата</th>
                 <th onClick={this.onSort.bind(this, 'expType')}>Тип
                 </th>
-                <th onClick={this.onSort.bind(this, 'username')}>Пользователя
+                <th onClick={this.onSort.bind(this, 'username')}>Пользователь
                 </th>
-                <th onClick={this.onSort.bind(this, 'expName')}>Эксперимента
+                <th onClick={this.onSort.bind(this, 'expName')}>Эксперимент
                 </th>
                 <th onClick={this.onSort.bind(this, 'expNumber')}>Номер
                   опыта
