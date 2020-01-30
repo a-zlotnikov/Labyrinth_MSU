@@ -13,7 +13,7 @@ import {
   MOVE_LEFT,
   MOVE_RIGHT,
   SAVE_EXP,
-  KEYBOARD_ACTION, DELETE_ACTION,
+  KEYBOARD_ACTION, DELETE_ACTION, MOUSE_ACTION,
 } from '../actions/actions';
 
 
@@ -109,6 +109,14 @@ export const KEYBOARDACTION = (value, time) => {
 export const DELETEACTION = () => {
   return {
     type: DELETE_ACTION
+  }
+};
+
+export const MOUSEACTION = (value, time) => {
+  return {
+    type: MOUSE_ACTION,
+    value,
+    time
   }
 };
 

@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
-  CHANGECOMP, DELETEACTION,
-  expField, KEYBOARDACTION,
+  CHANGECOMP,
+  DELETEACTION,
+  expField,
+  KEYBOARDACTION,
+  MOUSEACTION,
   MOVEDOWN,
   MOVELEFT,
   MOVERIGHT,
   MOVEUP,
-  newExp,
   NEWVALUE,
   saveExp,
   STARTPOS,
@@ -38,6 +40,8 @@ const initialState = {
   response: null,
   type: null,
   description: null,
+  click: '',
+  clickCounter: 0,
 };
 
 class Experiment extends Component {
@@ -178,7 +182,7 @@ class Experiment extends Component {
     const currentState = this.state;
 
     for (let key in currentState) {
-      switch (key){
+      switch (key) {
         case translate:
           currentState[key] = !currentState[key];
           break;
@@ -201,8 +205,8 @@ class Experiment extends Component {
           currentState[key] = false;
           break;
         case 'startPosition':
-          if(this.state.expBegin){
-          currentState[key] = currentState[key];
+          if (this.state.expBegin) {
+            currentState[key] = currentState[key];
           } else {
             currentState[key] = false;
           }
@@ -228,6 +232,7 @@ class Experiment extends Component {
     let clickCount = 0;
     const move = (e) => {
       let timer = this.state.timer;
+
       function singleClick(value) {
         keyButton(value, timer);
       }
@@ -265,7 +270,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('e')
+                singleClick('e');
 
               }, 300);
             } else if (clickCount === 2) {
@@ -280,7 +285,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('w')
+                singleClick('w');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -294,7 +299,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('r')
+                singleClick('r');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -308,7 +313,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('j')
+                singleClick('j');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -322,7 +327,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('|')
+                singleClick('|');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -336,7 +341,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('s')
+                singleClick('s');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -350,7 +355,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('t')
+                singleClick('t');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -364,7 +369,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('h')
+                singleClick('h');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -378,7 +383,7 @@ class Experiment extends Component {
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
-                singleClick('o')
+                singleClick('o');
               }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
@@ -392,67 +397,60 @@ class Experiment extends Component {
             this.setState({expStatus: !this.state.moveStatus});
 
             break;
-          // case 'NumpadDivide':
-          //   e.preventDefault();
-          //   clickCount++;
-          //   if (clickCount === 1) {
-          //     this.singleClickTimer = setTimeout(function() {
-          //       clickCount = 0;
-          //       singleClick('o')
-          //     }, 400);
-          //   } else if (clickCount === 2) {
-          //     clearTimeout(this.singleClickTimer);
-          //     clickCount = 0;
-          //     doubleClick('i');
-          //   }
-          //   break;
-          // case 'NumpadMultiply':
-          //   e.preventDefault();
-          //   clickCount++;
-          //   if (clickCount === 1) {
-          //     this.singleClickTimer = setTimeout(function() {
-          //       clickCount = 0;
-          //       singleClick('o')
-          //     }, 400);
-          //   } else if (clickCount === 2) {
-          //     clearTimeout(this.singleClickTimer);
-          //     clickCount = 0;
-          //     doubleClick('i');
-          //   }
-          //   break;
-          // case 'NumpadSubtract':
-          //   e.preventDefault();
-          //   clickCount++;
-          //   if (clickCount === 1) {
-          //     this.singleClickTimer = setTimeout(function() {
-          //       clickCount = 0;
-          //       singleClick('o')
-          //     }, 400);
-          //   } else if (clickCount === 2) {
-          //     clearTimeout(this.singleClickTimer);
-          //     clickCount = 0;
-          //     doubleClick('i');
-          //   }
-          //   break;
-          // case 'NumpadAdd':
-          //   e.preventDefault();
-          //   clickCount++;
-          //   if (clickCount === 1) {
-          //     this.singleClickTimer = setTimeout(function() {
-          //       clickCount = 0;
-          //       singleClick('o')
-          //     }, 400);
-          //   } else if (clickCount === 2) {
-          //     clearTimeout(this.singleClickTimer);
-          //     clickCount = 0;
-          //     doubleClick('i');
-          //   }
-          //   break;
-          // e.preventDefault();
-          // this.props.keyboard('asd',this.state.timer);
-          // this.setState({expStatus: !this.state.moveStatus});
-          // break;
-
+          case 'NumpadDivide':
+            e.preventDefault();
+            singleClick('/');
+            break;
+          case 'NumpadMultiply':
+            e.preventDefault();
+            singleClick('*');
+            break;
+          case 'NumpadSubtract':
+            e.preventDefault();
+            singleClick('-');
+            break;
+          case 'NumpadAdd':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('+');
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('a');
+            }
+            break;
+          case 'Numpad0':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('y');
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('d');
+            }
+            break;
+          case 'NumpadDecimal':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('k');
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('g');
+            }
+            break;
         }
       }
     };
@@ -463,36 +461,35 @@ class Experiment extends Component {
     clearInterval(this.intervalId);
     this.setState({expBegin: false});
     this.props.saveExperiment(this.props.match.params.id,
-      this.state.expName,
-      this.props.expField.moves,
-      this.props.expField.name,
-      this.state.expNumber,
-      this.state.expAnimal,
-      this.state.type);
-    debugger;
+        this.state.expName,
+        this.props.expField.moves,
+        this.props.expField.name,
+        this.state.expNumber,
+        this.state.expAnimal,
+        this.state.type);
     this.setState({...initialState});
     this.redirectNewExp();
   };
 
   redirectNewExp = async () => {
     const response = await fetch(
-          '/getNewExpField',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              id: this.props.match.params.id,
-              env: this.props.expField.name
-            }),
+        '/getNewExpField',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-      );
-      const result = await response.json();
-      if (result.id) {
-        this.props.history.push(`/experiment/${result.id}`);
-        this.props.fullField(result.id);
-      }
+          body: JSON.stringify({
+            id: this.props.match.params.id,
+            env: this.props.expField.name,
+          }),
+        },
+    );
+    const result = await response.json();
+    if (result.id) {
+      this.props.history.push(`/experiment/${result.id}`);
+      this.props.fullField(result.id);
+    }
   };
 
   newExpName = (e) => {
@@ -503,142 +500,190 @@ class Experiment extends Component {
     this.setState({type: e.target.value});
     this.setState({
       description: e.target.options[e.target.selectedIndex].getAttribute(
-        'description'),
+          'description'),
     });
+  };
+
+  mouseClickCount = 0;
+  clickAction = (e) => {
+    // debugger;
+    let singleValue;
+    let doubleValue;
+    if (e.target.className === 'keyBtn' || e.target.className ===
+        'keyWideBtn' || e.target.className === 'keyLongBtn') {
+      singleValue = e.target.firstElementChild.innerText;
+      doubleValue = e.target.lastElementChild.innerText;
+    } else if (e.target.className === 'left') {
+      singleValue = e.target.innerText;
+      doubleValue = e.target.nextElementSibling.innerText;
+    } else if (e.target.className === 'right') {
+      singleValue = e.target.previousElementSibling.innerText;
+      doubleValue = e.target.innerText;
+    } else if (e.target.className === 'keyBtnTop') {
+      singleValue = e.target.innerText;
+      doubleValue = e.target.innerText;
+    }
+
+    let singleClick = () => {
+      this.props.mouseAction(singleValue, this.state.timer);
+    };
+
+    let doubleClick = () => {
+      this.props.mouseAction(doubleValue, this.state.timer);
+    };
+
+    this.mouseClickCount++;
+
+    if (this.mouseClickCount === 1) {
+      this.singleMouseClickTimer = setTimeout(() => {
+        this.mouseClickCount = 0;
+        singleClick();
+      }, 400);
+    } else if (this.mouseClickCount === 2) {
+      clearTimeout(this.singleMouseClickTimer);
+      this.mouseClickCount = 0;
+      doubleClick();
+    }
+
   };
 
   render() {
     return (
-      <div className='board unselectable'>
-        <div className={'expInputBox'}>
-          <div className={'expInputs'}>
-            <div className={'expInputTitle'}>Название среды: {this.props.expField.name}</div>
-            <div className={'expInputTitle'}>
-              Тип эксперимента:
-              {this.state.response ?
-                <select className={'expSelector'} value={this.state.expType} onChange={this.setType}>
-                  <option/>
-                  {this.state.response.map((result, index) =>
-                    <option key={index}
-                            description={result.description}>{result.name}</option>,
-                  )}
-                </select>
-                : null}
+        <div className='board unselectable'>
+          <div className={'expInputBox'}>
+            <div className={'expInputs'}>
+              {this.state.click && <div>{this.state.click}</div>}
+              <div className={'expInputTitle'}>Название
+                среды: {this.props.expField.name}</div>
+              <div className={'expInputTitle'}>
+                Тип эксперимента:
+                {this.state.response ?
+                    <select className={'expSelector'} value={this.state.expType}
+                            onChange={this.setType}>
+                      <option/>
+                      {this.state.response.map((result, index) =>
+                          <option key={index}
+                                  description={result.description}>{result.name}</option>,
+                      )}
+                    </select>
+                    : null}
+              </div>
+              <div className={'expInputTitle'}>Название эксперимента:<input
+                  className={'expInput'}
+                  value={this.state.expName}
+                  onChange={this.newExpName}
+                  placeholder={'Введите название'}/></div>
+              <div className={'expInputTitle'}>Номер опыта:<input
+                  value={this.state.expNumber}
+                  onChange={this.newExpNumber} className={'expInput'}
+                  placeholder={'Введите номер'}/></div>
+              <div className={'expInputTitle'}>Имя особи:<input
+                  value={this.state.expAnimal}
+                  onChange={this.newExpAnimal} className={'expInput'}
+                  placeholder={'Введите имя'}/></div>
             </div>
-            <div className={'expInputTitle'}>Название эксперимента:<input
-              className={'expInput'}
-              value={this.state.expName}
-              onChange={this.newExpName}
-              placeholder={'Введите название'}/></div>
-            <div className={'expInputTitle'}>Номер опыта:<input
-                value={this.state.expNumber}
-                onChange={this.newExpNumber} className={'expInput'}
-              placeholder={'Введите номер'}/></div>
-            <div className={'expInputTitle'}>Имя особи:<input
-                value={this.state.expAnimal}
-                onChange={this.newExpAnimal} className={'expInput'}
-              placeholder={'Введите имя'}/></div>
-          </div>
-          <div className={'expTypeDescription'}>{this.state.description}</div>
+            <div className={'expTypeDescription'}>{this.state.description}</div>
 
-        </div>
-        {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в
-          процессе</div> : <div className={'expProgress'}></div>}
-        <div className={'expMainBox'}>
-          <div>
-            {this.props.expField.field &&
-            this.props.expField.field.line.map((element, i) => {
-              return (
-                <div key={`${element} ${i}`}>{element.line.map(component => {
-                  let action;
-                  switch (true) {
-                    case component.start:
-                      action = 'start comp';
-                      break;
-                    case component.wall:
-                      action = 'wall comp';
-                      break;
-                    case component.food:
-                      action = 'food comp';
-                      break;
-                    case component.fakeFood:
-                      action = 'fakeFood comp';
-                      break;
-                    case component.entry:
-                      action = 'entry comp';
-                      break;
-                    case component.exit:
-                      action = 'exit comp';
-                      break;
-                    case component.pedal:
-                      action = 'pedal comp';
-                      break;
-                    default:
-                      action = 'comp';
-                      break;
-                  }
-                  return (
-                    <span key={component.index}
-                          id={component.index}
-                          className={action}
-                          onClick={this.action}
-                    >
+          </div>
+          {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в
+            процессе</div> : <div className={'expProgress'}></div>}
+          <div className={'expMainBox'}>
+            <div>
+              {this.props.expField.field &&
+              this.props.expField.field.line.map((element, i) => {
+                return (
+                    <div key={`${element} ${i}`}>{element.line.map(
+                        component => {
+                          let action;
+                          switch (true) {
+                            case component.start:
+                              action = 'start comp';
+                              break;
+                            case component.wall:
+                              action = 'wall comp';
+                              break;
+                            case component.food:
+                              action = 'food comp';
+                              break;
+                            case component.fakeFood:
+                              action = 'fakeFood comp';
+                              break;
+                            case component.entry:
+                              action = 'entry comp';
+                              break;
+                            case component.exit:
+                              action = 'exit comp';
+                              break;
+                            case component.pedal:
+                              action = 'pedal comp';
+                              break;
+                            default:
+                              action = 'comp';
+                              break;
+                          }
+                          return (
+                              <span key={component.index}
+                                    id={component.index}
+                                    className={action}
+                                    onClick={this.action}
+                              >
                         {component.value
-                          ?
-                          <span className={'ValueBtn'}>{component.value}</span>
-                          :
-                          component.index}
+                            ?
+                            <span
+                                className={'ValueBtn'}>{component.value}</span>
+                            :
+                            component.index}
                       </span>
-                  );
-                })}
-                </div>
-              );
-            })}
-          </div>
+                          );
+                        })}
+                    </div>
+                );
+              })}
+            </div>
 
-          <div>
-            <div className={'expTimer'}>
-              <div>Таймер:</div>
-              <div className={'expTimerInt'}>{this.state.timer}</div>
-              <div>сек.</div>
-            </div>
-            <div className={'expTimer'}>Подкреплений: <div
-              className={'expTimerInt'}>?</div></div>
-            <Keyboard/>
-            <div className={'expStatusBtnsContainer'}>
-              <StatusButtons class={'expStatusBtnsBox'}
-                             btnClass={'expButton'} wall={this.state.wall}
-                             food={this.state.food}
-                             fakeFood={this.state.fakeFood}
-                             entry={this.state.entry} exit={this.state.exit}
-                             pedal={this.state.pedal}
-                             cellStatus={this.cellStatusExp}/>
-            </div>
-            <div className={'startBtnsRow'}>
-              <div>
-                <button className={'expStartButton'}
-                        onClick={this.cellStatusExp}>Стартовая позиция
-                </button>
+            <div>
+              <div className={'expTimer'}>
+                <div>Таймер:</div>
+                <div className={'expTimerInt'}>{this.state.timer}</div>
+                <div>сек.</div>
               </div>
-              <div>
-                {this.state.expBegin ?
+              <div className={'expTimer'}>Подкреплений: <div
+                  className={'expTimerInt'}>?</div></div>
+              <Keyboard click={this.clickAction}/>
+              <div className={'expStatusBtnsContainer'}>
+                <StatusButtons class={'expStatusBtnsBox'}
+                               btnClass={'expButton'} wall={this.state.wall}
+                               food={this.state.food}
+                               fakeFood={this.state.fakeFood}
+                               entry={this.state.entry} exit={this.state.exit}
+                               pedal={this.state.pedal}
+                               cellStatus={this.cellStatusExp}/>
+              </div>
+              <div className={'startBtnsRow'}>
+                <div>
                   <button className={'expStartButton'}
-                          onClick={this.finishExp}>Завершить
-                    эксперимент</button> :
-                  <button className={'expStartButton'}
-                          onClick={this.startExp}>Начать
-                    эксперимент</button>}
+                          onClick={this.cellStatusExp}>Стартовая позиция
+                  </button>
+                </div>
+                <div>
+                  {this.state.expBegin ?
+                      <button className={'expStartButton'}
+                              onClick={this.finishExp}>Завершить
+                        эксперимент</button> :
+                      <button className={'expStartButton'}
+                              onClick={this.startExp}>Начать
+                        эксперимент</button>}
+                </div>
               </div>
             </div>
           </div>
+          <div className={'expResultInput'}>{this.props.expField.moves &&
+          this.props.expField.moves.map((element, i) => {
+            for (let key in element) {
+              return <span key={i}>{element[key]}</span>;
+            }
+          })}</div>
         </div>
-        <div className={'expResultInput'}>{this.props.expField.moves &&
-        this.props.expField.moves.map((element, i) => {
-          for (let key in element) {
-            return <span key={i}>{element[key]}</span>;
-          }
-        })}</div>
-      </div>
     );
   }
 }
@@ -676,16 +721,19 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(MOVELEFT(timer));
     },
     saveExperiment: (
-      id, expName, moves, envName, expNumber, expAnimal, expType) => {
+        id, expName, moves, envName, expNumber, expAnimal, expType) => {
       dispatch(
-        saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
+          saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
     },
     keyboard: (value, time) => {
       dispatch(KEYBOARDACTION(value, time));
     },
     deleteAction: () => {
-      dispatch(DELETEACTION())
-    }
+      dispatch(DELETEACTION());
+    },
+    mouseAction: (value, time) => {
+      dispatch(MOUSEACTION(value, time));
+    },
   };
 };
 
