@@ -13,16 +13,23 @@ router.get('/getField', async (req, res) => {
 });
 
 router.post('/saveField', async (req, res) => {
+
+  const envirCheck = await Environment.find({name: req.body.name});
+  if(envirCheck[0]){
+    res.json({answer: 'busy'})
+  } else {
   const newEnv = await new Environment({
     name: req.body.name,
     field: {line: req.body.field},
   });
   await newEnv.save();
   res.json(newEnv);
+  }
 });
 
 router.post('/startExp', async (req, res) => {
-
+  console.log(req.body);
+  console.log(req.body.archive);
   let newEnv;
   let newExp;
   const envName = req.body.name;

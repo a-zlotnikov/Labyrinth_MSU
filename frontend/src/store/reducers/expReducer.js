@@ -444,6 +444,7 @@ export default function expReducer(state = initialState, action) {
       };
 
     case KEYBOARD_ACTION:
+      console.log(action.time);
       const expKeyField = state.expField;
       let prevMovesKey = state.expField.moves;
       if(prevMovesKey){
