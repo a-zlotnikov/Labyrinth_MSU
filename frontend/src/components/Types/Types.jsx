@@ -47,7 +47,13 @@ class Types extends Component {
     const res = await resp.json();
     this.setState({sending: true});
     if (res.succeeded) {
-      this.setState({sending: false, saved: true});
+      this.setState({
+        sending: false, 
+        saved: true,
+        name: '',
+        description: '',
+      });
+      this.fetchTypes();
     } else {
       this.setState({sending: false, failed: true});
     }
