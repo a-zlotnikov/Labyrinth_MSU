@@ -3,7 +3,7 @@ const router = express.Router();
 const Type = require('../models/type');
 const {checkSession} = require('../middleware/auth')
 
-router.get('/', checkSession, async function(req, res) {
+router.get('/', async function(req, res) {
   try {
     const result = await Type.find({});
     await res.json({response: result});
