@@ -49,7 +49,6 @@ class Results extends Component {
       body: JSON.stringify({id}),
     });
     const results = await response.json();
-    console.log(results);
     const {
       date, time, expName,
       expNumber, animalName, expType,
@@ -72,7 +71,6 @@ class Results extends Component {
       `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
     
-    console.log(results['0'].moves);
     
     let timeLine = [];
     if (results['0'].moves !== null) {
@@ -201,10 +199,6 @@ class Results extends Component {
                     {elem}
                   </option>);
               })}
-              {/*<option>Идентификатор пользователя</option>*/}
-              {/*<option>Тип эксперимента</option>*/}
-              {/*<option>Название эксперимента</option>*/}
-            
             </select>
             {this.state.type === 'username' ?
               <input
@@ -262,7 +256,6 @@ class Results extends Component {
               </thead>
               <tbody>
               {this.state.response.map((result, index) => {
-                console.log(result);
                 return (
                   <tr key={index} name={result._id}
                   >

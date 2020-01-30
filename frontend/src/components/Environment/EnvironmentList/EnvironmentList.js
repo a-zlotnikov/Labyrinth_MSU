@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import classes from './EnvironmentList.module.css';
+const Cookies = require('js-cookie');
+
 
 class EnvironmentList extends Component {
   render() {
@@ -13,10 +15,11 @@ class EnvironmentList extends Component {
             {id: this.props._id, name:this.props.name, field: this.props.field})}>Начать
           эксперимент
         </div>
+        {Cookies.get('category') === 'Преподаватель' ?
         <div
           className={classes.menu}
           onClick={this.props.onDelete.bind(this, this.props._id)}>Удалить
-        </div>
+        </div> : null}
       </div>
     );
   }
