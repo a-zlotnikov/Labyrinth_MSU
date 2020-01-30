@@ -1,18 +1,19 @@
 import {
   CHANGE_COMP,
+  DELETE_ACTION,
   EXP_FIELD,
+  KEYBOARD_ACTION,
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
   MOVE_UP,
   NEW_VALUE,
   START_POS,
-  KEYBOARD_ACTION,
 } from '../actions/actions';
 
 const initialState = {
   expField: {},
-  moves: []
+  moves: [],
 };
 
 export default function expReducer(state = initialState, action) {
@@ -79,7 +80,6 @@ export default function expReducer(state = initialState, action) {
       };
 
     case START_POS:
-      console.log('startpos');
       const stateField = state.expField;
       const startPos = stateField.field.line.map((comp) => {
         return {
@@ -130,8 +130,8 @@ export default function expReducer(state = initialState, action) {
         line: comp.line.map(elem => {
           if (elem.wall) {
             walls.push(elem.index);
-          } else if (elem.entry){
-            entry.push(elem.index)
+          } else if (elem.entry) {
+            entry.push(elem.index);
           }
         });
       });
@@ -164,14 +164,14 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newIndex) {
-              if(elem.value && prevMovesUp && prevIndex!==newIndex){
+              if (elem.value && prevMovesUp && prevIndex !== newIndex) {
                 let obj = {};
                 obj[currentSec] = elem.value;
                 prevMovesUp.push(obj);
-              } else if(elem.value && !prevMovesUp && prevIndex!==newIndex){
+              } else if (elem.value && !prevMovesUp && prevIndex !== newIndex) {
                 let obj = {};
                 obj[action.time] = elem.value;
-                prevMovesUp = [obj]
+                prevMovesUp = [obj];
               }
               for (let key in elem) {
                 if (key === 'start') {
@@ -214,8 +214,8 @@ export default function expReducer(state = initialState, action) {
         line: comp.line.map(elem => {
           if (elem.wall) {
             wallsDown.push(elem.index);
-          } else if (elem.exit){
-            exit.push(elem.index)
+          } else if (elem.exit) {
+            exit.push(elem.index);
           }
         });
       });
@@ -246,14 +246,16 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newIndexDown) {
-              if(elem.value && prevMovesDown && prevIndexDown!==newIndexDown){
+              if (elem.value && prevMovesDown && prevIndexDown !==
+                  newIndexDown) {
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesDown.push(obj);
-              } else if(elem.value && !prevMovesDown && prevIndexDown!==newIndexDown){
+              } else if (elem.value && !prevMovesDown && prevIndexDown !==
+                  newIndexDown) {
                 let obj = {};
                 obj[action.time] = elem.value;
-                prevMovesDown = [obj]
+                prevMovesDown = [obj];
               }
 
               for (let key in elem) {
@@ -311,7 +313,8 @@ export default function expReducer(state = initialState, action) {
               let number = newIndexArray.join('');
               prevLetRight = elem.index;
 
-              if (prevLetter === 'k' || wallsRight.indexOf(`${newLet}${number}`) !== -1) {
+              if (prevLetter === 'k' ||
+                  wallsRight.indexOf(`${newLet}${number}`) !== -1) {
                 newLetRight = elem.index;
               } else {
                 newLetRight = `${newLet}${number}`;
@@ -326,14 +329,16 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newLetRight) {
-              if(elem.value && prevMovesRight && prevLetRight!==newLetRight){
+              if (elem.value && prevMovesRight && prevLetRight !==
+                  newLetRight) {
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesRight.push(obj);
-              } else if(elem.value && !prevMovesRight && prevLetRight!==newLetRight){
+              } else if (elem.value && !prevMovesRight && prevLetRight !==
+                  newLetRight) {
                 let obj = {};
                 obj[action.time] = elem.value;
-                prevMovesRight = [obj]
+                prevMovesRight = [obj];
               }
               for (let key in elem) {
                 if (key === 'start') {
@@ -390,7 +395,8 @@ export default function expReducer(state = initialState, action) {
               let number = newIndexArray.join('');
               prevLetLeft = elem.index;
 
-              if (prevLetter === 'a' || wallsLeft.indexOf(`${newLet}${number}`) !== -1) {
+              if (prevLetter === 'a' ||
+                  wallsLeft.indexOf(`${newLet}${number}`) !== -1) {
                 newLetLeft = elem.index;
               } else {
                 newLetLeft = `${newLet}${number}`;
@@ -404,14 +410,15 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newLetLeft) {
-              if(elem.value && prevMovesLeft && prevLetLeft!==newLetLeft){
+              if (elem.value && prevMovesLeft && prevLetLeft !== newLetLeft) {
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesLeft.push(obj);
-              } else if(elem.value && !prevMovesLeft && prevLetLeft!==newLetLeft){
+              } else if (elem.value && !prevMovesLeft && prevLetLeft !==
+                  newLetLeft) {
                 let obj = {};
                 obj[action.time] = elem.value;
-                prevMovesLeft = [obj]
+                prevMovesLeft = [obj];
               }
               for (let key in elem) {
                 if (key === 'start') {
@@ -446,17 +453,30 @@ export default function expReducer(state = initialState, action) {
     case KEYBOARD_ACTION:
       const expKeyField = state.expField;
       let prevMovesKey = state.expField.moves;
-      if(prevMovesKey){
+      if (prevMovesKey) {
         let obj = {};
         obj[action.time] = action.value;
         prevMovesKey.push(obj);
-      } else if(!prevMovesKey){
+      } else if (!prevMovesKey) {
         let obj = {};
         obj[action.time] = action.value;
-        prevMovesKey = [obj]
+        prevMovesKey = [obj];
       }
       expKeyField.moves = prevMovesKey;
+      return {
+        expField: expKeyField
+      };
+    case DELETE_ACTION:
+      const expDeleteKeyField = state.expField;
+      let prevMovesDelete = state.expField.moves;
 
+      if (prevMovesDelete) {
+        prevMovesDelete.pop();
+      }
+      expDeleteKeyField.moves = prevMovesDelete;
+      return {
+        expField: expDeleteKeyField
+      };
 
     default:
       return state;

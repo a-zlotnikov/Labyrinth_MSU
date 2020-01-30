@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
-  CHANGECOMP,
+  CHANGECOMP, DELETEACTION,
   expField, KEYBOARDACTION,
   MOVEDOWN,
   MOVELEFT,
@@ -222,9 +222,6 @@ class Experiment extends Component {
 
   startExp = () => {
     let keyButton = this.props.keyboard;
-
-
-
     this.setState({expBegin: true});
     this.intervalId = setInterval(this.timer.bind(this), 1000);
     let clickCount = 0;
@@ -268,7 +265,8 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('e')
-              }, 200);
+
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -282,7 +280,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('w')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -296,7 +294,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('r')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -310,7 +308,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('j')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -324,7 +322,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('|')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -338,7 +336,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('s')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -352,7 +350,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('t')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -366,7 +364,7 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('h')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
@@ -380,12 +378,18 @@ class Experiment extends Component {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
                 singleClick('o')
-              }, 200);
+              }, 300);
             } else if (clickCount === 2) {
               clearTimeout(this.singleClickTimer);
               clickCount = 0;
               doubleClick('i');
             }
+            break;
+          case 'Backspace':
+            e.preventDefault();
+            this.props.deleteAction();
+            this.setState({expStatus: !this.state.moveStatus});
+
             break;
           // case 'NumpadDivide':
           //   e.preventDefault();
@@ -464,7 +468,28 @@ class Experiment extends Component {
       this.state.expNumber,
       this.state.expAnimal,
       this.state.type);
-    this.props.newExp(this.props.expField.name);
+    this.redirectNewExp();
+  };
+
+  redirectNewExp = async () => {
+    const response = await fetch(
+          '/getNewExpField',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: this.props.match.params.id,
+              env: this.props.expField.name
+            }),
+          },
+      );
+      const result = await response.json();
+      if (result.id) {
+        this.props.history.push(`/experiment/${result.id}`);
+        this.props.fullField(result.id);
+      }
   };
 
   newExpName = (e) => {
@@ -484,7 +509,7 @@ class Experiment extends Component {
       <div className='board unselectable'>
         <div className={'expInputBox'}>
           <div className={'expInputs'}>
-            <div className={'expInputTitle'}>Название среды:</div>
+            <div className={'expInputTitle'}>Название среды: {this.props.expField.name}</div>
             <div className={'expInputTitle'}>
               Тип эксперимента:
               {this.state.response ?
@@ -648,12 +673,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
     },
-    newExp: (envName) => {
-      dispatch(newExp(envName));
-    },
     keyboard: (value, time) => {
       dispatch(KEYBOARDACTION(value, time));
     },
+    deleteAction: () => {
+      dispatch(DELETEACTION())
+    }
   };
 };
 

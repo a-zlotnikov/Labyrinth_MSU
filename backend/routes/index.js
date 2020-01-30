@@ -29,7 +29,6 @@ router.post('/saveField', async (req, res) => {
 
 router.post('/startExp', async (req, res) => {
   console.log(req.body);
-  console.log(req.body.archive);
   let newEnv;
   let newExp;
   const envName = req.body.name;
@@ -63,7 +62,6 @@ router.post('/startExp', async (req, res) => {
 router.post('/saveExp', async (req, res) => {
   const date = moment().format('L');
   const time = moment().format('LTS')
-  console.log(req.body);
   const user = {
     _id: req.session.user._id,
   };
@@ -88,8 +86,11 @@ router.post('/getExpField', async (req, res) => {
 });
 
 router.post('/getNewExpField', async (req, res) => {
-  console.log(req.body.name);
-
+  let newExpEnv = await new Experiment({
+    env: {name: req.body.env},
+  });
+  await newExpEnv.save();
+  res.json({id: newExpEnv._id});
 });
 
 module.exports = router;
