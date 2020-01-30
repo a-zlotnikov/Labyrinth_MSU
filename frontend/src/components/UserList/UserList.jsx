@@ -126,9 +126,9 @@ class UserList extends Component {
                     <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>:
                         this.state.type === "category" ?
                             <select className={'selector'} value={this.state.query} onChange={this.changeQuery}>
-                              <option>Преподаватель</option>
                               <option>Студент</option>
                               <option>Дипломник</option>
+                              <option>Преподаватель</option>
                             </select>:
                             this.state.type === "year" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите год'}/>:
                             null

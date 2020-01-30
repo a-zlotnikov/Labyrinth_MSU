@@ -208,13 +208,11 @@ class FoundUser extends Component {
                     <div className={'text'}>{this.props.gender}</div>}</div>
                 <div className={'attribute'}>Дата рождения: {this.state.edit ?
                     <div><input className={'input textEdit'}
-                                value={moment(this.state.dob).
-                                    format('YYYY-MM-DD')}
+                                value={moment(this.state.dob).format('YYYY-MM-DD')}
                                 name="dob" onChange={this.changeValue}
                                 type="date"/>
                     </div> :
-                    <div className={'text'}>{moment(this.state.dob).
-                        format('DD.MM.YYYY')}</div>}</div>
+                    <div className={'text'}>{moment(this.state.dob).format('DD.MM.YYYY')}</div>}</div>
                 <div className={'attribute'}>Рука: {this.state.edit ?
                     <div><select className={'selector textEdit'}
                                  value={this.state.hand}

@@ -12,7 +12,7 @@ class Results extends Component {
     super(props);
 
     this.state = {
-      type: 'username',
+      type: 'expType',
       query: '',
       response: [],
       loading: false,
@@ -28,7 +28,6 @@ class Results extends Component {
 
   componentDidMount = async () => {
     await this.searchAll();
-
   };
 
   onSort = sortField => {
@@ -111,8 +110,7 @@ class Results extends Component {
 
     this.setState({
       loading: true, option: [
-        'Идентификатор пользователя', 'Тип' +
-        ' эксперимента', 'Название эксперимента'],
+        'Тип эксперимента', 'Название эксперимента'],
     });
 
     if (result) {
@@ -124,10 +122,7 @@ class Results extends Component {
   };
 
   changeType = async (e) => {
-    if (e.target.value === 'Идентификатор пользователя') {
-      this.setState({type: 'username'});
-      await this.search();
-    } else if (e.target.value === 'Тип эксперимента') {
+      if (e.target.value === 'Тип эксперимента') {
       this.setState({type: 'expType'});
       await this.search();
     } else if (e.target.value === 'Название эксперимента') {
@@ -160,7 +155,7 @@ class Results extends Component {
 
   reset = async () => {
     this.setState({
-      type: 'username',
+      type: 'expType',
       query: '',
       response: [],
       loading: false,
@@ -200,13 +195,7 @@ class Results extends Component {
                   </option>);
               })}
             </select>
-            {this.state.type === 'username' ?
-              <input
-                className={classes.topInput}
-                value={this.state.query}
-                onChange={this.changeQuery}
-                placeholder={'введите идентификатор пользователя'}
-              /> :
+            {
               this.state.type === 'expType' ?
                 <input
                   className={classes.topInput}
