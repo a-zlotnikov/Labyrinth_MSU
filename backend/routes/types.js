@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Type = require('../models/type');
+const {checkSession} = require('../middleware/auth')
 
 router.get('/', async function(req, res) {
   try {
