@@ -139,30 +139,6 @@ class Field extends Component {
     }
   };
 
-  // startExperiment = async () => {
-  //
-  //   const response = await fetch(
-  //       '/startExp',
-  //       {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           name: this.state.fieldName,
-  //           field: this.props.constructor,
-  //         }),
-  //       },
-  //   );
-  //   const result = await response.json();
-  //   if (result.id) {
-  //     this.props.history.push(`/experiment/${result.id}`);
-  //   } else {
-  //     this.setState({nameStatus: true});
-  //   }
-  //
-  // };
-
   render() {
 
     return (
@@ -235,9 +211,6 @@ class Field extends Component {
               <button className={'constStatusBtn'}
                       onClick={this.saveField}>Сохранить среду
               </button>
-              {/*<button className={'constStatusBtn'}*/}
-              {/*        onClick={this.startExperiment}>Начать эксперимент*/}
-              {/*</button>*/}
           </div>
         </div>
     );

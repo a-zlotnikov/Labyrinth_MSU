@@ -42,7 +42,7 @@ router.post('/startExp', async (req, res) => {
 
 router.post('/saveExp',newUserCheck, async (req, res) => {
   const date = moment().format('L');
-  const time = moment().format('LTS')
+  const time = moment().format('LTS');
   const user = {
     _id: req.session.user._id,
   };

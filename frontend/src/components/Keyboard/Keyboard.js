@@ -4,7 +4,7 @@ import './Keyboard.css';
 class Keyboard extends Component {
   render() {
     return (
-        <div className={'Keyboard unselectable'}>
+        <div className={'Keyboard unselectable'} onClick={this.props.click}>
           <div className={'keyBtnRow keyTopRow'}>
             <div className={'keyBtnTop'}>/</div>
             <div className={'keyBtnTop'}>*</div>
