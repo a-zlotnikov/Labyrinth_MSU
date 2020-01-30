@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import './CurrentType.css';
+const Cookies = require('js-cookie');
 
 class CurrentType extends Component {
     constructor(props) {
@@ -93,13 +94,19 @@ class CurrentType extends Component {
                     </td> :
                     <td>{this.state.description}</td>}
 
-                    {this.state.edit ?
-                    <td className={'typeCurButton'} onClick={this.save}>Сохранить</td> :
-                    <td className={'typeCurButton'} onClick={this.editMode}>Редактировать</td>}
-
-                    {this.state.edit ?
-                    <td className={'typeCurButton'} onClick={this.editMode}>Отменить</td> :
-                    <td className={'typeCurButton'} onClick={this.delete}>Удалить</td>}
+                    {Cookies.get('category') === 'Преподаватель'
+                      ? (
+                          this.state.edit
+                            ? <>
+                                <td className={'typeCurButton'} onClick={this.save}>Сохранить</td>
+                                <td className={'typeCurButton'} onClick={this.editMode}>Отменить</td>
+                              </>
+                            : <>
+                                <td className={'typeCurButton'} onClick={this.editMode}>Редактировать</td>
+                                <td className={'typeCurButton'} onClick={this.delete}>Удалить</td>
+                              </>
+                        )
+                      : null}
                 </tr>
         );
     }

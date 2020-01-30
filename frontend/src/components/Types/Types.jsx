@@ -104,9 +104,11 @@ class Types extends Component {
                     <tr>
                       <th>Имя</th>
                       <th>Описание</th>
+                      {Cookies.get('category') === 'Преподаватель' ?
                       <th colSpan="2">
                         Опции
-                      </th>
+                      </th> :
+                      null}
                     </tr>
                     </thead>
                     <tbody>

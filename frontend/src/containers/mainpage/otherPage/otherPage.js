@@ -8,6 +8,8 @@ class OtherPage extends Component {
       <div className={classes.OtherPage}>
         <Link to={'/environment'}>Архив сред</Link>
         <Link to={'/results'}>Архив экспериментов</Link>
+        <Link to={'/types'}>Типы экспериментов</Link>
+        <Link to={'/readme'}>Документация</Link>
       </div>
     );
   }

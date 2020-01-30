@@ -30,6 +30,14 @@ const newUserCheck = (req, res, next) => {
   }
 };
 
+const admin = (req, res, next) => {
+  if (req.session.user.category === 'Преподаватель') {
+    next()
+  } else {
+    res.json({result: false})
+  }
+}
+
 module.exports = {
   sessionChecker,
   cookiesCleaner,
