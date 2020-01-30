@@ -48,7 +48,7 @@ class Types extends Component {
     this.setState({sending: true});
     if (res.succeeded) {
       this.setState({
-        sending: false, 
+        sending: false,
         saved: true,
         name: '',
         description: '',
@@ -97,19 +97,12 @@ class Types extends Component {
             <div>
               <h2>Все типы экспериментов</h2>
                 <div>
-                  <table className={'typeTable'}>
-                    <thead>
-                    <tr>
-                      <th>Имя</th>
-                      <th>Описание</th>
-                      {Cookies.get('category') === 'Преподаватель' ?
-                      <th colSpan="2">
-                        Опции
-                      </th> :
-                      null}
-                    </tr>
-                    </thead>
-                    <tbody>
+                  <div className={'typeTable'}>
+                    <div className={'typeTableHead'}>
+                      <div className={'typeName'}>Имя</div>
+                      <div className={'typeDescription'}>Описание</div>
+                      {/*{Cookies.get('category') === 'Преподаватель' ?*/}
+                    </div>
                     {this.state.response.map((result, index) =>
                         <CurrentType
                         key={index}
@@ -119,8 +112,7 @@ class Types extends Component {
                         fetch={this.fetchTypes}
                         />,
                     )}
-                    </tbody>
-                  </table>
+                  </div>
               </div>
             </div> :
             <div>
