@@ -542,7 +542,8 @@ class Experiment extends Component {
               <div className={'expInputTitle'}>
                 Тип эксперимента:
                 {this.state.response ?
-                    <select className={'expSelector'} value={this.state.expType}
+                    <select className={'expSelector'}
+                            // value={this.state.expType}
                             onChange={this.setType}>
                       <option/>
                       {this.state.response.map((result, index) =>
