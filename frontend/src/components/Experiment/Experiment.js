@@ -562,7 +562,6 @@ class Experiment extends Component {
                 Тип эксперимента:
                 {this.state.response ?
                     <select className={'expSelector'}
-                            // value={this.state.expType}
                             onChange={this.setType}>
                       <option/>
                       {this.state.response.map((result, index) =>
@@ -646,13 +645,15 @@ class Experiment extends Component {
             </div>
 
             <div>
-              <div className={'expTimer'}>
-                <div>Таймер:</div>
-                <div className={'expTimerInt'}>{this.state.timer}</div>
-                <div>сек.</div>
+              <div>
+                <div className={'expTimer'}>
+                  <div>Таймер:</div>
+                  <div className={'expTimerInt'}>{this.state.timer}</div>
+                  <div>сек.</div>
+                </div>
+                <div className={'expTimer'}>Подкреплений: <div
+                    className={'expTimerInt'}>{this.state.feeding}</div></div>
               </div>
-              <div className={'expTimer'}>Подкреплений: <div
-                  className={'expTimerInt'}>{this.state.feeding}</div></div>
               <Keyboard click={this.clickAction}/>
               <div className={'expStatusBtnsContainer'}>
                 <StatusButtons class={'expStatusBtnsBox'}
