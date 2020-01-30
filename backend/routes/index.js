@@ -56,6 +56,7 @@ router.post('/saveExp',newUserCheck, async (req, res) => {
     expNumber: Number(req.body.expNumber),
     expType: req.body.expType,
     moves: req.body.moves,
+    numberOfReinforcements: req.body.expFeeding
   });
 });
 

@@ -10,7 +10,8 @@ const experimentSchema = new mongoose.Schema({
   animalName: String,
   expNumber: Number,
   expType: String,
-  moves: Array
+  moves: Array,
+  numberOfReinforcements: Number
 });
 
 module.exports = {

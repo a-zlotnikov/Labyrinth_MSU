@@ -42,6 +42,7 @@ const initialState = {
   description: null,
   click: '',
   clickCounter: 0,
+  feeding: 0,
 };
 
 class Experiment extends Component {
@@ -209,13 +210,16 @@ class Experiment extends Component {
     const move = (e) => {
       let timer = this.state.timer;
 
-      function singleClick(value) {
+      let singleClick = (value) => {
         keyButton(value, timer);
-      }
+        if (value === '+') {
+          this.setState({feeding: this.state.feeding + 1});
+        }
+      };
 
-      function doubleClick(value) {
+      let doubleClick = (value) => {
         keyButton(value, timer);
-      }
+      };
 
       const x = e.code;
       if (this.state.expBegin) {
@@ -442,7 +446,8 @@ class Experiment extends Component {
         this.props.expField.name,
         this.state.expNumber,
         this.state.expAnimal,
-        this.state.type);
+        this.state.type,
+        this.state.feeding);
     this.setState({...initialState});
     this.redirectNewExp();
   };
@@ -501,6 +506,9 @@ class Experiment extends Component {
 
     let singleClick = () => {
       this.props.mouseAction(singleValue, this.state.timer);
+      if (singleValue === '+') {
+        this.setState({feeding: this.state.feeding + 1});
+      }
     };
 
     let doubleClick = () => {
@@ -508,16 +516,17 @@ class Experiment extends Component {
     };
 
     this.mouseClickCount++;
-
-    if (this.mouseClickCount === 1) {
-      this.singleMouseClickTimer = setTimeout(() => {
+    if (this.state.expBegin) {
+      if (this.mouseClickCount === 1) {
+        this.singleMouseClickTimer = setTimeout(() => {
+          this.mouseClickCount = 0;
+          singleClick();
+        }, 400);
+      } else if (this.mouseClickCount === 2) {
+        clearTimeout(this.singleMouseClickTimer);
         this.mouseClickCount = 0;
-        singleClick();
-      }, 400);
-    } else if (this.mouseClickCount === 2) {
-      clearTimeout(this.singleMouseClickTimer);
-      this.mouseClickCount = 0;
-      doubleClick();
+        doubleClick();
+      }
     }
 
   };
@@ -623,7 +632,7 @@ class Experiment extends Component {
                 <div>сек.</div>
               </div>
               <div className={'expTimer'}>Подкреплений: <div
-                  className={'expTimerInt'}>?</div></div>
+                  className={'expTimerInt'}>{this.state.feeding}</div></div>
               <Keyboard click={this.clickAction}/>
               <div className={'expStatusBtnsContainer'}>
                 <StatusButtons class={'expStatusBtnsBox'}
@@ -696,9 +705,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(MOVELEFT(timer));
     },
     saveExperiment: (
-        id, expName, moves, envName, expNumber, expAnimal, expType) => {
+        id, expName, moves, envName, expNumber, expAnimal, expType, expFeeding) => {
       dispatch(
-          saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
+          saveExp(id, expName, moves, envName, expNumber, expAnimal, expType, expFeeding));
     },
     keyboard: (value, time) => {
       dispatch(KEYBOARDACTION(value, time));
