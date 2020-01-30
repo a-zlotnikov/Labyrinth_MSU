@@ -6,7 +6,7 @@ class Documentation extends Component {
     return (
         <div className={'container'}>
           <div className={'logo'}>
-            <img src={'/img/logo.png'}/>
+            <img src={'/img/logo.png'} alt="..."/>
           </div>
           <h1>Labyrinth_MSU</h1>
           <p>Виртуальная среда для протоколирования поведенческого эксперимента
@@ -108,6 +108,12 @@ class Documentation extends Component {
             </li>
             <li>
               Педаль
+            </li>
+            <li>
+              Лампочка
+            </li>
+            <li>
+              Звук
             </li>
           </ul>
           <p>В левом верхнем углу находится поле ввода названия среды. В левом
