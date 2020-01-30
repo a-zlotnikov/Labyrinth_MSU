@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import  { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {AUTHSUCCESS} from '../../store/creators/creators';
 import './SignIn.css';
@@ -25,9 +24,6 @@ class SignIn extends Component {
   };
 
   signIn = async() => {
-    // const username = this.state.username;
-    // const password = this.state.password;
-    // await console.log(username);
     let resp = await fetch('/users/signin', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -35,13 +31,8 @@ class SignIn extends Component {
     });
 
     const res = await resp.json();
-    // console.log(res);
     if (res.user && res.cookie) {
-      // this.props.cookie.set({session: true})
-      // Cookies.set('logged_in', true);
-      // Cookies.set('username', res.username);
       const {_id, username, category, surname, name, gender, dob, hand, group, year} = res.user;
-      // Cookies.set('cookie', res.cookie);
 
       Cookies.set('user_id', _id);
       Cookies.set('username', username);
@@ -54,16 +45,10 @@ class SignIn extends Component {
       Cookies.set('group', group);
       Cookies.set('year', year);
 
-      // this.props.authSuccess(res);
-
-      console.log('>>> Authorized');
       this.props.handler();
-      console.log('>>> HANDLER')
-      // return <Redirect to='/readme'/>;
     } else {
-      alert('Try again')
+      alert('Try again') /// !!!
     }
-    // await console.log(res);
   };
 
   render() {

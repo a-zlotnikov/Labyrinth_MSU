@@ -24,7 +24,7 @@ class FoundUser extends Component {
     };
   }
 
-  delete = async (e) => { // Удаляется, но карточка висит в результатах
+  delete = async (e) => {
     const id = this.state.id;
     let resp = await fetch('/users/delete', {
       method: 'DELETE',
@@ -35,16 +35,13 @@ class FoundUser extends Component {
     this.setState({loading: true});
     if (res.succeed) {
       this.setState({loading: false});
-      // alert('Пользователь удален');
       this.props.fetch();
     } else {
       this.setState({loading: false});
-      alert('Произошла ошибка');
     }
   };
 
   switchStatus = async (e) => {
-    console.log('switching')
     this.setState({saved: null});
     const id = this.state.id;
     let resp = await fetch('/users/switch_status', {
@@ -107,7 +104,6 @@ class FoundUser extends Component {
         body: JSON.stringify(body),
       });
       const res = await resp.json();
-      // this.setState({edit: !this.state.edit});
       if (res.succeeded) {
         this.setState({saved: true});
         this.setState({edit: false});
