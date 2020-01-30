@@ -201,7 +201,11 @@ class Experiment extends Component {
           currentState[key] = false;
           break;
         case 'startPosition':
-          currentState[key] = false;
+          if(this.state.expBegin){
+          currentState[key] = currentState[key];
+          } else {
+            currentState[key] = false;
+          }
           break;
       }
     }
