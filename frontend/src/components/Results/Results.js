@@ -50,7 +50,7 @@ class Results extends Component {
     const results = await response.json();
     const {
       date, time, expName,
-      expNumber, animalName, expType,
+      expNumber, animalName, expType, numberOfReinforcements,
     } = results['0'];
 
     const elemFile = [
@@ -61,6 +61,7 @@ class Results extends Component {
       `${expNumber}\n`,
       `${animalName}\n`,
       `${expType}\n`,
+      `${numberOfReinforcements ? numberOfReinforcements : '-'}\n`,
       `${results['0'].user.surname}\n`,
       `${results['0'].user.name}\n`,
       `${results['0'].user.age ? results['0'].user.age : '-'}\n`,
@@ -70,7 +71,7 @@ class Results extends Component {
       `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
 
-
+console.log(elemFile)
     let timeLine = [];
     if (results['0'].moves !== null) {
       results['0'].moves.forEach((elem) => {
