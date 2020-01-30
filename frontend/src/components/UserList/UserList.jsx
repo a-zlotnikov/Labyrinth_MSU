@@ -173,6 +173,7 @@ class UserList extends Component {
                                       hand = {result.hand}
                                       group = {result.group}
                                       year = {result.year}
+                                      fetch = {this.searchAll}
                                   />)}
                                 </div> :
                                 <div><h2>По вашему запросу нет результатов</h2></div>

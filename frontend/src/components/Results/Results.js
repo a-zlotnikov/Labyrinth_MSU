@@ -49,7 +49,6 @@ class Results extends Component {
       body: JSON.stringify({id}),
     });
     const results = await response.json();
-    console.log(results);
     const {
       date, time, expName,
       expNumber, animalName, expType,
@@ -72,7 +71,6 @@ class Results extends Component {
       `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
     
-    console.log(results['0'].moves);
     
     let timeLine = [];
     if (results['0'].moves !== null) {
@@ -130,10 +128,10 @@ class Results extends Component {
       this.setState({type: 'username'});
       await this.search();
     } else if (e.target.value === 'Тип эксперимента') {
-      this.setState({type: 'typeExperiment'});
+      this.setState({type: 'expType'});
       await this.search();
     } else if (e.target.value === 'Название эксперимента') {
-      this.setState({type: 'nameExperiment'});
+      this.setState({type: 'expName'});
       await this.search();
     }
     await this.search();
@@ -146,7 +144,7 @@ class Results extends Component {
   
   search = async () => {
     const {type, query} = this.state;
-    let resp = await fetch('/results/search', {
+    let resp = await fetch('/experiment/search', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({type, query}),
@@ -201,10 +199,6 @@ class Results extends Component {
                     {elem}
                   </option>);
               })}
-              {/*<option>Идентификатор пользователя</option>*/}
-              {/*<option>Тип эксперимента</option>*/}
-              {/*<option>Название эксперимента</option>*/}
-            
             </select>
             {this.state.type === 'username' ?
               <input
@@ -213,14 +207,14 @@ class Results extends Component {
                 onChange={this.changeQuery}
                 placeholder={'введите идентификатор пользователя'}
               /> :
-              this.state.type === 'typeExperiment' ?
+              this.state.type === 'expType' ?
                 <input
                   className={classes.topInput}
                   value={this.state.query}
                   onChange={this.changeQuery}
                   placeholder={'введите тип эксперемента'}
                 /> :
-                this.state.type === 'nameExperiment' ?
+                this.state.type === 'expName' ?
                   <input
                     className={classes.topInput}
                     value={this.state.query}
@@ -240,19 +234,19 @@ class Results extends Component {
               <thead>
               <tr>
                 <th onClick={this.onSort.bind(this, 'date')}>Дата</th>
-                <th onClick={this.onSort.bind(this, 'typeExperiment')}>Тип
+                <th onClick={this.onSort.bind(this, 'expType')}>Тип
                   эксперемента
                 </th>
                 <th onClick={this.onSort.bind(this, 'username')}>Идентификатор
                   пользователя
                 </th>
-                <th onClick={this.onSort.bind(this, 'nameExperiment')}>Название
+                <th onClick={this.onSort.bind(this, 'expName')}>Название
                   эксперимента
                 </th>
-                <th onClick={this.onSort.bind(this, 'numberExperiment')}>Номер
+                <th onClick={this.onSort.bind(this, 'expNumber')}>Номер
                   опыта
                 </th>
-                <th onClick={this.onSort.bind(this, 'nameIndividual')}>Имя
+                <th onClick={this.onSort.bind(this, 'animalName')}>Имя
                   особи
                 </th>
                 <th colSpan="3">
@@ -262,7 +256,6 @@ class Results extends Component {
               </thead>
               <tbody>
               {this.state.response.map((result, index) => {
-                console.log(result);
                 return (
                   <tr key={index} name={result._id}
                   >

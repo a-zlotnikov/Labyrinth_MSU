@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Type = require('../models/type');
 
-router.get('/', async function(req, res) {
+const {newUserCheck} = require('../middleware/auth');
+
+router.get('/', newUserCheck, async function(req, res) {
   try {
     const result = await Type.find({});
     await res.json({response: result});
@@ -11,7 +13,7 @@ router.get('/', async function(req, res) {
   }
 });
 
-router.post('/create', async function(req, res) {
+router.post('/create',newUserCheck, async function(req, res) {
   try {
     const type = new Type({...req.body});
     await type.save();
@@ -21,7 +23,7 @@ router.post('/create', async function(req, res) {
   }
 });
 
-router.put('/edit', async function(req, res) {
+router.put('/edit',newUserCheck, async function(req, res) {
   console.log(req.body);
   try {
     const type = await Type.findOne({_id: req.body.id});
@@ -34,7 +36,7 @@ router.put('/edit', async function(req, res) {
   }
 });
 
-router.delete('/delete', async function(req, res) {
+router.delete('/delete',newUserCheck, async function(req, res) {
   try {
     await Type.findOneAndDelete({_id: req.body.id});
     await res.json({succeed: true});
