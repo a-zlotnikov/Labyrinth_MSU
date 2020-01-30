@@ -13,7 +13,7 @@ import {
   MOVE_LEFT,
   MOVE_RIGHT,
   SAVE_EXP,
-  KEYBOARD_ACTION,
+  KEYBOARD_ACTION, DELETE_ACTION,
 } from '../actions/actions';
 
 
@@ -106,6 +106,12 @@ export const KEYBOARDACTION = (value, time) => {
   }
 };
 
+export const DELETEACTION = () => {
+  return {
+    type: DELETE_ACTION
+  }
+};
+
 export const fetchField = () => {
   return async (dispatch) => {
     const response = await fetch('/getField');
@@ -153,30 +159,30 @@ export const saveExp = (id, expName, moves, envName, expNumber, expAnimal, expTy
           }),
         }
     );
-    const result = await response.json();
+    // const result = await response.json();
 
   }
 };
 
-export const newExp = (envName) => {
-  return async (dispatch) => {
-    const response = await fetch(
-        '/getNewExpField',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            envName
-          }),
-        }
-    );
-    const result = await response.json();
-    console.log(result);
-    // dispatch(EXPFIELD(result));
-  };
-};
+// export const newExp = (envName) => {
+//   return async (dispatch) => {
+//     const response = await fetch(
+//         '/getNewExpField',
+//         {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({
+//             envName
+//           }),
+//         }
+//     );
+//     const result = await response.json();
+//     console.log(result);
+//     // dispatch(EXPFIELD(result));
+//   };
+// };
 
 export const AUTHSUCCESS = (token) => {
   return {
