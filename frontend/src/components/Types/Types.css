@@ -1,5 +1,15 @@
+.typeTable {
+    border: none;
+}
+
 .typeContainer {
     margin: 0 50px;
+}
+
+.typeInputBox {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
 }
 
 .typeNameInput {
@@ -9,8 +19,9 @@
     width: 85px;
     background-color: whitesmoke;
     border: 0;
-    margin: 0 5px;
+    margin: 25px 5px;
     outline: 0 !important;
+    text-align: center;
 }
 
 .typeNameInput:focus {
@@ -23,10 +34,11 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
     width: 760px;
-    background-color: whitesmoke;
+    background-color: white;
     border: 0;
     margin: 0 5px;
     outline: 0 !important;
+    align-content: center;
 }
 
 .typeDescriptionInput:focus {
@@ -39,11 +51,12 @@
     width: 150px;
     height: 30px;
     display: flex;
-    margin-top: 10px;
+    margin-top: 20px;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
 }
 
 .typeSaveButton:hover {

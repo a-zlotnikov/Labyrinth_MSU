@@ -69,9 +69,9 @@ class CurrentType extends Component {
 
     render() {
         return (
-                <tr name={this.state.id}>
+                <tr className={'curResult'} name={this.state.id}>
                     {this.state.edit ?
-                    <td>
+                    <td >
                         <input className={'typeCurInput'} name="name"
                         placeholder="название"
                         value={this.state.name}
@@ -79,7 +79,7 @@ class CurrentType extends Component {
                         onChange={this.changeName}
                         />
                     </td> :
-                    <td>{this.state.name}</td>}
+                    <td className={'typeName'}>{this.state.name}</td>}
 
                     {this.state.edit ?
                     <td>
@@ -89,7 +89,7 @@ class CurrentType extends Component {
                         onChange={this.changeDescription}
                         />
                     </td> :
-                    <td>{this.state.description}</td>}
+                    <td className={'typeDescription'}>{this.state.description}</td>}
 
                     {Cookies.get('category') === 'Преподаватель'
                       ? (

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './Types.css';
-import classes from '../Results/Results.module.css';
 import CurrentType from '../Types/CurrentType/CurrentType';
 const Cookies = require('js-cookie');
 
@@ -69,18 +68,17 @@ class Types extends Component {
         {Cookies.get('category') === 'Преподаватель' ?
             <div>
               <h2>Создать новый</h2>
-              <div>
+              <div className={'typeInputBox'}>
                 <input className={'typeNameInput'}
                        name="name"
                        value={this.state.name}
-                       placeholder="имя"
+                       placeholder="ИМЯ"
                        maxLength="3"
                        onChange={this.changeName}
                 />
-                <input className={'typeDescriptionInput'}
+                <textarea className={'typeDescriptionInput'}
                        name="description"
                        value={this.state.description}
-                       placeholder="описание"
                        onChange={this.changeDescription}/>
               </div>
               <div className={'typeSaveButton'}
@@ -92,8 +90,8 @@ class Types extends Component {
         {this.state.response ?
             <div>
               <h2>Все типы экспериментов</h2>
-                <div className={classes.Results}>
-                  <table>
+                <div>
+                  <table className={'typeTable'}>
                     <thead>
                     <tr>
                       <th>Имя</th>
