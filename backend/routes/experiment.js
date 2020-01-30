@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {Experiment} = require('../models/experiment');
+const {checkSession} = require('../middleware/auth')
 
 router.get('/', async (req, res) => {
   const results = await Experiment.find().populate('user');
