@@ -108,7 +108,7 @@
 }
 
 .pedal {
-    background-color: lemonchiffon;
+    background-color: #ffed61;
     color: black;
 }
 
@@ -171,11 +171,11 @@ b {
 }
 
 .pedalBtn {
-    background-color: #fffef7;
+    background-color: #fff6b0;
 }
 
 .activePedal {
-    background-color: lemonchiffon;
+    background-color: #ffed61;
     font-weight: bold;
 }
 
