@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
-  CHANGECOMP,
+  CHANGECOMP, DELETEACTION,
   expField, KEYBOARDACTION,
   MOVEDOWN,
   MOVELEFT,
@@ -17,34 +17,36 @@ import StatusButtons from '../StatusButtons/StatusButtons';
 import Keyboard from '../Keyboard/Keyboard';
 import './Experiment.css';
 
+const initialState = {
+  expName: '',
+  expNumber: 1,
+  expAnimal: '',
+  expType: '',
+  timer: 0,
+  wall: false,
+  food: false,
+  fakeFood: false,
+  entry: false,
+  exit: false,
+  pedal: false,
+  changeStatus: false,
+  startPosition: false,
+  moveStatus: false,
+  expBegin: false,
+  loading: false,
+  error: false,
+  response: null,
+  type: null,
+  description: null,
+};
+
 class Experiment extends Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
-      expName: '',
-      expNumber: 1,
-      expAnimal: null,
-      expType: '',
-      timer: 0,
-      wall: false,
-      food: false,
-      fakeFood: false,
-      entry: false,
-      exit: false,
-      pedal: false,
-      changeStatus: false,
-      startPosition: false,
-      moveStatus: false,
-      expBegin: false,
-      loading: false,
-      error: false,
-      response: null,
-      type: null,
-      description: null,
-    };
+
+    this.state = {...initialState};
   }
-  
+
   fetchTypes = async () => {
     console.log('>>> FETCH TYPES');
     this.setState({response: null});
@@ -61,12 +63,9 @@ class Experiment extends Component {
     }
     console.log(this.state.response);
   };
-  
+
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
-    console.log('>>> START FETCH');
-    
-    console.log('>>> FETCH TYPES');
     this.setState({response: null});
     let resp = await fetch('/types', {
       method: 'GET',
@@ -79,9 +78,7 @@ class Experiment extends Component {
     } else {
       this.setState({loading: false, error: true});
     }
-    console.log('>>> SUCCESS');
-    console.log(this.state.response);
-    
+
     // this.fetchTypes;
     // fetch('/types', {
     //   method: 'GET',
@@ -89,14 +86,14 @@ class Experiment extends Component {
     // }).then(
     //   res => res.json()).then(result => console.log(result))
   };
-  
+
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
-  
+
   changeValue = (prevValue) => {
     const getValue = (e) => {
-      
+
       const x = e.key;
       const regex = /[\u0400-\u04FF0-9]+/g;
       const match = regex.exec(x);
@@ -109,19 +106,19 @@ class Experiment extends Component {
     };
     document.onkeydown = getValue;
   };
-  
+
   newExpNumber = (e) => {
     this.setState({expNumber: e.target.value});
   };
-  
+
   newExpAnimal = (e) => {
     this.setState({expAnimal: e.target.value});
   };
-  
+
   expType = (e) => {
     this.setState({expType: e.target.value});
   };
-  
+
   action = (e) => {
     switch (true) {
       case this.state.wall:
@@ -151,7 +148,7 @@ class Experiment extends Component {
     }
     this.setState({changeStatus: !this.state.changeStatus});
   };
-  
+
   cellStatusExp = (e) => {
     let translate;
     switch (e.target.innerText) {
@@ -177,9 +174,9 @@ class Experiment extends Component {
         translate = 'startPosition';
         break;
     }
-    
+
     const currentState = this.state;
-    
+
     for (let key in currentState) {
       switch (key){
         case translate:
@@ -210,7 +207,7 @@ class Experiment extends Component {
     }
     this.setState(currentState);
   };
-  
+
   timer() {
     this.setState({
       timer: this.state.timer + 1,
@@ -219,26 +216,23 @@ class Experiment extends Component {
       clearInterval(this.intervalId);
     }
   }
-  
+
   startExp = () => {
     let keyButton = this.props.keyboard;
-    
-    let timer = this.state.timer;
-    
     this.setState({expBegin: true});
     this.intervalId = setInterval(this.timer.bind(this), 1000);
     let clickCount = 0;
     const move = (e) => {
-      function singleClick() {
-        keyButton('asd', timer);
+      let timer = this.state.timer;
+      function singleClick(value) {
+        keyButton(value, timer);
       }
-      
-      function doubleClick() {
-        keyButton('qwe', timer);
+
+      function doubleClick(value) {
+        keyButton(value, timer);
       }
-      
+
       const x = e.code;
-      let singleClickTimer;
       if (this.state.expBegin) {
         switch (x) {
           case 'ArrowUp':
@@ -261,35 +255,208 @@ class Experiment extends Component {
             this.props.moveLeft(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
-          // case 'Numpad1':
-          //   // let singleClickTimer;
+          case 'Numpad1':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('e')
+
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('x');
+            }
+            break;
+          case 'Numpad2':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('w')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('z');
+            }
+            break;
+          case 'Numpad3':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('r')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('m');
+            }
+            break;
+          case 'Numpad4':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('j')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('q');
+            }
+            break;
+          case 'Numpad5':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('|')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('b');
+            }
+            break;
+          case 'Numpad6':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('s')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('l');
+            }
+            break;
+          case 'Numpad7':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('t')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('?');
+            }
+            break;
+          case 'Numpad8':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('h')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('_');
+            }
+            break;
+          case 'Numpad9':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('o')
+              }, 300);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('i');
+            }
+            break;
+          case 'Backspace':
+            e.preventDefault();
+            this.props.deleteAction();
+            this.setState({expStatus: !this.state.moveStatus});
+
+            break;
+          // case 'NumpadDivide':
           //   e.preventDefault();
           //   clickCount++;
           //   if (clickCount === 1) {
-          //     singleClickTimer = setTimeout(function() {
+          //     this.singleClickTimer = setTimeout(function() {
           //       clickCount = 0;
-          //       singleClick()
+          //       singleClick('o')
           //     }, 400);
           //   } else if (clickCount === 2) {
-          //     clearTimeout(singleClickTimer);
+          //     clearTimeout(this.singleClickTimer);
           //     clickCount = 0;
-          //     doubleClick();
+          //     doubleClick('i');
           //   }
           //   break;
-          
+          // case 'NumpadMultiply':
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     this.singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick('o')
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(this.singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick('i');
+          //   }
+          //   break;
+          // case 'NumpadSubtract':
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     this.singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick('o')
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(this.singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick('i');
+          //   }
+          //   break;
+          // case 'NumpadAdd':
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     this.singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick('o')
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(this.singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick('i');
+          //   }
+          //   break;
           // e.preventDefault();
           // this.props.keyboard('asd',this.state.timer);
           // this.setState({expStatus: !this.state.moveStatus});
           // break;
-          
+
         }
       }
     };
     document.onkeydown = move;
   };
-  
+
   finishExp = () => {
-    
+    clearInterval(this.intervalId);
     this.setState({expBegin: false});
     this.props.saveExperiment(this.props.match.params.id,
       this.state.expName,
@@ -298,13 +465,36 @@ class Experiment extends Component {
       this.state.expNumber,
       this.state.expAnimal,
       this.state.type);
-    this.props.newExp(this.props.expField.name);
+    debugger;
+    this.setState({...initialState});
+    this.redirectNewExp();
   };
-  
+
+  redirectNewExp = async () => {
+    const response = await fetch(
+          '/getNewExpField',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: this.props.match.params.id,
+              env: this.props.expField.name
+            }),
+          },
+      );
+      const result = await response.json();
+      if (result.id) {
+        this.props.history.push(`/experiment/${result.id}`);
+        this.props.fullField(result.id);
+      }
+  };
+
   newExpName = (e) => {
     this.setState({expName: e.target.value});
   };
-  
+
   setType = (e) => {
     this.setState({type: e.target.value});
     this.setState({
@@ -312,17 +502,17 @@ class Experiment extends Component {
         'description'),
     });
   };
-  
+
   render() {
     return (
       <div className='board unselectable'>
         <div className={'expInputBox'}>
           <div className={'expInputs'}>
-            <div className={'expInputTitle'}>Название среды:</div>
+            <div className={'expInputTitle'}>Название среды: {this.props.expField.name}</div>
             <div className={'expInputTitle'}>
               Тип эксперимента:
               {this.state.response ?
-                <select className={'expSelector'} onChange={this.setType}>
+                <select className={'expSelector'} value={this.state.expType} onChange={this.setType}>
                   <option/>
                   {this.state.response.map((result, index) =>
                     <option key={index}
@@ -332,17 +522,21 @@ class Experiment extends Component {
                 : null}
             </div>
             <div className={'expInputTitle'}>Название эксперимента:<input
-              className={'expInput'} onChange={this.newExpName}
+              className={'expInput'}
+              value={this.state.expName}
+              onChange={this.newExpName}
               placeholder={'Введите название'}/></div>
             <div className={'expInputTitle'}>Номер опыта:<input
-              onChange={this.newExpNumber} className={'expInput'}
+                value={this.state.expNumber}
+                onChange={this.newExpNumber} className={'expInput'}
               placeholder={'Введите номер'}/></div>
             <div className={'expInputTitle'}>Имя особи:<input
-              onChange={this.newExpAnimal} className={'expInput'}
+                value={this.state.expAnimal}
+                onChange={this.newExpAnimal} className={'expInput'}
               placeholder={'Введите имя'}/></div>
           </div>
           <div className={'expTypeDescription'}>{this.state.description}</div>
-        
+
         </div>
         {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в
           процессе</div> : <div className={'expProgress'}></div>}
@@ -397,7 +591,7 @@ class Experiment extends Component {
               );
             })}
           </div>
-          
+
           <div>
             <div className={'expTimer'}>
               <div>Таймер:</div>
@@ -437,7 +631,7 @@ class Experiment extends Component {
         <div className={'expResultInput'}>{this.props.expField.moves &&
         this.props.expField.moves.map((element, i) => {
           for (let key in element) {
-            return <span key={i}>{key}: {element[key]}</span>;
+            return <span key={i}>{element[key]}</span>;
           }
         })}</div>
       </div>
@@ -482,12 +676,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         saveExp(id, expName, moves, envName, expNumber, expAnimal, expType));
     },
-    newExp: (envName) => {
-      dispatch(newExp(envName));
-    },
     keyboard: (value, time) => {
       dispatch(KEYBOARDACTION(value, time));
     },
+    deleteAction: () => {
+      dispatch(DELETEACTION())
+    }
   };
 };
 

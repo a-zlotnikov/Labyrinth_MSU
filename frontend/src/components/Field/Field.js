@@ -18,6 +18,7 @@ class Field extends Component {
       fieldName: '',
       saveStatus: false,
       nameStatus: false,
+      busyName: false
     };
   }
 
@@ -125,8 +126,12 @@ class Field extends Component {
             }),
           },
       );
+
       const result = await response.json();
-      if (result) {
+      console.log(result);
+      if (result.answer === 'busy') {
+        this.setState({busyName: true});
+      } else if (result.name) {
         this.setState({saveStatus: true});
       }
     } else {
@@ -134,29 +139,29 @@ class Field extends Component {
     }
   };
 
-  startExperiment = async () => {
-
-    const response = await fetch(
-        '/startExp',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: this.state.fieldName,
-            field: this.props.constructor,
-          }),
-        },
-    );
-    const result = await response.json();
-    if (result.id) {
-      this.props.history.push(`/experiment/${result.id}`);
-    } else {
-      this.setState({nameStatus: true});
-    }
-
-  };
+  // startExperiment = async () => {
+  //
+  //   const response = await fetch(
+  //       '/startExp',
+  //       {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           name: this.state.fieldName,
+  //           field: this.props.constructor,
+  //         }),
+  //       },
+  //   );
+  //   const result = await response.json();
+  //   if (result.id) {
+  //     this.props.history.push(`/experiment/${result.id}`);
+  //   } else {
+  //     this.setState({nameStatus: true});
+  //   }
+  //
+  // };
 
   render() {
 
@@ -166,7 +171,8 @@ class Field extends Component {
                  value={this.state.fieldName}
                  placeholder={'Введите имя среды'}/>
           {this.state.saveStatus && <div>Среда сохранена</div>}
-          {this.state.nameStatus && <div>Введите имя</div>}
+          {this.state.nameStatus && <div>Введите название среды</div>}
+          {this.state.busyName && <div>Название среды занято</div>}
 
           <div className={'constMainBox unselectable'}>
             <div className={'constFieldBox'}>
@@ -229,9 +235,9 @@ class Field extends Component {
               <button className={'constStatusBtn'}
                       onClick={this.saveField}>Сохранить среду
               </button>
-              <button className={'constStatusBtn'}
-                      onClick={this.startExperiment}>Начать эксперимент
-              </button>
+              {/*<button className={'constStatusBtn'}*/}
+              {/*        onClick={this.startExperiment}>Начать эксперимент*/}
+              {/*</button>*/}
           </div>
         </div>
     );

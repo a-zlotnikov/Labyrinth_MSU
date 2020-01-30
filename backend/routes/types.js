@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Type = require('../models/type');
+
 const {newUserCheck} = require('../middleware/auth');
 
 router.get('/', newUserCheck, async function(req, res) {
