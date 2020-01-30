@@ -5,14 +5,16 @@ moment.locale('ru');
 const {Field} = require('../models/field');
 const {Environment} = require('../models/environment');
 const {Experiment} = require('../models/experiment');
+const {newUserCheck} = require('../middleware/auth');
+
 
 /* GET home page. */
-router.get('/getField', async (req, res) => {
+router.get('/getField',newUserCheck, async (req, res) => {
   const field = await Field.find({}, {'__v': 0});
   res.json(field[0].line);
 });
 
-router.post('/saveField', async (req, res) => {
+router.post('/saveField',newUserCheck, async (req, res) => {
   const newEnv = await new Environment({
     name: req.body.name,
     field: {line: req.body.field},
@@ -21,7 +23,7 @@ router.post('/saveField', async (req, res) => {
   res.json(newEnv);
 });
 
-router.post('/startExp', async (req, res) => {
+router.post('/startExp',newUserCheck, async (req, res) => {
 
   let newEnv;
   let newExp;
@@ -53,7 +55,7 @@ router.post('/startExp', async (req, res) => {
 
 });
 
-router.post('/saveExp', async (req, res) => {
+router.post('/saveExp',newUserCheck, async (req, res) => {
   const date = moment().format('L');
   const time = moment().format('LTS')
   console.log(req.body);
@@ -73,14 +75,14 @@ router.post('/saveExp', async (req, res) => {
   });
 });
 
-router.post('/getExpField', async (req, res) => {
+router.post('/getExpField',newUserCheck, async (req, res) => {
   const exp = await Experiment.find({_id: req.body.id});
   const env = exp[0].env.name;
   const environ = await Environment.find({name: env});
   res.json(environ[0]);
 });
 
-router.post('/getNewExpField', async (req, res) => {
+router.post('/getNewExpField',newUserCheck, async (req, res) => {
   console.log(req.body.name);
 
 });

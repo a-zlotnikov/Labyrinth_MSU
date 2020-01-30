@@ -1,31 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const {Experiment} = require('../models/experiment');
-const {checkSession} = require('../middleware/auth')
+const {newUserCheck} = require('../middleware/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', newUserCheck, async (req, res) => {
   const results = await Experiment.find().populate('user');
   res.json(results);
 });
 
-router.post('/search', async function(req, res) {
+router.post('/search', newUserCheck, async function(req, res) {
   try {
     let result = '';
-    req.body.query === result ?
-      result = await Experiment.find() :
-      result = await Experiment.find({[req.body.type]: req.body.query});
+    result = req.body.query === result ?
+      await Experiment.find().populate('user') :
+      req.body.type === 'username' ?
+        
+        await Experiment.find({
+          "user.username": req.body.query,
+        }).populate('user')
+        :
+        await Experiment.find({
+          [req.body.type]: req.body.query,
+        }).populate('user');
+    
+    // console.log(req.body);
+    console.log(result);
     await res.json({response: result});
   } catch (e) {
+    console.log(e);
     await res.json({response: false});
   }
 });
 
-router.post('/', async function(req, res) {
+router.post('/', newUserCheck, async function(req, res) {
   const results = await Experiment.find({_id: req.body.id}).populate('user');
   res.json(results);
 });
 
-router.delete('/', async function(req, res) {
+router.delete('/', newUserCheck, async function(req, res) {
   const deleteElem = await Experiment.findOneAndDelete({_id: req.body.id});
   const newResults = await Experiment.find().populate('user');
   res.json(newResults);

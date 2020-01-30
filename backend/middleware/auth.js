@@ -8,10 +8,8 @@ function cookiesCleaner(req, res, next) {
 const checkSession = (req, res) => {
   if (req.session.user) {
     res.send({ result: true });
-    // console.log({ result: true })
   } else {
     res.send({ result: false });
-    // console.log ({ result: false })
   }
 };
 
@@ -25,7 +23,8 @@ const sessionChecker = (req, res, next) => {
 
 const newUserCheck = (req, res, next) => {
   if (!req.session.user) {
-    res.redirect('/');
+    res.json({Error: 'Access denied'})
+    ;
   } else {
     next();
   }
