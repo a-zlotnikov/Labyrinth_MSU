@@ -78,7 +78,8 @@ class Results extends Component {
       });
     }
 
-    const newFile = [...elemFile, ...timeLine];
+    const newFile = [...elemFile,
+      ...timeLine];
 
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
