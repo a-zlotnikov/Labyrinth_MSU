@@ -8,7 +8,7 @@ class Video extends Component {
       facingMode: 'user',
     };
     
-    return <Webcam videoConstraints={videoConstraints}/>;
+    return <Webcam className={classes.Webcam} videoConstraints={videoConstraints}/>;
   }
 }
 

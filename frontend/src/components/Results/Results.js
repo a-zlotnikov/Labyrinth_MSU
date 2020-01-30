@@ -73,7 +73,7 @@ class Results extends Component {
 
     let timeLine = [];
     if (results['0'].moves !== null) {
-      results['0'].moves.map((elem) => {
+      results['0'].moves.forEach((elem) => {
         timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`);
       });
     }

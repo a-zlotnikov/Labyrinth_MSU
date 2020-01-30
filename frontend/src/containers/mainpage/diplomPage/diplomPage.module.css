@@ -21,6 +21,8 @@
     margin: 10px;
     background-color: lightgrey;
     box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    text-align: center;
+
 }
 
 .diplomPage a:hover {
