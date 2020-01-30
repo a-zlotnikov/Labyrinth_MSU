@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import classes from './ResultDetail.module.css';
 import Loader from '../../../containers/Loader/Loader';
+import moment from 'moment';
+import {Link} from 'react-router-dom'
 
 class ResultDetail extends Component {
   
@@ -29,23 +31,26 @@ class ResultDetail extends Component {
     return !this.state.loading ? (
       <div className={classes.ResultDetail}>
         <hr/>
-        <p>Дата: {this.state.details.date ? this.state.details.date : '-'}</p>
-        <p>Время: {this.state.details.time ? this.state.details.time : '-'}</p>
-        <p>Название среды: {this.state.details.env.name ? this.state.details.env.name : '-'}</p>
-        <p>Название эксперимента: {this.state.details.expName ? this.state.details.expName : '-'}</p>
-        <p>Номер опыта: {this.state.details.expNumber ? this.state.details.expNumber : '-'}</p>
-        <p>Имя особи: {this.state.details.animalName ? this.state.details.animalName : '-'}</p>
-        <p>Тип эксперимента: {this.state.details.expType ? this.state.details.expType : '-'}</p>
-        <p>Количество подкормов: {this.state.details.numberOfReinforcements ? this.state.details.numberOfReinforcements : '-'}</p>
+        <div className={classes.back}>
+          <div>Дата: {this.state.details.date ? this.state.details.date : '-'}</div>
+          <div> <Link to={'/results'}>Вернуться назад </Link></div>
+        </div>
+        <div>Время: {this.state.details.time ? this.state.details.time : '-'}</div>
+        <div>Название среды: {this.state.details.env.name ? this.state.details.env.name : '-'}</div>
+        <div>Название эксперимента: {this.state.details.expName ? this.state.details.expName : '-'}</div>
+        <div>Номер опыта: {this.state.details.expNumber ? this.state.details.expNumber : '-'}</div>
+        <div>Имя особи: {this.state.details.animalName ? this.state.details.animalName : '-'}</div>
+        <div>Тип эксперимента: {this.state.details.expType ? this.state.details.expType : '-'}</div>
+        <div>Количество подкормов: {this.state.details.numberOfReinforcements ? this.state.details.numberOfReinforcements : '-'}</div>
         <hr/>
-        <p>Эксперимент проведен</p>
-        <p>Фамилия: {this.state.details.user.surname ? this.state.details.user.surname : '-'}</p>
-        <p>Имя: {this.state.details.user.name ? this.state.details.user.name : '-'}</p>
-        <p>Возраст: {this.state.details.user.age ? this.state.details.user.age : '-'}</p>
-        <p>Пол: {this.state.details.user.gender ? this.state.details.user.gender : '-'}</p>
-        <p>Рука: {this.state.details.user.hand ? this.state.details.user.hand : '-'}</p>
-        <p>Год: {this.state.details.user.year ? this.state.details.user.year : '-'}</p>
-        <p>Группа: {this.state.details.user.group ? this.state.details.user.group : '-'}</p>
+        <div>Эксперимент проведен</div>
+        <div>Фамилия: {this.state.details.user.surname ? this.state.details.user.surname : '-'}</div>
+        <div>Имя: {this.state.details.user.name ? this.state.details.user.name : '-'}</div>
+        <div>Возраст: {this.state.details.user.dob ? moment().diff(this.state.details.user.dob, 'years') : '-'}</div>
+        <div>Пол: {this.state.details.user.gender ? this.state.details.user.gender : '-'}</div>
+        <div>Рука: {this.state.details.user.hand ? this.state.details.user.hand : '-'}</div>
+        <div>Год: {this.state.details.user.year ? this.state.details.user.year : '-'}</div>
+        <div>Группа: {this.state.details.user.group ? this.state.details.user.group : '-'}</div>
         <hr/>
         <table width="100%" cellSpacing="0" border="1">
           <thead>

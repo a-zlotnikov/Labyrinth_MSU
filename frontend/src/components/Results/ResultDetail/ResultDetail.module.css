@@ -1,3 +1,14 @@
 .ResultDetail {
 
 }
+
+.ResultDetail > div {
+margin: 0px 10px;
+
+}
+
+.back {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
