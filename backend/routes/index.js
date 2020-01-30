@@ -31,7 +31,6 @@ router.post('/saveField',newUserCheck, async (req, res) => {
 
 
 router.post('/startExp', async (req, res) => {
-
   if (req.body.archive) {
     newExp = await new Experiment({
       env: {name: req.body.name},
