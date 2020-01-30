@@ -10,9 +10,9 @@ const Cookies = require('js-cookie');
 class Results extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      type: 'username',
+      type: 'expType',
       query: '',
       response: [],
       loading: false,
@@ -25,12 +25,11 @@ class Results extends Component {
       option: [],
     };
   }
-  
+
   componentDidMount = async () => {
     await this.searchAll();
-    
   };
-  
+
   onSort = sortField => {
     const cloneData = this.state.response;
     const sortType = this.state.sort === 'asc' ? 'desc' : 'asc';
@@ -41,7 +40,7 @@ class Results extends Component {
       sortField,
     });
   };
-  
+
   onSaveTxt = async id => {
     const response = await fetch('/experiment', {
       method: 'POST',
@@ -49,12 +48,11 @@ class Results extends Component {
       body: JSON.stringify({id}),
     });
     const results = await response.json();
-    console.log(results);
     const {
       date, time, expName,
       expNumber, animalName, expType,
     } = results['0'];
-    
+
     const elemFile = [
       `${date}\n`,
       `${time}\n`,
@@ -71,24 +69,23 @@ class Results extends Component {
       `${results['0'].user.year ? results['0'].user.year : '-'}\n`,
       `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
-    
-    console.log(results['0'].moves);
-    
+
+
     let timeLine = [];
     if (results['0'].moves !== null) {
-      results['0'].moves.map((elem) => {
+      results['0'].moves.forEach((elem) => {
         timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`);
       });
     }
-    
+
     const newFile = [...elemFile, ...timeLine];
-    
+
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
       `${results['0'].env.name}_${expType}_${expName}_${expNumber}_${animalName}`);
-    
+
   };
-  
+
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
       const response = await fetch('/experiment', {
@@ -101,52 +98,48 @@ class Results extends Component {
         response: results,
       });
     }
-    
+
   };
-  
+
   searchAll = async () => {
     let response = await fetch('/experiment', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     });
     const result = await response.json();
-    
+
     this.setState({
       loading: true, option: [
-        'Идентификатор пользователя', 'Тип' +
-        ' эксперимента', 'Название эксперимента'],
+        'Тип эксперимента', 'Название эксперимента'],
     });
-    
+
     if (result) {
       this.setState({loading: false, error: false, response: result});
     } else {
       this.setState({loading: false, error: true});
     }
-    
+
   };
-  
+
   changeType = async (e) => {
-    if (e.target.value === 'Идентификатор пользователя') {
-      this.setState({type: 'username'});
-      await this.search();
-    } else if (e.target.value === 'Тип эксперимента') {
-      this.setState({type: 'typeExperiment'});
+      if (e.target.value === 'Тип эксперимента') {
+      this.setState({type: 'expType'});
       await this.search();
     } else if (e.target.value === 'Название эксперимента') {
-      this.setState({type: 'nameExperiment'});
+      this.setState({type: 'expName'});
       await this.search();
     }
     await this.search();
   };
-  
+
   changeQuery = async (e) => {
     await this.setState({query: e.target.value});
     await this.search();
   };
-  
+
   search = async () => {
     const {type, query} = this.state;
-    let resp = await fetch('/results/search', {
+    let resp = await fetch('/experiment/search', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({type, query}),
@@ -159,20 +152,20 @@ class Results extends Component {
       this.setState({loading: false, error: true});
     }
   };
-  
+
   reset = async () => {
     this.setState({
-      type: 'username',
+      type: 'expType',
       query: '',
       response: [],
       loading: false,
       error: false,
       option: [],
-      
+
     });
     await this.searchAll();
   };
-  
+
   render() {
     const cls = [classes.Option];
     const any = [classes.Option, classes.enable];
@@ -181,7 +174,7 @@ class Results extends Component {
     } else {
       cls.push(classes.disable);
     }
-    
+
     return this.state.response ? (
       <div>
         <div className={classes.Header}>
@@ -190,7 +183,7 @@ class Results extends Component {
         <div className={classes.LayoutRes}>
           <div className={'title'}><h1>Поиск</h1></div>
           <div className={classes.Header}>
-            
+
             <select
               className={classes.selector}
               name="type"
@@ -201,26 +194,16 @@ class Results extends Component {
                     {elem}
                   </option>);
               })}
-              {/*<option>Идентификатор пользователя</option>*/}
-              {/*<option>Тип эксперимента</option>*/}
-              {/*<option>Название эксперимента</option>*/}
-            
             </select>
-            {this.state.type === 'username' ?
-              <input
-                className={classes.topInput}
-                value={this.state.query}
-                onChange={this.changeQuery}
-                placeholder={'введите идентификатор пользователя'}
-              /> :
-              this.state.type === 'typeExperiment' ?
+            {
+              this.state.type === 'expType' ?
                 <input
                   className={classes.topInput}
                   value={this.state.query}
                   onChange={this.changeQuery}
                   placeholder={'введите тип эксперемента'}
                 /> :
-                this.state.type === 'nameExperiment' ?
+                this.state.type === 'expName' ?
                   <input
                     className={classes.topInput}
                     value={this.state.query}
@@ -235,24 +218,21 @@ class Results extends Component {
             >Сбросить
             </div>
           </div>
-          <div className={classes.Results}>
-            <table>
+          <div className={classes.resTableDiv}>
+            <table className={classes.resTable}>
               <thead>
               <tr>
                 <th onClick={this.onSort.bind(this, 'date')}>Дата</th>
-                <th onClick={this.onSort.bind(this, 'typeExperiment')}>Тип
-                  эксперемента
+                <th onClick={this.onSort.bind(this, 'expType')}>Тип
                 </th>
-                <th onClick={this.onSort.bind(this, 'username')}>Идентификатор
-                  пользователя
+                <th onClick={this.onSort.bind(this, 'username')}>Пользователя
                 </th>
-                <th onClick={this.onSort.bind(this, 'nameExperiment')}>Название
-                  эксперимента
+                <th onClick={this.onSort.bind(this, 'expName')}>Эксперимента
                 </th>
-                <th onClick={this.onSort.bind(this, 'numberExperiment')}>Номер
+                <th onClick={this.onSort.bind(this, 'expNumber')}>Номер
                   опыта
                 </th>
-                <th onClick={this.onSort.bind(this, 'nameIndividual')}>Имя
+                <th onClick={this.onSort.bind(this, 'animalName')}>Имя
                   особи
                 </th>
                 <th colSpan="3">
@@ -262,32 +242,30 @@ class Results extends Component {
               </thead>
               <tbody>
               {this.state.response.map((result, index) => {
-                console.log(result);
                 return (
-                  <tr key={index} name={result._id}
-                  >
-                    <td>{result.date}</td>
-                    <td>{result.expType}</td>
-                    <td>{result.user ? result.user.username : null}</td>
-                    <td>{result.expName}</td>
-                    <td>{result.expNumber}</td>
-                    <td>{result.animalName}</td>
-                    <td
-                      className={any.join(' ')}
-                      onClick={() => this.props.history.push(
-                        '/results/' + result._id)}
-                    >Смотреть
-                    </td>
-                    <td
-                      className={any.join(' ')}
-                      onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
-                    </td>
-                    <td
-                      className={cls.join(' ')}
-                      onClick={this.onDelete.bind(this, result._id)}
-                    >Удалить
-                    </td>
-                  </tr>
+                      <tr className={classes.resResult} key={index} name={result._id}>
+                        <td className={classes.resTd}>{result.date}</td>
+                        <td className={classes.resTd}>{result.expType}</td>
+                        <td className={classes.resTd}>{result.user ? result.user.username : null}</td>
+                        <td className={classes.resTd}>{result.expName}</td>
+                        <td className={classes.resTd}>{result.expNumber}</td>
+                        <td className={classes.resTd}>{result.animalName}</td>
+                        <td
+                            className={any.join(' ')}
+                            onClick={() => this.props.history.push(
+                                '/results/' + result._id)}
+                        >Смотреть
+                        </td>
+                        <td
+                            className={any.join(' ')}
+                            onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
+                        </td>
+                        <td
+                            className={cls.join(' ')}
+                            onClick={this.onDelete.bind(this, result._id)}
+                        >Удалить
+                        </td>
+                      </tr>
                 );
               })
               }

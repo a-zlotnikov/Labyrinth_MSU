@@ -18,11 +18,9 @@ class Environment extends Component {
     this.setState({
       results,
     });
-    // console.log(results);
   };
 
   onStartEx = async (props) => {
-    // console.log(props)
     const response = await fetch(
       '/startExp',
       {
@@ -38,7 +36,6 @@ class Environment extends Component {
       },
     );
     const result = await response.json();
-    console.log(result);
     this.props.history.push(`/experiment/${result.id}`);
 
   };

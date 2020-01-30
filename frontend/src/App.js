@@ -13,7 +13,7 @@ import ResultDetail from './components/Results/ResultDetail/ResultDetail';
 import Loader from './containers/Loader/Loader';
 import Experiment from './components/Experiment/Experiment';
 import Types from './components/Types/Types';
-import Video from './components/Webcam/Webcamv2';
+import Video from './components/Webcam/Webcam';
 
 import {connect} from 'react-redux'
 import Environment from './components/Environment/Environment';
@@ -41,7 +41,6 @@ class App extends Component {
     this.setState({loading: true});
     const response = await fetch('/users');
     const result = await response.json();
-    // console.log(result);
     if (result.user) {
       this.setState({user: result.user, loading: false, logged_in: true});
     } else {
@@ -84,8 +83,6 @@ class App extends Component {
                       <Switch>
                         <Route path={'/types'} component={Types}/>
                         <Route path={'/registration'} component={SignUp}/>
-
-                        {/*<Route path={'/constructor'} component={Field}/>*/}
                         <Route path={'/constructor'} render={
                           (props)=>{
                             return (

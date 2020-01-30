@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-// import {Link} from 'react-router-dom';
 import './Types.css';
 import classes from '../Results/Results.module.css';
 import CurrentType from '../Types/CurrentType/CurrentType';
 const Cookies = require('js-cookie');
-
-// TODO: Otrai reizi rediģet (iepriekšajs state)
 
 class Types extends Component {
   constructor(props) {
@@ -58,9 +55,6 @@ class Types extends Component {
   };
 
   changeName = (e) => {
-    // if (e.target.value.match(/[0-9]/)) {
-    //   this.setState({name: ''});
-    // }
     this.setState({name: e.target.value.toUpperCase()});
   };
 
@@ -104,9 +98,11 @@ class Types extends Component {
                     <tr>
                       <th>Имя</th>
                       <th>Описание</th>
+                      {Cookies.get('category') === 'Преподаватель' ?
                       <th colSpan="2">
                         Опции
-                      </th>
+                      </th> :
+                      null}
                     </tr>
                     </thead>
                     <tbody>

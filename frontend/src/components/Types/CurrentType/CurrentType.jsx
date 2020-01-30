@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import './CurrentType.css';
+const Cookies = require('js-cookie');
 
 class CurrentType extends Component {
     constructor(props) {
@@ -30,7 +30,6 @@ class CurrentType extends Component {
       save = async () => {
         try {
           const {id, name, description} = this.state;
-          console.log(id);
           const resp = await fetch('/types/edit', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -50,7 +49,7 @@ class CurrentType extends Component {
         }
       };
 
-    delete = async (e) => { // Удаляется, но карточка висит в результатах
+    delete = async (e) => {
         const id = this.state.id;
         let resp = await fetch('/types/delete', {
           method: 'DELETE',
@@ -62,10 +61,8 @@ class CurrentType extends Component {
         if (res.succeed) {
           this.setState({loading: false});
           this.props.fetch();
-          alert('Тип удален');
         } else {
           this.setState({loading: false});
-          alert('Произошла ошибка');
         }
       };
 
@@ -93,13 +90,19 @@ class CurrentType extends Component {
                     </td> :
                     <td>{this.state.description}</td>}
 
-                    {this.state.edit ?
-                    <td className={'typeCurButton'} onClick={this.save}>Сохранить</td> :
-                    <td className={'typeCurButton'} onClick={this.editMode}>Редактировать</td>}
-
-                    {this.state.edit ?
-                    <td className={'typeCurButton'} onClick={this.editMode}>Отменить</td> :
-                    <td className={'typeCurButton'} onClick={this.delete}>Удалить</td>}
+                    {Cookies.get('category') === 'Преподаватель'
+                      ? (
+                          this.state.edit
+                            ? <>
+                                <td className={'typeCurButton'} onClick={this.save}>Сохранить</td>
+                                <td className={'typeCurButton'} onClick={this.editMode}>Отменить</td>
+                              </>
+                            : <>
+                                <td className={'typeCurButton'} onClick={this.editMode}>Редактировать</td>
+                                <td className={'typeCurButton'} onClick={this.delete}>Удалить</td>
+                              </>
+                        )
+                      : null}
                 </tr>
         );
     }

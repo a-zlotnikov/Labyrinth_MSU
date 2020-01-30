@@ -41,22 +41,12 @@ class UserList extends Component {
     };
     const translatedArray = this.state.response.map((i) => objectRenameKeys(i, changesMap));
     const newArray = translatedArray.map(({_id, __v, ...keepAttrs}) => keepAttrs);
-    const ws = XLSX.utils.json_to_sheet(newArray); // Надо изменить формат данных (ключи по-русски и пр.)
+    const ws = XLSX.utils.json_to_sheet(newArray);
     const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], {type: fileType});
     FileSaver.saveAs(data, 'search_results' + fileExtension);
   };
-
-  // exportToXLS = () => {
-  //   const fileType = 'application/vnd.ms-excel';
-  //   const fileExtension = '.xls';
-  //   const ws = XLS.utils.json_to_sheet(this.state.response); // Надо изменить формат данных (ключи по-русски и пр.)
-  //   const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-  //   const excelBuffer = XLS.write(wb, { bookType: 'xls', type: 'array' });
-  //   const data = new Blob([excelBuffer], {type: fileType});
-  //   FileSaver.saveAs(data, 'search_results' + fileExtension);
-  // };
 
   searchAll = async () => {
     let resp = await fetch('/users/search/all', {
@@ -108,7 +98,6 @@ class UserList extends Component {
 
   reset = async () => {
     this.setState({
-      // type: 'group',
       query: '',
       response: [],
       loading: false,
@@ -137,11 +126,10 @@ class UserList extends Component {
                     <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите фамилию'}/>:
                         this.state.type === "category" ?
                             <select className={'selector'} value={this.state.query} onChange={this.changeQuery}>
-                              <option>Преподаватель</option>
                               <option>Студент</option>
                               <option>Дипломник</option>
+                              <option>Преподаватель</option>
                             </select>:
-                            // <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите тип пользователя'}/>:
                             this.state.type === "year" ? <input className={'topInput'} value={this.state.query} onChange={this.changeQuery} placeholder={'введите год'}/>:
                             null
                 }
@@ -173,6 +161,7 @@ class UserList extends Component {
                                       hand = {result.hand}
                                       group = {result.group}
                                       year = {result.year}
+                                      fetch = {this.searchAll}
                                   />)}
                                 </div> :
                                 <div><h2>По вашему запросу нет результатов</h2></div>

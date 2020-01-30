@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 // const bcryptjs = require('bcryptjs');
+const {newUserCheck} = require('../middleware/auth');
 
 /* GET users listing. */
 router.get('/', async function(req, res) {
@@ -12,7 +13,7 @@ router.get('/', async function(req, res) {
   }
 });
 
-router.post('/search', async function(req, res) {
+router.post('/search',newUserCheck, async function(req, res) {
   try {
     if (req.body.type === 'year') {
       const result = await User.find({[req.body.type]: Number(req.body.query)});
@@ -25,7 +26,7 @@ router.post('/search', async function(req, res) {
   }
 });
 
-router.get('/search/all', async function(req, res) {
+router.get('/search/all',newUserCheck, async function(req, res) {
   try {
     const result = await User.find({});
     await res.json({response: result});
@@ -34,7 +35,7 @@ router.get('/search/all', async function(req, res) {
   }
 });
 
-router.post('/signup', async function(req, res, next) { // Регистрация нового пользователя
+router.post('/signup',newUserCheck, async function(req, res, next) { // Регистрация нового пользователя
   try {
     const user = new User({...req.body});
     await user.save();
@@ -46,7 +47,7 @@ router.post('/signup', async function(req, res, next) { // Регистраци�
   }
 });
 
-router.post('/signin', async function(req, res, next) {
+router.post('/signin',async function(req, res, next) {
   try {
     const {username, password} = req.body;
     const user = await User.findOne({username});
@@ -62,7 +63,7 @@ router.post('/signin', async function(req, res, next) {
   }
 });
 
-router.post('/edit', async function(req, res, next) {
+router.post('/edit',newUserCheck, async function(req, res, next) {
   try {
     await User.findOneAndUpdate({_id: req.body.id}, req.body);
     const user = await User.findById(req.body.id);
@@ -72,7 +73,7 @@ router.post('/edit', async function(req, res, next) {
   }
 });
 
-router.post('/switch_status', async function(req, res) {
+router.post('/switch_status',newUserCheck, async function(req, res) {
   try {
     const id = req.body.id;
     const user = await User.findById(id);
@@ -83,7 +84,7 @@ router.post('/switch_status', async function(req, res) {
   }
 });
 
-router.delete('/delete', async function(req, res) {
+router.delete('/delete',newUserCheck, async function(req, res) {
   try {
     await User.findOneAndDelete({_id: req.body.id});
     await res.json({succeed: true});
