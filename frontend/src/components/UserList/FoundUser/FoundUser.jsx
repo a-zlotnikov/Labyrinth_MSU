@@ -35,7 +35,8 @@ class FoundUser extends Component {
     this.setState({loading: true});
     if (res.succeed) {
       this.setState({loading: false});
-      alert('Пользователь удален');
+      // alert('Пользователь удален');
+      this.props.fetch();
     } else {
       this.setState({loading: false});
       alert('Произошла ошибка');
