@@ -20,7 +20,7 @@ import './Experiment.css';
 class Experiment extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       expName: '',
       expNumber: 1,
@@ -44,7 +44,7 @@ class Experiment extends Component {
       description: null,
     };
   }
-  
+
   fetchTypes = async () => {
     console.log('>>> FETCH TYPES');
     this.setState({response: null});
@@ -61,11 +61,11 @@ class Experiment extends Component {
     }
     console.log(this.state.response);
   };
-  
+
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
     console.log('>>> START FETCH');
-    
+
     console.log('>>> FETCH TYPES');
     this.setState({response: null});
     let resp = await fetch('/types', {
@@ -81,7 +81,7 @@ class Experiment extends Component {
     }
     console.log('>>> SUCCESS');
     console.log(this.state.response);
-    
+
     // this.fetchTypes;
     // fetch('/types', {
     //   method: 'GET',
@@ -89,14 +89,14 @@ class Experiment extends Component {
     // }).then(
     //   res => res.json()).then(result => console.log(result))
   };
-  
+
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
-  
+
   changeValue = (prevValue) => {
     const getValue = (e) => {
-      
+
       const x = e.key;
       const regex = /[\u0400-\u04FF0-9]+/g;
       const match = regex.exec(x);
@@ -109,19 +109,19 @@ class Experiment extends Component {
     };
     document.onkeydown = getValue;
   };
-  
+
   newExpNumber = (e) => {
     this.setState({expNumber: e.target.value});
   };
-  
+
   newExpAnimal = (e) => {
     this.setState({expAnimal: e.target.value});
   };
-  
+
   expType = (e) => {
     this.setState({expType: e.target.value});
   };
-  
+
   action = (e) => {
     switch (true) {
       case this.state.wall:
@@ -151,7 +151,7 @@ class Experiment extends Component {
     }
     this.setState({changeStatus: !this.state.changeStatus});
   };
-  
+
   cellStatusExp = (e) => {
     let translate;
     switch (e.target.innerText) {
@@ -177,9 +177,9 @@ class Experiment extends Component {
         translate = 'startPosition';
         break;
     }
-    
+
     const currentState = this.state;
-    
+
     for (let key in currentState) {
       switch (key){
         case translate:
@@ -210,7 +210,7 @@ class Experiment extends Component {
     }
     this.setState(currentState);
   };
-  
+
   timer() {
     this.setState({
       timer: this.state.timer + 1,
@@ -219,26 +219,26 @@ class Experiment extends Component {
       clearInterval(this.intervalId);
     }
   }
-  
+
   startExp = () => {
     let keyButton = this.props.keyboard;
-    
-    let timer = this.state.timer;
-    
+
+
+
     this.setState({expBegin: true});
     this.intervalId = setInterval(this.timer.bind(this), 1000);
     let clickCount = 0;
     const move = (e) => {
-      function singleClick() {
-        keyButton('asd', timer);
+      let timer = this.state.timer;
+      function singleClick(value) {
+        keyButton(value, timer);
       }
-      
-      function doubleClick() {
-        keyButton('qwe', timer);
+
+      function doubleClick(value) {
+        keyButton(value, timer);
       }
-      
+
       const x = e.code;
-      let singleClickTimer;
       if (this.state.expBegin) {
         switch (x) {
           case 'ArrowUp':
@@ -261,35 +261,201 @@ class Experiment extends Component {
             this.props.moveLeft(this.state.timer);
             this.setState({expStatus: !this.state.moveStatus});
             break;
-          // case 'Numpad1':
-          //   // let singleClickTimer;
+          case 'Numpad1':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('e')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('x');
+            }
+            break;
+          case 'Numpad2':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('w')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('z');
+            }
+            break;
+          case 'Numpad3':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('r')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('m');
+            }
+            break;
+          case 'Numpad4':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('j')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('q');
+            }
+            break;
+          case 'Numpad5':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('|')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('b');
+            }
+            break;
+          case 'Numpad6':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('s')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('l');
+            }
+            break;
+          case 'Numpad7':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('t')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('?');
+            }
+            break;
+          case 'Numpad8':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('h')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('_');
+            }
+            break;
+          case 'Numpad9':
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 1) {
+              this.singleClickTimer = setTimeout(function() {
+                clickCount = 0;
+                singleClick('o')
+              }, 400);
+            } else if (clickCount === 2) {
+              clearTimeout(this.singleClickTimer);
+              clickCount = 0;
+              doubleClick('i');
+            }
+            break;
+          // case 'NumpadDivide':
           //   e.preventDefault();
           //   clickCount++;
           //   if (clickCount === 1) {
-          //     singleClickTimer = setTimeout(function() {
+          //     this.singleClickTimer = setTimeout(function() {
           //       clickCount = 0;
-          //       singleClick()
+          //       singleClick('o')
           //     }, 400);
           //   } else if (clickCount === 2) {
-          //     clearTimeout(singleClickTimer);
+          //     clearTimeout(this.singleClickTimer);
           //     clickCount = 0;
-          //     doubleClick();
+          //     doubleClick('i');
           //   }
           //   break;
-          
+          // case 'NumpadMultiply':
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     this.singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick('o')
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(this.singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick('i');
+          //   }
+          //   break;
+          // case 'NumpadSubtract':
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     this.singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick('o')
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(this.singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick('i');
+          //   }
+          //   break;
+          // case 'NumpadAdd':
+          //   e.preventDefault();
+          //   clickCount++;
+          //   if (clickCount === 1) {
+          //     this.singleClickTimer = setTimeout(function() {
+          //       clickCount = 0;
+          //       singleClick('o')
+          //     }, 400);
+          //   } else if (clickCount === 2) {
+          //     clearTimeout(this.singleClickTimer);
+          //     clickCount = 0;
+          //     doubleClick('i');
+          //   }
+          //   break;
           // e.preventDefault();
           // this.props.keyboard('asd',this.state.timer);
           // this.setState({expStatus: !this.state.moveStatus});
           // break;
-          
+
         }
       }
     };
     document.onkeydown = move;
   };
-  
+
   finishExp = () => {
-    
+
     this.setState({expBegin: false});
     this.props.saveExperiment(this.props.match.params.id,
       this.state.expName,
@@ -300,11 +466,11 @@ class Experiment extends Component {
       this.state.type);
     this.props.newExp(this.props.expField.name);
   };
-  
+
   newExpName = (e) => {
     this.setState({expName: e.target.value});
   };
-  
+
   setType = (e) => {
     this.setState({type: e.target.value});
     this.setState({
@@ -312,7 +478,7 @@ class Experiment extends Component {
         'description'),
     });
   };
-  
+
   render() {
     return (
       <div className='board unselectable'>
@@ -342,7 +508,7 @@ class Experiment extends Component {
               placeholder={'Введите имя'}/></div>
           </div>
           <div className={'expTypeDescription'}>{this.state.description}</div>
-        
+
         </div>
         {this.state.expBegin ? <div className={'expProgress'}>Эксперимент в
           процессе</div> : <div className={'expProgress'}></div>}
@@ -397,7 +563,7 @@ class Experiment extends Component {
               );
             })}
           </div>
-          
+
           <div>
             <div className={'expTimer'}>
               <div>Таймер:</div>
@@ -437,7 +603,7 @@ class Experiment extends Component {
         <div className={'expResultInput'}>{this.props.expField.moves &&
         this.props.expField.moves.map((element, i) => {
           for (let key in element) {
-            return <span key={i}>{key}: {element[key]}</span>;
+            return <span key={i}>{element[key]}</span>;
           }
         })}</div>
       </div>
