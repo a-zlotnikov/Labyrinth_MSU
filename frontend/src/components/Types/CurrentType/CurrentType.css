@@ -1,12 +1,27 @@
 .curResult {
+    border-bottom: lightgray solid 1px;
+    padding-top: 10px;
+}
 
+.curStudentResultBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.curTeacherResultBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.curResult:hover {
+    border-bottom: black solid 1px;
 }
 
 td {
     border: 0;
 }
 
-.typeName {
+.curTypeName {
     vertical-align: top;
 }
 
@@ -14,20 +29,43 @@ td {
     vertical-align: top;
 }
 
-.curResult:hover {
-    font-weight: bold;
+.curTypeName {
+    width: 60px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
+.curTypeDescription {
+    width: 500px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.curTypeStudentDescription {
+    width: 770px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+
 .typeCurButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
     border: 0;
     height: 30px;
     background-color: lightgray;
     border-radius: 5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .typeCurButton:hover {
     cursor: pointer;
+    font-weight: bold;
 }
 
 .typeCurButton:active {

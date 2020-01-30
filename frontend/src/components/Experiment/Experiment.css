@@ -207,3 +207,19 @@
     min-height: 22px;
     margin: 10px;
 }
+
+.exitBtn {
+    border: none;
+    background-color: lightgray;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    outline: 0 !important;
+    border-radius: 3px;
+}
+
+.exitBtn:hover {
+    cursor: pointer;
+}
+
+.exitBtn:active {
+    background-color: gray;
+}

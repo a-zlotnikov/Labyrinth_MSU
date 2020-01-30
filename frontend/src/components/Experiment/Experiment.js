@@ -688,7 +688,7 @@ class Experiment extends Component {
               return <span key={i}>{element[key]}</span>;
             }
           })}</div>
-          <button onClick={this.endExp}>Выйти из эксперимента</button>
+          <button className={'exitBtn'} onClick={this.endExp}>Выйти из эксперимента</button>
         </div>
     );
   }
