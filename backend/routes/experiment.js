@@ -13,17 +13,11 @@ router.post('/search', newUserCheck, async function(req, res) {
     let result = '';
     result = req.body.query === result ?
       await Experiment.find().populate('user') :
-      req.body.type === 'username' ?
-        
-        await Experiment.find({
-          "user.username": req.body.query,
-        }).populate('user')
-        :
         await Experiment.find({
           [req.body.type]: req.body.query,
         }).populate('user');
     
-    // console.log(req.body);
+    console.log(req.body);
     console.log(result);
     await res.json({response: result});
   } catch (e) {
