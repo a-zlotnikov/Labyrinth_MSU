@@ -531,6 +531,25 @@ class Experiment extends Component {
 
   };
 
+  endExp = async () => {
+    const response = await fetch(
+        '/endExp',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: this.props.match.params.id,
+          }),
+        },
+    );
+    const result = await response.json();
+    if (result.answer === 'deleted') {
+      this.props.history.push('/')
+    }
+  };
+
   render() {
     return (
         <div className='board unselectable'>
@@ -667,6 +686,7 @@ class Experiment extends Component {
               return <span key={i}>{element[key]}</span>;
             }
           })}</div>
+          <button onClick={this.endExp}>Выйти из эксперимента</button>
         </div>
     );
   }
@@ -705,9 +725,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(MOVELEFT(timer));
     },
     saveExperiment: (
-        id, expName, moves, envName, expNumber, expAnimal, expType, expFeeding) => {
+        id, expName, moves, envName, expNumber, expAnimal, expType,
+        expFeeding) => {
       dispatch(
-          saveExp(id, expName, moves, envName, expNumber, expAnimal, expType, expFeeding));
+          saveExp(id, expName, moves, envName, expNumber, expAnimal, expType,
+              expFeeding));
     },
     keyboard: (value, time) => {
       dispatch(KEYBOARDACTION(value, time));
