@@ -73,4 +73,9 @@ router.post('/getNewExpField', newUserCheck, async (req, res) => {
   res.json({id: newExpEnv._id});
 });
 
+router.post('/endExp', async (req, res) => {
+  await Experiment.deleteOne({_id: req.body.id});
+  res.json({answer: 'deleted'})
+});
+
 module.exports = router;
