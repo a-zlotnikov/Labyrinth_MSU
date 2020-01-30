@@ -18,7 +18,7 @@ router.post('/search', newUserCheck, async function(req, res) {
         }).populate('user');
     await res.json({response: result});
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     await res.json({response: false});
   }
 });
