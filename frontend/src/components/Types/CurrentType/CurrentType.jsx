@@ -31,7 +31,6 @@ class CurrentType extends Component {
       save = async () => {
         try {
           const {id, name, description} = this.state;
-          console.log(id);
           const resp = await fetch('/types/edit', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -51,7 +50,7 @@ class CurrentType extends Component {
         }
       };
 
-    delete = async (e) => { // Удаляется, но карточка висит в результатах
+    delete = async (e) => {
         const id = this.state.id;
         let resp = await fetch('/types/delete', {
           method: 'DELETE',
@@ -63,10 +62,8 @@ class CurrentType extends Component {
         if (res.succeed) {
           this.setState({loading: false});
           this.props.fetch();
-          alert('Тип удален');
         } else {
           this.setState({loading: false});
-          alert('Произошла ошибка');
         }
       };
 

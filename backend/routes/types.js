@@ -23,13 +23,12 @@ router.post('/create',newUserCheck, async function(req, res) {
   }
 });
 
+
 router.put('/edit',newUserCheck, async function(req, res) {
-  console.log(req.body);
   try {
     const type = await Type.findOne({_id: req.body.id});
     type.name = req.body.name;
     await type.save();
-    //await Type.findOneAndUpdate({_id: req.body.id}, req.body);
     res.json({succeeded: true});
   } catch (e) {
     await res.json({succeeded: false});

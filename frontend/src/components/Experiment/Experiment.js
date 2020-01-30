@@ -47,23 +47,6 @@ class Experiment extends Component {
     this.state = {...initialState};
   }
 
-  fetchTypes = async () => {
-    console.log('>>> FETCH TYPES');
-    this.setState({response: null});
-    let resp = await fetch('/types', {
-      method: 'GET',
-      headers: {'Content-Type': 'application/json'},
-    });
-    const res = await resp.json();
-    this.setState({loading: true});
-    if (res.response) {
-      this.setState({loading: false, error: false, response: res.response});
-    } else {
-      this.setState({loading: false, error: true});
-    }
-    console.log(this.state.response);
-  };
-
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
     this.setState({response: null});
@@ -78,13 +61,6 @@ class Experiment extends Component {
     } else {
       this.setState({loading: false, error: true});
     }
-
-    // this.fetchTypes;
-    // fetch('/types', {
-    //   method: 'GET',
-    //   headers: {'Content-Type': 'application/json'},
-    // }).then(
-    //   res => res.json()).then(result => console.log(result))
   };
 
   componentWillUnmount() {
