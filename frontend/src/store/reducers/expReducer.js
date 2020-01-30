@@ -164,11 +164,11 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newIndex) {
-              if(elem.value && prevMovesUp){
+              if(elem.value && prevMovesUp && prevIndex!==newIndex){
                 let obj = {};
                 obj[currentSec] = elem.value;
                 prevMovesUp.push(obj);
-              } else if(elem.value && !prevMovesUp){
+              } else if(elem.value && !prevMovesUp && prevIndex!==newIndex){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesUp = [obj]
@@ -246,11 +246,11 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newIndexDown) {
-              if(elem.value && prevMovesDown){
+              if(elem.value && prevMovesDown && prevIndexDown!==newIndexDown){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesDown.push(obj);
-              } else if(elem.value && !prevMovesDown){
+              } else if(elem.value && !prevMovesDown && prevIndexDown!==newIndexDown){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesDown = [obj]
@@ -326,11 +326,11 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newLetRight) {
-              if(elem.value && prevMovesRight){
+              if(elem.value && prevMovesRight && prevLetRight!==newLetRight){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesRight.push(obj);
-              } else if(elem.value && !prevMovesRight){
+              } else if(elem.value && !prevMovesRight && prevLetRight!==newLetRight){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesRight = [obj]
@@ -404,11 +404,11 @@ export default function expReducer(state = initialState, action) {
         return {
           line: comp.line.map(elem => {
             if (elem.index === newLetLeft) {
-              if(elem.value && prevMovesLeft){
+              if(elem.value && prevMovesLeft && prevLetLeft!==newLetLeft){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesLeft.push(obj);
-              } else if(elem.value && !prevMovesLeft){
+              } else if(elem.value && !prevMovesLeft && prevLetLeft!==newLetLeft){
                 let obj = {};
                 obj[action.time] = elem.value;
                 prevMovesLeft = [obj]
@@ -444,7 +444,6 @@ export default function expReducer(state = initialState, action) {
       };
 
     case KEYBOARD_ACTION:
-      console.log(action.time);
       const expKeyField = state.expField;
       let prevMovesKey = state.expField.moves;
       if(prevMovesKey){
