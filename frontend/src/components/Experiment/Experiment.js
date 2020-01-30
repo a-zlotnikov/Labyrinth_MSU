@@ -17,32 +17,34 @@ import StatusButtons from '../StatusButtons/StatusButtons';
 import Keyboard from '../Keyboard/Keyboard';
 import './Experiment.css';
 
+const initialState = {
+  expName: '',
+  expNumber: 1,
+  expAnimal: '',
+  expType: '',
+  timer: 0,
+  wall: false,
+  food: false,
+  fakeFood: false,
+  entry: false,
+  exit: false,
+  pedal: false,
+  changeStatus: false,
+  startPosition: false,
+  moveStatus: false,
+  expBegin: false,
+  loading: false,
+  error: false,
+  response: null,
+  type: null,
+  description: null,
+};
+
 class Experiment extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      expName: '',
-      expNumber: 1,
-      expAnimal: null,
-      expType: '',
-      timer: 0,
-      wall: false,
-      food: false,
-      fakeFood: false,
-      entry: false,
-      exit: false,
-      pedal: false,
-      changeStatus: false,
-      startPosition: false,
-      moveStatus: false,
-      expBegin: false,
-      loading: false,
-      error: false,
-      response: null,
-      type: null,
-      description: null,
-    };
+    this.state = {...initialState};
   }
 
   fetchTypes = async () => {
@@ -64,9 +66,6 @@ class Experiment extends Component {
 
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
-    console.log('>>> START FETCH');
-
-    console.log('>>> FETCH TYPES');
     this.setState({response: null});
     let resp = await fetch('/types', {
       method: 'GET',
@@ -79,8 +78,6 @@ class Experiment extends Component {
     } else {
       this.setState({loading: false, error: true});
     }
-    console.log('>>> SUCCESS');
-    console.log(this.state.response);
 
     // this.fetchTypes;
     // fetch('/types', {
@@ -459,7 +456,7 @@ class Experiment extends Component {
   };
 
   finishExp = () => {
-
+    clearInterval(this.intervalId);
     this.setState({expBegin: false});
     this.props.saveExperiment(this.props.match.params.id,
       this.state.expName,
@@ -468,6 +465,8 @@ class Experiment extends Component {
       this.state.expNumber,
       this.state.expAnimal,
       this.state.type);
+    debugger;
+    this.setState({...initialState});
     this.redirectNewExp();
   };
 
@@ -513,7 +512,7 @@ class Experiment extends Component {
             <div className={'expInputTitle'}>
               Тип эксперимента:
               {this.state.response ?
-                <select className={'expSelector'} onChange={this.setType}>
+                <select className={'expSelector'} value={this.state.expType} onChange={this.setType}>
                   <option/>
                   {this.state.response.map((result, index) =>
                     <option key={index}
@@ -523,13 +522,17 @@ class Experiment extends Component {
                 : null}
             </div>
             <div className={'expInputTitle'}>Название эксперимента:<input
-              className={'expInput'} onChange={this.newExpName}
+              className={'expInput'}
+              value={this.state.expName}
+              onChange={this.newExpName}
               placeholder={'Введите название'}/></div>
             <div className={'expInputTitle'}>Номер опыта:<input
-              onChange={this.newExpNumber} className={'expInput'}
+                value={this.state.expNumber}
+                onChange={this.newExpNumber} className={'expInput'}
               placeholder={'Введите номер'}/></div>
             <div className={'expInputTitle'}>Имя особи:<input
-              onChange={this.newExpAnimal} className={'expInput'}
+                value={this.state.expAnimal}
+                onChange={this.newExpAnimal} className={'expInput'}
               placeholder={'Введите имя'}/></div>
           </div>
           <div className={'expTypeDescription'}>{this.state.description}</div>

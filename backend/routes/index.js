@@ -28,34 +28,35 @@ router.post('/saveField', async (req, res) => {
 });
 
 router.post('/startExp', async (req, res) => {
-  console.log(req.body);
-  let newEnv;
-  let newExp;
-  const envName = req.body.name;
-  const envCheck = await Environment.find({name: envName});
+  // console.log(req.body);
+  // let newEnv;
+  // let newExp;
+  // const envName = req.body.name;
+  // const envCheck = await Environment.find({name: envName});
   if (req.body.archive) {
     newExp = await new Experiment({
       env: {name: req.body.name},
     });
     await newExp.save();
     res.json({id: newExp._id});
-  } else if (envCheck[0]) {
-    res.json({answer: 'envName is busy'});
-  } else {
-    newEnv = await new Environment({
-      name: req.body.name,
-      field: {line: req.body.field},
-    });
-    await newEnv.save();
-    const newEnvId = await Environment.find({name: req.body.name});
-
-    newExp = await new Experiment({
-      env: {name: newEnvId[0].name},
-    });
-    await newExp.save();
-    // const newExpId = await Experiment.find({})
-    res.json({id: newExp._id});
   }
+  // else if (envCheck[0]) {
+  //   res.json({answer: 'envName is busy'});
+  // } else {
+  //   newEnv = await new Environment({
+  //     name: req.body.name,
+  //     field: {line: req.body.field},
+  //   });
+  //   await newEnv.save();
+  //   const newEnvId = await Environment.find({name: req.body.name});
+  //
+  //   newExp = await new Experiment({
+  //     env: {name: newEnvId[0].name},
+  //   });
+  //   await newExp.save();
+  //   // const newExpId = await Experiment.find({})
+  //   res.json({id: newExp._id});
+  // }
 
 });
 
