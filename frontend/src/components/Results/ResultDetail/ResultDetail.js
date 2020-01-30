@@ -36,6 +36,7 @@ class ResultDetail extends Component {
         <p>Номер опыта: {this.state.details.expNumber ? this.state.details.expNumber : '-'}</p>
         <p>Имя особи: {this.state.details.animalName ? this.state.details.animalName : '-'}</p>
         <p>Тип эксперимента: {this.state.details.expType ? this.state.details.expType : '-'}</p>
+        <p>Количество подкормов: {this.state.details.numberOfReinforcements ? this.state.details.numberOfReinforcements : '-'}</p>
         <hr/>
         <p>Эксперимент проведен</p>
         <p>Фамилия: {this.state.details.user.surname ? this.state.details.user.surname : '-'}</p>

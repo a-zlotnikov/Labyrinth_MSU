@@ -94,7 +94,6 @@ router.delete('/delete',newUserCheck, async function(req, res) {
 });
 
 router.post('/logout', async (req, res, next) => {
-  console.log(req.session);
   if (req.session.user) {
     try {
       await req.session.destroy();
