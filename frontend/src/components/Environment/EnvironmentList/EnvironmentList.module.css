@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: row;
     width: 800px;
+    border-bottom: 1px lightgrey solid;
 }
 
 .EnvironmentList:hover {
-    border-bottom: 1px lightgrey solid;
+    border-bottom: 1px gray solid;
 }
 
 .title {
