@@ -1,25 +1,4 @@
-.Results {
-    padding-top: 20px;
-}
 
-.Results {
-    /*border: 1px solid black;*/
-}
-
-.Results th {
-    background-color: lightgray;
-    border: 1px solid black;
-}
-
-.Results th:hover {
-    cursor: pointer;
-}
-
-.Results td {
-    border: 1px solid black;
-    text-align: center;
-    margin: 0;
-}
 
 .Header {
     display: flex;
@@ -36,12 +15,15 @@
 }
 
 .Option {
-
+    background-color: lightgray;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
 .Option.enable:hover {
-    background-color: lightgrey;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .Option.disable {
@@ -55,6 +37,10 @@
     border: 0px;
 }
 
+.resTableDiv {
+    margin-top: 30px;
+}
+
 .topInput {
     font-family: 'Montserrat', sans-serif;
     width: 430px;
@@ -63,6 +49,17 @@
     border: 0;
     margin: 0 5px;
     outline: 0 !important;
+}
+
+.resTable {
+    border: 0;
+    max-width: 90%;
+    margin: auto;
+}
+
+.resTd {
+    border: 0;
+    text-align: center;
 }
 
 .button {
@@ -76,6 +73,7 @@
     align-items: center;
 }
 
+
 .button:hover {
     cursor: pointer;
 }
@@ -86,4 +84,13 @@
 
 .logo {
     margin-top: 30px;
+}
+
+.resResult {
+    border: black 20px solid;
+    margin: 10px;
+}
+
+.resResult:hover {
+    font-weight: bold;
 }
