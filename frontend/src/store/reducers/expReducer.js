@@ -9,6 +9,7 @@ import {
   MOVE_UP,
   NEW_VALUE,
   START_POS,
+  MOUSE_ACTION
 } from '../actions/actions';
 
 const initialState = {
@@ -466,6 +467,7 @@ export default function expReducer(state = initialState, action) {
       return {
         expField: expKeyField
       };
+
     case DELETE_ACTION:
       const expDeleteKeyField = state.expField;
       let prevMovesDelete = state.expField.moves;
@@ -476,6 +478,25 @@ export default function expReducer(state = initialState, action) {
       expDeleteKeyField.moves = prevMovesDelete;
       return {
         expField: expDeleteKeyField
+      };
+
+    case MOUSE_ACTION:
+      const expMouseField = state.expField;
+      let prevMovesMouse = state.expField.moves;
+
+      if (prevMovesMouse) {
+        let obj = {};
+        obj[action.time] = action.value;
+        prevMovesMouse.push(obj);
+      } else if (!prevMovesMouse) {
+        let obj = {};
+        obj[action.time] = action.value;
+        prevMovesMouse = [obj];
+      }
+
+      expMouseField.moves = prevMovesMouse;
+      return {
+        expField: expMouseField
       };
 
     default:

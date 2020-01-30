@@ -1,5 +1,29 @@
-.typeCurButton {
+.curResult {
 
+}
+
+td {
+    border: 0;
+}
+
+.typeName {
+    vertical-align: top;
+}
+
+.typeDescription {
+    vertical-align: top;
+}
+
+.curResult:hover {
+    font-weight: bold;
+}
+
+.typeCurButton {
+    border: 0;
+    height: 30px;
+    background-color: lightgray;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
 .typeCurButton:hover {
