@@ -482,7 +482,6 @@ class Experiment extends Component {
 
   mouseClickCount = 0;
   clickAction = (e) => {
-    // debugger;
     let singleValue;
     let doubleValue;
     if (e.target.className === 'keyBtn' || e.target.className ===
