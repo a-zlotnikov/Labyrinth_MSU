@@ -73,7 +73,7 @@ class CurrentType extends Component {
           {Cookies.get('category') === 'Преподаватель' ?
               this.state.edit ?
                   <div className={'curTeacherResultBox'}>
-                    <div>
+                    <div className={'curTypeName'}>
                       <input className={'typeCurInput'} name="name"
                              placeholder="название"
                              value={this.state.name}
@@ -81,8 +81,8 @@ class CurrentType extends Component {
                              onChange={this.changeName}
                       />
                     </div>
-                    <div>
-                      <input className={'typeCurInput'}
+                    <div className={'curTypeDescription'}>
+                      <textarea className={'typeCurInput'}
                              name="description"
                              placeholder="описание"
                              value={this.state.description}
