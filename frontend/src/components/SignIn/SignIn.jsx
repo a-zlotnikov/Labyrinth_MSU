@@ -55,6 +55,7 @@ class SignIn extends Component {
     return (
       <div className={'logContainer'}>
         <Logo/>
+        <h2>Tracking behavior</h2>
         <h1 className={'logTitle'}>Вход в систему</h1>
         <br/>
         <div>

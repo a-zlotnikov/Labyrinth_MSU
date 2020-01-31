@@ -2,6 +2,11 @@
     border: none;
 }
 
+.typeTableHead {
+    display: flex;
+    flex-direction: row;
+}
+
 .typeContainer {
     margin: 0 50px;
 }
@@ -15,11 +20,11 @@
 .typeNameInput {
     padding-left: 5px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     width: 85px;
     background-color: whitesmoke;
     border: 0;
-    margin: 25px 5px;
+    margin: 0 5px;
     outline: 0 !important;
     text-align: center;
 }
@@ -32,7 +37,7 @@
 .typeDescriptionInput {
     padding-left: 5px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     width: 760px;
     background-color: white;
     border: 0;
@@ -66,4 +71,17 @@
 
 .typeSaveButton:active {
     background-color: grey;
+}
+
+.typeName {
+    width: 60px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.typeDescription {
+    width: 500px;
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
