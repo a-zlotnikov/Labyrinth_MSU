@@ -11,7 +11,7 @@ const Cookies = require('js-cookie');
 class Results extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       type: 'expType',
       query: '',
@@ -26,11 +26,11 @@ class Results extends Component {
       option: [],
     };
   }
-  
+
   componentDidMount = async () => {
     await this.searchAll();
   };
-  
+
   onSort = sortField => {
     const cloneData = this.state.response;
     const sortType = this.state.sort === 'asc' ? 'desc' : 'asc';
@@ -41,19 +41,19 @@ class Results extends Component {
       sortField,
     });
   };
-  
+
   onSaveTxt = async id => {
     const response = await fetch('/experiment', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.sdivingify({id}),
+      body: JSON.stringify({id}),
     });
     const results = await response.json();
     const {
       date, time, expName,
       expNumber, animalName, expType, numberOfReinforcements,
     } = results['0'];
-    
+
     const elemFile = [
       `${date}\n`,
       `${time}\n`,
@@ -71,24 +71,24 @@ class Results extends Component {
       `${results['0'].user.year ? results['0'].user.year : '-'}\n`,
       `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
-    
+
     let timeLine = [];
     if (results['0'].moves !== null) {
       results['0'].moves.forEach((elem) => {
         timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`);
       });
     }
-    
+
     const newFile = [
       ...elemFile,
       ...timeLine];
-    
+
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
       `${results['0'].env.name}_${expType}_${expName}_${expNumber}_${animalName}`);
-    
+
   };
-  
+
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
       const response = await fetch('/experiment', {
@@ -101,29 +101,29 @@ class Results extends Component {
         response: results,
       });
     }
-    
+
   };
-  
+
   searchAll = async () => {
     let response = await fetch('/experiment', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     });
     const result = await response.json();
-    
+
     this.setState({
       loading: true, option: [
         'Тип эксперимента', 'Название эксперимента'],
     });
-    
+
     if (result) {
       this.setState({loading: false, error: false, response: result});
     } else {
       this.setState({loading: false, error: true});
     }
-    
+
   };
-  
+
   changeType = async (e) => {
     if (e.target.value === 'Тип эксперимента') {
       this.setState({type: 'expType'});
@@ -134,18 +134,18 @@ class Results extends Component {
     }
     await this.search();
   };
-  
+
   changeQuery = async (e) => {
     await this.setState({query: e.target.value});
     await this.search();
   };
-  
+
   search = async () => {
     const {type, query} = this.state;
     let resp = await fetch('/experiment/search', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.sdivingify({type, query}),
+      body: JSON.stringify({type, query}),
     });
     const res = await resp.json();
     this.setState({loading: true});
@@ -155,7 +155,7 @@ class Results extends Component {
       this.setState({loading: false, error: true});
     }
   };
-  
+
   reset = async () => {
     this.setState({
       type: 'expType',
@@ -164,20 +164,18 @@ class Results extends Component {
       loading: false,
       error: false,
       option: [],
-      
+
     });
     await this.searchAll();
   };
-  
+
   render() {
-    const cls = [classes.Option];
-    const any = [classes.Option, classes.enable];
     if (Cookies.get('category') === 'Преподаватель') {
       cls.push(classes.enable);
     } else {
       cls.push(classes.disable);
     }
-    
+
     return this.state.response ? (
       <div>
         <div className={classes.Header}>
@@ -186,7 +184,7 @@ class Results extends Component {
         <div className={classes.LayoutRes}>
           <div className={'title'}><h1>Поиск</h1></div>
           <div className={classes.Header}>
-            
+
             <select
               className={classes.selector}
               name="type"
