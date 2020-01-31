@@ -46,7 +46,7 @@ class Results extends Component {
     const response = await fetch('/experiment', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({id}),
+      body: JSON.sdivingify({id}),
     });
     const results = await response.json();
     const {
@@ -145,7 +145,7 @@ class Results extends Component {
     let resp = await fetch('/experiment/search', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({type, query}),
+      body: JSON.sdivingify({type, query}),
     });
     const res = await resp.json();
     this.setState({loading: true});
@@ -222,61 +222,55 @@ class Results extends Component {
             </div>
           </div>
           <div className={classes.resTableDiv}>
-            <table className={classes.resTable}>
-              <thead>
-              <tr>
-                <th onClick={this.onSort.bind(this, 'date')}>Дата</th>
-                <th onClick={this.onSort.bind(this, 'expType')}>Тип
-                </th>
-                <th onClick={this.onSort.bind(this, 'username')}>Пользователь
-                </th>
-                <th onClick={this.onSort.bind(this, 'expName')}>Эксперимент
-                </th>
-                <th onClick={this.onSort.bind(this, 'expNumber')}>Номер
+            <div className={classes.resTable}>
+              <div className={classes.resTableHead}>
+                <div className={classes.resDate} onClick={this.onSort.bind(this, 'date')}>Дата</div>
+                <div className={classes.resType} onClick={this.onSort.bind(this, 'expType')}>Тип
+                </div>
+                <div className={classes.resUser} onClick={this.onSort.bind(this, 'username')}>Пользователь
+                </div>
+                <div className={classes.resName} onClick={this.onSort.bind(this, 'expName')}>Эксперимент
+                </div>
+                <div className={classes.resNumber} onClick={this.onSort.bind(this, 'expNumber')}>Номер
                   опыта
-                </th>
-                <th onClick={this.onSort.bind(this, 'animalName')}>Имя
+                </div>
+                <div className={classes.resAnimal} onClick={this.onSort.bind(this, 'animalName')}>Имя
                   особи
-                </th>
-                <th colSpan="3">
-                  Опции
-                </th>
-              </tr>
-              </thead>
-              <tbody>
+                </div>
+              </div>
+              <div className={classes.resResultBox}>
               {this.state.response.map((result, index) => {
                 return (
-                  <tr className={classes.resResult} key={index}
-                      name={result._id}>
-                    <td className={classes.resTd}>{result.date}</td>
-                    <td className={classes.resTd}>{result.expType}</td>
-                    <td className={classes.resTd}>{result.user
-                      ? result.user.username
-                      : null}</td>
-                    <td className={classes.resTd}>{result.expName}</td>
-                    <td className={classes.resTd}>{result.expNumber}</td>
-                    <td className={classes.resTd}>{result.animalName}</td>
-                    <td
-                      className={any.join(' ')}
-                      onClick={() => this.props.history.push(
-                        '/results/' + result._id)}
-                    >Смотреть
-                    </td>
-                    <td
-                      className={any.join(' ')}
-                      onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
-                    </td>
-                    <td
-                      className={cls.join(' ')}
-                      onClick={this.onDelete.bind(this, result._id)}
-                    >Удалить
-                    </td>
-                  </tr>
+                      <div className={classes.resResult} key={index} name={result._id}>
+                        <div className={classes.resDate}>{result.date}</div>
+                        <div className={classes.resType}>{result.expType}</div>
+                        <div className={classes.resUser}>{result.user ? result.user.username : null}</div>
+                        <div className={classes.resName}>{result.expName}</div>
+                        <div className={classes.resNumber}>{result.expNumber}</div>
+                        <div className={classes.resAnimal}>{result.animalName}</div>
+                        <div className={classes.resOptionBox}>
+                          <div
+                              className={classes.Option}
+                              onClick={() => this.props.history.push(
+                                  '/results/' + result._id)}
+                          >Смотреть
+                          </div>
+                          <div
+                              className={classes.Option}
+                              onClick={this.onSaveTxt.bind(this, result._id)}>Скачать
+                          </div>
+                          {Cookies.get('category') === 'Преподаватель' ?  <div
+                              className={classes.Option}
+                              onClick={this.onDelete.bind(this, result._id)}
+                          >Удалить
+                          </div> : null}
+                        </div>
+                      </div>
                 );
               })
               }
-              </tbody>
-            </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -15,19 +15,32 @@
 }
 
 .Option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     border: none;
+    width: 100px;
+    height: 30px;
     border-radius: 5px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 5px;
+    margin-bottom: 5px;
 }
 
-.Option.enable:hover {
+.Option:hover {
     cursor: pointer;
     font-weight: bold;
 }
 
-.Option.disable {
-    background-color: darkgray;
+.Option:active {
+    background-color: gray;
+}
+
+.resOptionBox {
+    width: 330px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .selector {
@@ -53,8 +66,14 @@
 
 .resTable {
     border: 0;
-    max-width: 90%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.resTableHead {
+    display: flex;
+    flex-direction: row;
 }
 
 .resTd {
@@ -87,11 +106,48 @@
     margin-top: 30px;
 }
 
+.resResultBox {
+    margin: auto;
+}
+
 .resResult {
-    border: black 20px solid;
-    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 950px;
+    margin: 10px auto;
+    border-bottom: lightgray 1px solid;
 }
 
 .resResult:hover {
-    font-weight: bold;
+    border-bottom: black 1px solid;
+}
+
+.resDate {
+    width: 90px;
+    text-align: center;
+}
+
+.resType {
+    width: 60px;
+    text-align: center;
+}
+
+.resUser{
+    width: 120px;
+    text-align: center;
+}
+
+.resName {
+    width: 180px;
+    text-align: center;
+}
+
+.resNumber {
+    width: 60px;
+    text-align: center;
+}
+
+.resAnimal {
+    width: 100px;
+    text-align: center;
 }
