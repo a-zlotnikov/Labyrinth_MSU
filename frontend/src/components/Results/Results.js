@@ -170,12 +170,7 @@ class Results extends Component {
   };
 
   render() {
-    if (Cookies.get('category') === 'Преподаватель') {
-      cls.push(classes.enable);
-    } else {
-      cls.push(classes.disable);
-    }
-
+    
     return this.state.response ? (
       <div>
         <div className={classes.Header}>
