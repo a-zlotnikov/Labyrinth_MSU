@@ -8,8 +8,7 @@ router.get('/', newUserCheck, async (req, res) => {
   res.json(results);
 });
 
-router.post('/search', newUserCheck, async function(req, res) {
-  try {
+router.post('/allSearch', newUserCheck, async function(req, res) {
     let result = '';
     result = req.body.query === result ?
       await Experiment.find().populate('user') :
@@ -17,14 +16,23 @@ router.post('/search', newUserCheck, async function(req, res) {
           [req.body.type]: req.body.query,
         }).populate('user');
     await res.json({response: result});
-  } catch (e) {
-    // console.log(e);
-    await res.json({response: false});
-  }
 });
 
+router.post('/studentSearch', newUserCheck, async function(req, res) {
+  let result = '';
+  result = (req.body.query === result) ||(req.body.query === undefined) ?
+    await Experiment.find({user:req.body.id}).populate('user') :
+    await Experiment.find({user:req.body.id,
+      [req.body.type]: req.body.query,
+    }).populate('user');
+  await res.json({response: result});
+});
+
+
+
+
 router.post('/', newUserCheck, async function(req, res) {
-  const results = await Experiment.find({_id: req.body.id}).populate('user');
+  const results = await Experiment.find({user: req.body.id}).populate('user');
   res.json(results);
 });
 
