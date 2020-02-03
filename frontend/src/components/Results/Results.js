@@ -91,6 +91,54 @@ class Results extends Component {
     
   };
   
+  onSaveAll = () => {
+    const result = this.state.response;
+    let newFile = [];
+    
+    for (let elem of result) {
+      let elemFile = [];
+      
+      const {
+        date, time, expName,
+        expNumber, animalName, expType, numberOfReinforcements,
+      } = elem;
+      
+      elemFile.push(`${date}\n`,
+        `${time}\n`,
+        `${elem.env.name}\n`,
+        `${expName}\n`,
+        `${expNumber}\n`,
+        `${animalName}\n`,
+        `${expType}\n`,
+        `${numberOfReinforcements ? numberOfReinforcements : '-'}\n`,
+        `${elem.user.surname}\n`,
+        `${elem.user.name}\n`,
+        `${elem.user.dob
+          ? moment().diff(elem.user.dob, 'years')
+          : '-'}\n`,
+        `${elem.user.gender}\n`,
+        `${elem.user.hand}\n`,
+        `${elem.user.year ? elem.user.year : '-'}\n`,
+        `${elem.user.group ? elem.user.group : '-'}\n`);
+      
+      let timeLine = [];
+      if (elem.moves !== null) {
+        elem.moves.forEach((element) => {
+          timeLine.push(`${Object.keys(element)}:${Object.values(element)}\n`);
+        });
+      }
+      
+      newFile = [
+        ...newFile,
+        ...elemFile,
+        ...timeLine];
+      
+    }
+  
+    const blob =  new Blob(newFile, {type: 'text/plain;charset=utf-8'});
+     saveAs(blob, `Results`);
+  };
+  
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
       const response = await fetch('/experiment', {
@@ -123,7 +171,6 @@ class Results extends Component {
       });
     
     const result = await response.json();
-    console.log(result)
     this.setState({
       loading: true, option: [
         'Тип эксперимента', 'Название эксперимента'],
@@ -156,7 +203,7 @@ class Results extends Component {
   search = async () => {
     const {type, query} = this.state;
     const id = Cookies.get('user_id');
-    const category = Cookies.get('category')
+    const category = Cookies.get('category');
     let response = '';
     
     Cookies.get('category') === 'Студент' ?
@@ -261,6 +308,13 @@ class Results extends Component {
                      onClick={this.onSort.bind(this, 'animalName')}>Имя
                   особи
                 </div>
+                
+                <div style={{width:320, margin:'auto'}}>
+                  <div style={{margin:'auto'}} className={classes.Option}
+                       onClick={this.onSaveAll}>Скачать
+                  </div>
+                </div>
+              
               </div>
               <div className={classes.resResultBox}>
                 {this.state.response.map((result, index) => {
