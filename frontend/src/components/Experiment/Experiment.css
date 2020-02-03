@@ -212,6 +212,7 @@
     border: none;
     background-color: lightgray;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    margin-right: 10px;
     outline: 0 !important;
     border-radius: 3px;
 }
