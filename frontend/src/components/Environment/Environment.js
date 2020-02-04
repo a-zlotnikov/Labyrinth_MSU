@@ -22,7 +22,7 @@ class Environment extends Component {
 
   onStartEx = async (props) => {
     const response = await fetch(
-      '/startExp',
+      '/index/startExp',
       {
         method: 'POST',
         headers: {
