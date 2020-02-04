@@ -58,7 +58,7 @@ class Experiment extends Component {
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
     this.setState({response: null});
-    let resp = await fetch('/types', {
+    let resp = await fetch('/index/types', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     });
@@ -465,7 +465,7 @@ class Experiment extends Component {
 
   redirectNewExp = async () => {
     const response = await fetch(
-        '/getNewExpField',
+        '/index/getNewExpField',
         {
           method: 'POST',
           headers: {
@@ -544,7 +544,7 @@ class Experiment extends Component {
 
   endExp = async () => {
     const response = await fetch(
-        '/endExp',
+        '/index/endExp',
         {
           method: 'POST',
           headers: {

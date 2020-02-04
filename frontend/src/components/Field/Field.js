@@ -114,7 +114,7 @@ class Field extends Component {
     });
     if (this.state.fieldName.length > 0) {
       const response = await fetch(
-          '/saveField',
+          '/index/saveField',
           {
             method: 'POST',
             headers: {
