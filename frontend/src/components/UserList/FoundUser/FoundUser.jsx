@@ -60,7 +60,7 @@ class FoundUser extends Component {
 
   editMode = () => {
     this.setState({edit: !this.state.edit, saved: null});
-    this.setState(this.props);
+    // this.setState(this.props);
   };
 
   changeValue = (e) => {
@@ -107,6 +107,7 @@ class FoundUser extends Component {
       if (res.succeeded) {
         this.setState({saved: true});
         this.setState({edit: false});
+        // this.setState({...body});
       } else {
         this.setState({saved: false});
         this.setState(this.props);
@@ -150,9 +151,9 @@ class FoundUser extends Component {
                         </select>
                       </div>
                       :
-                      <div className={'text'}>{this.props.category}</div>
+                      <div className={'text'}>{this.state.category}</div>
                   }
-                  {this.props.active === false ?
+                  {this.state.active === false ?
                       <div className={'text'}>отключен</div> :
                       <div/>}
                 </div>
@@ -161,16 +162,16 @@ class FoundUser extends Component {
                     <div><input className={'input textEdit'} name="username"
                                 value={this.state.username}
                                 onChange={this.changeValue}/></div> :
-                    <div className={'text'}>{this.props.username}</div>}</div>
+                    <div className={'text'}>{this.state.username}</div>}</div>
                 <div className={'attribute'}>Пароль: {this.state.edit ?
                     <div><input className={'input textEdit'} name="password"
                                 value={this.state.password}
                                 onChange={this.changeValue}/></div> :
-                    <div className={'text'}>{this.props.password}</div>}</div>
+                    <div className={'text'}>{this.state.password}</div>}</div>
               </div>
               <div>
                 <div className={'attribute'}>
-                  {this.props.category === 'Студент' ?
+                  {this.state.category === 'Студент' ?
                       <div>
                         <div className={'studentBox'}>
                           <div className={'attribute'}>
@@ -179,7 +180,7 @@ class FoundUser extends Component {
                                           name="group"
                                           value={this.state.group}
                                           onChange={this.changeValue}/></div> :
-                              <div className={'text'}>{this.props.group}</div>}
+                              <div className={'text'}>{this.state.group}</div>}
                           </div>
                         </div>
                         <div className={'studentBox'}>
@@ -189,7 +190,7 @@ class FoundUser extends Component {
                                           name="year"
                                           value={this.state.year}
                                           onChange={this.changeValue}/></div> :
-                              <div className={'text'}>{this.props.year}</div>}
+                              <div className={'text'}>{this.state.year}</div>}
                           </div>
                         </div>
                       </div>
@@ -205,7 +206,7 @@ class FoundUser extends Component {
                       </select>
                     </div>
                     :
-                    <div className={'text'}>{this.props.gender}</div>}</div>
+                    <div className={'text'}>{this.state.gender}</div>}</div>
                 <div className={'attribute'}>Дата рождения: {this.state.edit ?
                     <div><input className={'input textEdit'}
                                 value={moment(this.state.dob).format('YYYY-MM-DD')}
@@ -220,7 +221,7 @@ class FoundUser extends Component {
                       <option>Правша</option>
                       <option>Левша</option>
                     </select></div> :
-                    <div className={'text'}>{this.props.hand}</div>}</div>
+                    <div className={'text'}>{this.state.hand}</div>}</div>
               </div>
             </div>
             <div>
