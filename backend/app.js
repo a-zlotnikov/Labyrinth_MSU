@@ -18,7 +18,7 @@ app.use('/environment', environmentRouter);
 app.use('/types', typesRouter);
 app.use('/results', resultsRouter);
 app.use('/users', usersRouter);
-app.use('/', indexRouter);
+app.use('/index', indexRouter);
 
 // Подключаем импортированные маршруты с определенным url префиксом.
 

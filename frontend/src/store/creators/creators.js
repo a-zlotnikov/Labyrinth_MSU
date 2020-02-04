@@ -17,14 +17,14 @@ import {
 } from '../actions/actions';
 
 
-export const FULLFIELD = (field) => {
+export const FULLFIELD = (field) => {         // отрисовка пустого поля в конструкторе
   return {
     type: FULL_FIELD,
     field,
   };
 };
 
-export const ADDVALUE = (index, change) => {
+export const ADDVALUE = (index, change) => {        //
   return {
     type: ADD_VALUE,
     index,
@@ -122,7 +122,7 @@ export const MOUSEACTION = (value, time) => {
 
 export const fetchField = () => {
   return async (dispatch) => {
-    const response = await fetch('/getField');
+    const response = await fetch('/index/getField');
     const result = await response.json();
     dispatch(FULLFIELD(result));
   };
@@ -131,7 +131,7 @@ export const fetchField = () => {
 export const expField = (id) => {
   return async (dispatch) => {
     const response = await fetch(
-        '/getExpField',
+        '/index/getExpField',
         {
           method: 'POST',
           headers: {
@@ -150,7 +150,7 @@ export const expField = (id) => {
 export const saveExp = (id, expName, moves, envName, expNumber, expAnimal, expType, expFeeding) => {
   return async () => {
     const response = await fetch(
-        '/saveExp',
+        '/index/saveExp',
         {
           method: 'POST',
           headers: {
@@ -168,30 +168,8 @@ export const saveExp = (id, expName, moves, envName, expNumber, expAnimal, expTy
           }),
         }
     );
-    // const result = await response.json();
-
   }
 };
-
-// export const newExp = (envName) => {
-//   return async (dispatch) => {
-//     const response = await fetch(
-//         '/getNewExpField',
-//         {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({
-//             envName
-//           }),
-//         }
-//     );
-//     const result = await response.json();
-//     console.log(result);
-//     // dispatch(EXPFIELD(result));
-//   };
-// };
 
 export const AUTHSUCCESS = (token) => {
   return {
