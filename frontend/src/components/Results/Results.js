@@ -11,7 +11,7 @@ const Cookies = require('js-cookie');
 class Results extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       type: 'expType',
       query: '',
@@ -26,11 +26,11 @@ class Results extends Component {
       option: [],
     };
   }
-  
+
   componentDidMount = async () => {
     await this.searchAll();
   };
-  
+
   onSort = sortField => {
     const cloneData = this.state.response;
     const sortType = this.state.sort === 'asc' ? 'desc' : 'asc';
@@ -41,7 +41,7 @@ class Results extends Component {
       sortField,
     });
   };
-  
+
   onSaveTxt = async id => {
     const response = await fetch('/experiment', {
       method: 'POST',
@@ -53,7 +53,7 @@ class Results extends Component {
       date, time, expName,
       expNumber, animalName, expType, numberOfReinforcements,
     } = results['0'];
-    
+
     const elemFile = [
       `${date}\n`,
       `${time}\n`,
@@ -73,36 +73,36 @@ class Results extends Component {
       `${results['0'].user.year ? results['0'].user.year : '-'}\n`,
       `${results['0'].user.group ? results['0'].user.group : '-'}\n`,
     ];
-    
+
     let timeLine = [];
     if (results['0'].moves !== null) {
       results['0'].moves.forEach((elem) => {
         timeLine.push(`${Object.keys(elem)}:${Object.values(elem)}\n`);
       });
     }
-    
+
     const newFile = [
       ...elemFile,
       ...timeLine];
-    
+
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
       `${results['0'].env.name}_${expType}_${expName}_${expNumber}_${animalName}`);
-    
+
   };
-  
+
   onSaveAll = () => {
     const result = this.state.response;
     let newFile = [];
-    
+
     for (let elem of result) {
       let elemFile = [];
-      
+
       const {
         date, time, expName,
         expNumber, animalName, expType, numberOfReinforcements,
       } = elem;
-      
+
       elemFile.push(`${date}\n`,
         `${time}\n`,
         `${elem.env.name}\n`,
@@ -120,25 +120,25 @@ class Results extends Component {
         `${elem.user.hand}\n`,
         `${elem.user.year ? elem.user.year : '-'}\n`,
         `${elem.user.group ? elem.user.group : '-'}\n`);
-      
+
       let timeLine = [];
       if (elem.moves !== null) {
         elem.moves.forEach((element) => {
           timeLine.push(`${Object.keys(element)}:${Object.values(element)}\n`);
         });
       }
-      
+
       newFile = [
         ...newFile,
         ...elemFile,
         ...timeLine];
-      
+
     }
-  
+
     const blob =  new Blob(newFile, {type: 'text/plain;charset=utf-8'});
      saveAs(blob, `Results`);
   };
-  
+
   onDelete = async id => {
     if (this.state.category === 'Преподаватель') {
       const response = await fetch('/experiment', {
@@ -152,38 +152,38 @@ class Results extends Component {
       });
     }
   };
-  
+
   searchAll = async () => {
-    
+
     const id = Cookies.get('user_id');
     let response = '';
-    
+
     Cookies.get('category') === 'Студент' ?
       response = await fetch('/experiment/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({id}),
       }) :
-      
+
       response = await fetch('/experiment', {
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
       });
-    
+
     const result = await response.json();
     this.setState({
       loading: true, option: [
         'Тип эксперимента', 'Название эксперимента'],
     });
-    
+
     if (result) {
       this.setState({loading: false, error: false, response: result});
     } else {
       this.setState({loading: false, error: true});
     }
-    
+
   };
-  
+
   changeType = async (e) => {
     if (e.target.value === 'Тип эксперимента') {
       this.setState({type: 'expType'});
@@ -194,18 +194,18 @@ class Results extends Component {
     }
     await this.search();
   };
-  
+
   changeQuery = async (e) => {
     await this.setState({query: e.target.value});
     await this.search();
   };
-  
+
   search = async () => {
     const {type, query} = this.state;
     const id = Cookies.get('user_id');
     const category = Cookies.get('category');
     let response = '';
-    
+
     Cookies.get('category') === 'Студент' ?
       response = await fetch('/experiment/studentSearch', {
         method: 'POST',
@@ -217,7 +217,7 @@ class Results extends Component {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({type, query, id, category}),
       });
-    
+
     const res = await response.json();
     this.setState({loading: true});
     if (res.response) {
@@ -226,7 +226,7 @@ class Results extends Component {
       this.setState({loading: false, error: true});
     }
   };
-  
+
   reset = async () => {
     this.setState({
       type: 'expType',
@@ -235,13 +235,13 @@ class Results extends Component {
       loading: false,
       error: false,
       option: [],
-      
+
     });
     await this.searchAll();
   };
-  
+
   render() {
-    
+
     return this.state.response ? (
       <div>
         <div className={classes.Header}>
@@ -250,7 +250,7 @@ class Results extends Component {
         <div className={classes.LayoutRes}>
           <div className={'title'}><h1>Поиск</h1></div>
           <div className={classes.Header}>
-            
+
             <select
               className={classes.selector}
               name="type"
@@ -308,13 +308,13 @@ class Results extends Component {
                      onClick={this.onSort.bind(this, 'animalName')}>Имя
                   особи
                 </div>
-                
-                <div style={{width:320, margin:'auto'}}>
+
+                <div style={{width:320, marginLeft:8}}>
                   <div style={{margin:'auto'}} className={classes.Option}
                        onClick={this.onSaveAll}>Скачать
                   </div>
                 </div>
-              
+
               </div>
               <div className={classes.resResultBox}>
                 {this.state.response.map((result, index) => {
