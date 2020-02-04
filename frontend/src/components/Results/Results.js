@@ -43,12 +43,13 @@ class Results extends Component {
   };
   
   onSaveTxt = async id => {
-    const response = await fetch('/experiment', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({id}),
-    });
-    const results = await response.json();
+  
+    let results = [];
+    const result = this.state.response;
+    for await (let item of result) {
+       item._id = id ? results.push(item) : null
+    }
+
     const {
       date, time, expName,
       expNumber, animalName, expType, numberOfReinforcements,

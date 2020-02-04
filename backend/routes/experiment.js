@@ -8,6 +8,7 @@ router.get('/', newUserCheck, async (req, res) => {
   res.json(results);
 });
 
+
 router.post('/allSearch', newUserCheck, async function(req, res) {
     let result = '';
     result = req.body.query === result ?
@@ -28,7 +29,10 @@ router.post('/studentSearch', newUserCheck, async function(req, res) {
   await res.json({response: result});
 });
 
-
+router.post('/details', newUserCheck, async function(req, res) {
+  const results = await Experiment.find({_id: req.body.id}).populate('user');
+  res.json(results);
+});
 
 
 router.post('/', newUserCheck, async function(req, res) {

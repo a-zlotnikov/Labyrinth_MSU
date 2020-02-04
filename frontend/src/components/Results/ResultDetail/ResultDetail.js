@@ -18,7 +18,7 @@ class ResultDetail extends Component {
   componentDidMount = async () => {
     this.setState({loading: true});
     const id = this.props.match.params.id;
-    const response = await fetch('/experiment', {
+    const response = await fetch('/experiment/details', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({id}),
