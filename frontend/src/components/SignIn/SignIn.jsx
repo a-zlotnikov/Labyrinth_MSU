@@ -47,7 +47,7 @@ class SignIn extends Component {
 
       this.props.handler();
     } else {
-      alert('Try again') /// !!!
+      alert('Пароль введён неверно') /// !!!
     }
   };
 
