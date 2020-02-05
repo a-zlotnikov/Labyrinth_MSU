@@ -2,6 +2,8 @@ const express = require('express');
 const useMiddleware = require('./middleware');
 const useErrorHandlers = require('./middleware/error-handlers');
 const dotenv = require('dotenv').config();
+const publicPath = path.join(__dirname, 'build');
+app.use(express.static(publicPath));
 
 const app = express();
 useMiddleware(app);
@@ -21,6 +23,10 @@ app.use('/users', usersRouter);
 app.use('/index', indexRouter);
 
 // Подключаем импортированные маршруты с определенным url префиксом.
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 useErrorHandlers(app);
 
