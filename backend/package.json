@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npx nodemon --ignore './sessions' ./server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
