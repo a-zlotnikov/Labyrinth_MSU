@@ -9,7 +9,6 @@ const publicPath = path.join(__dirname, 'build');
 const app = express();
 useMiddleware(app);
 
-const resultsRouter = require('./routes/results');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 const typesRouter = require('./routes/types');
@@ -19,7 +18,6 @@ const experimentRouter = require('./routes/experiment')
 app.use('/experiment', experimentRouter);
 app.use('/environment', environmentRouter);
 app.use('/types', typesRouter);
-app.use('/results', resultsRouter);
 app.use('/users', usersRouter);
 app.use('/index', indexRouter);
 
