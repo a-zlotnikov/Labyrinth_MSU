@@ -43,11 +43,8 @@ class Results extends Component {
   };
   
   onSaveTxt = async id => {
-    let results = [];
     const result = this.state.response;
-  
-    result.forEach(elem => elem._id === id ? results.push(elem): null)
-    
+    let results = result.filter(elem => elem._id === id);
     const {
       date, time, expName,
       expNumber, animalName, expType, numberOfReinforcements,
@@ -87,7 +84,6 @@ class Results extends Component {
     const blob = await new Blob(newFile, {type: 'text/plain;charset=utf-8'});
     await saveAs(blob,
       `${results['0'].env.name}_${expType}_${expName}_${expNumber}_${animalName}`);
-    
   };
   
   onSaveAll = () => {
@@ -339,7 +335,7 @@ class Results extends Component {
                         </div>
                         <div
                           className={classes.Option}
-                          onClick={()=>this.onSaveTxt(
+                          onClick={() => this.onSaveTxt(
                             result._id)}>Скачать
                         </div>
                         {Cookies.get('category') === 'Преподаватель' ? <div
