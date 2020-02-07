@@ -58,16 +58,12 @@ class SignIn extends Component {
         <h2>Behavior tracking</h2>
         <h1 className={'logTitle'}>Вход в систему</h1>
         <br/>
-        <div>
           <input className={'logInput'} onChange={this.refreshUsernameField} placeholder="Идентификатор пользователя"/>
-        </div>
         <br/>
-        <div>
           <input className={'logInput'} onChange={this.refreshPasswordField} placeholder="Пароль" type="password"/>
-        </div>
         {this.state.logged_in === false ? <div>Проверьте логин и пароль</div> : <div/>}
         <br/>
-        <div className={'logButton'} onClick={this.signIn}>Войти</div>
+        <button type={'submit'} className={'logButton'} onClick={this.signIn}>Войти</button>
       </div>
     );
   }
