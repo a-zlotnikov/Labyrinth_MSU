@@ -58,7 +58,7 @@ class Experiment extends Component {
   componentDidMount = async () => {
     this.props.fullField(this.props.match.params.id);
     this.setState({response: null});
-    let resp = await fetch('/index/types', {
+    let resp = await fetch('/types', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     });
