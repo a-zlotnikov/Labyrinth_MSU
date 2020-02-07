@@ -44,12 +44,11 @@ class Results extends Component {
   
   onSaveTxt = async id => {
     const result = this.state.response;
-    let results = result.find(elem => elem._id === id);
+    const results = result.filter(elem => elem._id === id);
     const {
       date, time, expName,
       expNumber, animalName, expType, numberOfReinforcements,
     } = results['0'];
-    
     const elemFile = [
       `${date}\n`,
       `${time}\n`,
