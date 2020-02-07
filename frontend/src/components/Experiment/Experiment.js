@@ -218,7 +218,10 @@ class Experiment extends Component {
     this.setState({expBegin: true});
     this.intervalId = setInterval(this.timer.bind(this), 1000);
     let clickCount = 0;
+    let arr = [];
+
     const move = (e) => {
+
       let timer = this.state.timer;
 
       let singleClick = (value) => {
@@ -226,14 +229,21 @@ class Experiment extends Component {
         if (value === '+') {
           this.setState({feeding: this.state.feeding + 1});
         }
+        arr = [];
       };
 
       let doubleClick = (value) => {
         keyButton(value, timer);
+        arr = [];
+
       };
 
       const x = e.code;
+      if(x !== 'ArrowUp' && x !== 'ArrowDown' && x !== 'ArrowRight' && x !== 'ArrowLeft' && x !== 'Backspace' && x !== 'NumpadDivide' && x !== 'NumpadMultiply' && x !== 'NumpadSubtract'){
+        arr.push(x);
+      }
       if (this.state.expBegin) {
+
         switch (x) {
           case 'ArrowUp':
             e.preventDefault();
@@ -257,7 +267,10 @@ class Experiment extends Component {
             break;
           case 'Numpad1':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad1'){
+              clickCount++;
+            }
+
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -272,7 +285,9 @@ class Experiment extends Component {
             break;
           case 'Numpad2':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad2'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -286,7 +301,9 @@ class Experiment extends Component {
             break;
           case 'Numpad3':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad3'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -300,7 +317,9 @@ class Experiment extends Component {
             break;
           case 'Numpad4':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad4'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -314,7 +333,9 @@ class Experiment extends Component {
             break;
           case 'Numpad5':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad5'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -328,7 +349,9 @@ class Experiment extends Component {
             break;
           case 'Numpad6':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad6'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -342,7 +365,9 @@ class Experiment extends Component {
             break;
           case 'Numpad7':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad7'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -356,7 +381,9 @@ class Experiment extends Component {
             break;
           case 'Numpad8':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad8'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -370,7 +397,9 @@ class Experiment extends Component {
             break;
           case 'Numpad9':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad9'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -402,7 +431,9 @@ class Experiment extends Component {
             break;
           case 'NumpadAdd':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='NumpadAdd'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -416,7 +447,9 @@ class Experiment extends Component {
             break;
           case 'Numpad0':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='Numpad0'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
@@ -430,7 +463,9 @@ class Experiment extends Component {
             break;
           case 'NumpadDecimal':
             e.preventDefault();
-            clickCount++;
+            if(arr[0]==='NumpadDecimal'){
+              clickCount++;
+            }
             if (clickCount === 1) {
               this.singleClickTimer = setTimeout(function() {
                 clickCount = 0;
