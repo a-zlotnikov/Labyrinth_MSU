@@ -803,8 +803,8 @@ class Experiment extends Component {
               return <span key={i}>{element[key]}</span>;
             }
           })}</div>
-          <button className={'exitBtn'} onClick={this.endExp}>Выйти из эксперимента</button>
-          <button className={'exitBtn'} onClick={this.changeHand}>Изменить расположение</button>
+          <button className={'exitBotBtn'} onClick={this.endExp}>Выйти из эксперимента</button>
+          <button className={'exitBotBtn'} onClick={this.changeHand}>Изменить расположение</button>
         </div>
     );
   }
