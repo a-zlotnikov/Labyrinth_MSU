@@ -93,7 +93,7 @@ class SignUp extends Component {
       category: 'Студент',
       surname: null,
       name: null,
-      gender: 'Мужской',
+      gender: 'Женский',
       dob: null,
       hand: 'Правша',
       group: null,
@@ -173,8 +173,8 @@ class SignUp extends Component {
                             <div>
                               <select className={'regTextEdit'} name="gender"
                                       onChange={this.changeValue}>
-                                <option>Мужской</option>
                                 <option>Женский</option>
+                                <option>Мужской</option>
                               </select>
                             </div>
                           </div>
