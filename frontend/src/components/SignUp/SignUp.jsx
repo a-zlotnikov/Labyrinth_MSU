@@ -15,7 +15,7 @@ class SignUp extends Component {
       category: 'Студент',
       surname: null,
       name: null,
-      gender: 'Мужской',
+      gender: 'Женский',
       dob: null,
       hand: 'Правша',
       group: null,
