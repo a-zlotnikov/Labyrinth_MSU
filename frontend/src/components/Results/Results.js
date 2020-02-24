@@ -86,9 +86,10 @@ class Results extends Component {
   };
   
   onSaveAll = () => {
-    const result = this.state.response;
+    let resultAll = this.state.response;
     let newFile = [];
-    
+    const result = resultAll.filter(elem => {if (elem.user !== undefined) {return elem}});
+  
     for (let elem of result) {
       let elemFile = [];
       
@@ -96,7 +97,6 @@ class Results extends Component {
         date, time, expName,
         expNumber, animalName, expType, numberOfReinforcements,
       } = elem;
-      
       elemFile.push(
         `${date}\n`,
         `${time}\n`,
@@ -106,8 +106,8 @@ class Results extends Component {
         `${animalName}\n`,
         `${expType}\n`,
         `${numberOfReinforcements ? numberOfReinforcements : '-'}\n`,
-        `${elem.user.surname}\n`,
-        `${elem.user.name}\n`,
+        `${elem.user.surname ? elem.user.surname : '-'}\n`,
+        `${elem.user.name ? elem.user.name : '-'}\n`,
         `${elem.user.dob
           ? moment().diff(elem.user.dob, 'years')
           : '-'}\n`,
