@@ -4,7 +4,15 @@ const {Experiment} = require('../models/experiment');
 const {newUserCheck} = require('../middleware/auth');
 
 router.get('/', newUserCheck, async (req, res) => {
-  const results = await Experiment.find();
+  const count = await Experiment.find().populate('user').count();
+  const results = await Experiment.find().populate('user').limit(20).skip(0);
+  res.json({results, count});
+});
+
+router.post('/pogination', newUserCheck, async (req, res) => {
+  const skip = Number(req.body.skip);
+  console.log(req.body.skip);
+  const results = await Experiment.find().populate('user').limit(20).skip(skip);
   res.json(results);
 });
 

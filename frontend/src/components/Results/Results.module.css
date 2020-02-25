@@ -26,6 +26,7 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
     margin-left: 5px;
     margin-bottom: 5px;
+    outline: 0 !important;
 }
 
 .Option:hover {
@@ -150,4 +151,10 @@
 .resAnimal {
     width: 100px;
     text-align: center;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }

@@ -24,6 +24,8 @@ class Results extends Component {
       row: null,
       find: '',
       option: [],
+      curPage: 0,
+      count: null
     };
   }
 
@@ -149,6 +151,36 @@ class Results extends Component {
     }
   };
 
+  fetchResultsPlus = async () => {
+    if (this.state.curPage < this.state.count - 20) {
+      const response = await fetch('/experiment/pogination', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({skip: this.state.curPage + 20})
+      });
+      const results = await response.json();
+      this.setState({
+        response: results,
+      });
+      this.setState({curPage: this.state.curPage + 20})
+    }
+  };
+
+  fetchResultsMinus = async () => {
+    if (this.state.curPage > 0) {
+      const response = await fetch('/experiment/pogination', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({skip: this.state.curPage - 20})
+      });
+      const results = await response.json();
+      this.setState({
+        response: results,
+      });
+      this.setState({curPage: this.state.curPage - 20})
+    }
+  };
+
   searchAll = async () => {
 
     const id = Cookies.get('user_id');
@@ -173,7 +205,8 @@ class Results extends Component {
     });
 
     if (result) {
-      this.setState({loading: false, error: false, response: result.reverse()});
+      this.setState({loading: false, error: false, response: result.results});
+      this.setState({loading: false, error: false, count: result.count});
     } else {
       this.setState({loading: false, error: true});
     }
@@ -351,6 +384,10 @@ class Results extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className={classes.pagination}>
+          <button className={classes.Option} onClick={() => this.fetchResultsMinus()}>назад</button>
+          <button className={classes.Option} onClick={() => this.fetchResultsPlus()}>вперёд</button>
         </div>
       </div>
     ) : (<Loader/>);
