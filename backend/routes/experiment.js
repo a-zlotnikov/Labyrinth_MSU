@@ -4,7 +4,7 @@ const {Experiment} = require('../models/experiment');
 const {newUserCheck} = require('../middleware/auth');
 
 router.get('/', newUserCheck, async (req, res) => {
-  const results = await Experiment.find().populate('user');
+  const results = await Experiment.find();
   res.json(results);
 });
 
