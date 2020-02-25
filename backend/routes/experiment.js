@@ -5,14 +5,15 @@ const {newUserCheck} = require('../middleware/auth');
 
 router.get('/', newUserCheck, async (req, res) => {
   const count = await Experiment.find().populate('user').count();
-  const results = await Experiment.find().populate('user').limit(20).skip(0);
+  const results = await Experiment.find().sort({date: 'desc'}).populate('user').limit(20).skip(0);
+  console.log(results);
   res.json({results, count});
 });
 
 router.post('/pogination', newUserCheck, async (req, res) => {
   const skip = Number(req.body.skip);
   console.log(req.body.skip);
-  const results = await Experiment.find().populate('user').limit(20).skip(skip);
+  const results = await Experiment.find().sort({date: 'desc'}).populate('user').limit(20).skip(skip);
   res.json(results);
 });
 
